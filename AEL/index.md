@@ -14,6 +14,8 @@ Advanced Emulator Launcher (AEL) is a multi-emulator front-end for Kodi scalable
 
  * Imports Advanced Launcher launchers.xml. Users of Advanced Launcher will get started instantly.
 
+[Go back to index page](../)
+
 ### Getting started
 
  1. [Installation](Getting-Started-Installation)
@@ -41,7 +43,7 @@ Advanced Emulator Launcher (AEL) is a multi-emulator front-end for Kodi scalable
  2. [Configuration of console emulators](Setup-Console) 
  3. [Configuration of arcade emulators](Setup-Arcade) 
  4. [Configuration of computer emulators](Setup-Computer)
- 5. [Configuration of games](Setup-Games)
+ 5. [Configuration of standalone games](Setup-Games)
 
 ### AEL menu reference ###
  

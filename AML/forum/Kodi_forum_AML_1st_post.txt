@@ -1,0 +1,186 @@
+[align=center][img]https://github.com/Wintermute0110/plugin.program.advanced.MAME.launcher/wiki/shots/aml-forumbanner.png[/img][/align]
+ 
+[align=center][size=x-large][u][b][color=#87ceeb]Welcome to Advanced MAME Launcher[/color][/b][/u][/size][/align]
+
+Advanced MAME Launcher is a MAME front-end for Kodi. It supports both MAME arcade ROMs plus Software Lists (about 100.000 ROMs in total).
+
+[size=large][b][color=#6b8e23]Features[/color][/b][/size]
+[list]
+[*]Browse and launch MAME arcade Machines.
+[*]Browse and launch MAME Software List ROMs.
+[*]Very easy to setup. Automatically extracts all metadata from MAME XML database and scans your MAME ROMs and Software Lists.
+[*]Optimized for blistering speed and efficiency.
+[*]Includes lots of filters to browse your MAME machines easily and conveniently.
+[*]Supports [inline]Catver.ini[/inline], [inline]Catlist.ini[/inline], [inline]Genre.ini[/inline], [inline]NPlayers.ini[/inline], [inline]Bestgames.ini[/inline] and [inline]Series.ini[/inline].
+[*]Support [inline]MAMEInfo.dat[/inline], [inline]History.dat[/inline], [inline]Command.dat[/inline] and [inline]Gameinit.dat[/inline]. Information provided by these DAT files can be accesed from the context menu.
+[*]Expanded artwork & asset support including Titles, Snaps, Cabinets, Control Panels, PCBs, Flyers, Marquees, Clearlogos and Trailers. AML views are compatible with [url=http://forum.kodi.tv/showthread.php?tid=287826]Advanced Emulator Launcher[/url] views.
+[*]Organise and unify all your treasured MAME Machines or Software List ROMs with the special in-built Favourites category.
+[*]ROM and CHD audit for MAME machines and Software List items. The ROM auditor supports Merged, Split and Non-merged sets.
+[*]Automatic Fanart generation from other pieces of artwork.
+[*]Automatic generation of MAME machines and SL item plots with useful information.
+[*]Custom MAME machine filters. The filters are configured by editing an XML file and enable having your custom game lists with no ROM/artwork duplicates.
+[*]Integrated addon configuration checker.
+[*]Extensive number of statistical information, ROM scanner and ROM auditor reports. These reports can be read with the context menu or as an external TXT files.
+[*]Export any MAME filter, including the MAME Favourites or any MAME custom filter, into an Advanced Emulator Launcher virtual launcher. This enables conveniently browsing your fine-tuned MAME machines from AEL without ROM or asset duplicates in your setup.
+[*]Integrated PDF Manual reader. PDF Manuals must be composed of scanned images (99% of the game manuals fall into this category).
+[*](*) Integrated CBR/CBZ Manual reader.
+[*]Display the most played ROMs for MAME and Software List items.
+[*]Display the last played ROMs for MAME and Software List items.
+[/list]
+
+(*) Planned features, not implemented yet.
+
+[color=#708090][b]Advanced MAME Launcher or Advanced Emulator Launcher?[/b][/color]
+
+Why two different addons capable of launching MAME? Should I use [url=http://forum.kodi.tv/showthread.php?tid=304186]Advanced MAME Launcher[/url] or [url=http://forum.kodi.tv/showthread.php?tid=287826]Advanced Emulator Launcher[/url]?
+
+[list]
+[*]AML is much easier to configure than AEL. AEL is a general launcher whereas AML is tailored specifically for MAME.
+[*]AEL only shows the MAME ROMs you have. As opposed, AML shows every single MAME machine, even the ones you don't have the ROMs for.
+[*]AML includes a set of powerful Machine/ROM filters that makes navigation of MAME and Software Lists easy and convenient.
+[/list]
+
+The answer is that you can use both! AML and AEL have been designed to work in tandem to enrich the retrogaming experience for Kodi users.
+
+[size=large][b][color=#6b8e23]Installation & Downloads[/color][/b][/size]
+
+AML is now available on the [b]Kodi Official Addon Repository[/b]. To install it, go to [b]Settings[/b] and then to [b]Addon settings[/b], [b]Install from repository[/b]. AML is under the category [b]Program add-ons[/b] and [b]Game add-ons, Game providers[/b].
+
+[b]NOTE[/b] If you are upgrading to AML 0.9.9 from a previous version make sure you read the Release Notes first! The Release Notes links are in the third post of this thread.
+
+[size=small]Development builds are also available from GitHub by clicking [url=https://github.com/Wintermute0110/plugin.program.AML.dev]HERE.[/url] You can have both the stable version and the development version installed on the same machine. They behave like different addons and do not inferfere with each other.[/size]
+
+[size=large][b][color=#6b8e23]Getting Started[/color][/b][/size]
+
+[color=#708090][b]Setting up MAME ROMs, CHDs and assets[/b][/color]
+
+If you need help setting up MAME in Linux or Windows you have a some good tutorials [url=http://easyemu.mameworld.info/mameguide/mameguide.html]here[/url], [url=http://www.mameguide.info/index.html]here[/url] and [url=http://choccyhobnob.com/articles/demystifying-mame-roms/]here[/url]. You can also ask questions about how to setup MAME in this thread but [i]please[/i] try to read the tutorials first in order not to ask the same basic questions again and again.
+
+Supported [url=http://docs.mamedev.org/usingmame/aboutromsets.html]MAME ROM sets[/url]: AML currently supports [b]Merged[/b], [b]Split[/b], and [b]Fully Non-Merged[/b].
+
+This is the recommended MAME directory layout. You have to create all the directories yourself, AML does not create any directory automatically.
+[code]/home/kodi/AML-ROMs/                --> Place MAME arcade ROMs and BIOSes here
+/home/kodi/AML-assets/              --> Place MAME and Software Lists assets here
+/home/kodi/AML-CHDs/                --> Place the CHDs here
+/home/kodi/AML-SL-ROMs/             --> Place the Software Lists ROMs here
+/home/kodi/AML-SL-CHDs/             --> Place the Software Lists CHDs here
+/home/kodi/AML-assets/samples/      --> MAME samples (optional)
+/home/kodi/AML-assets/catver.ini    --> Catver (optional)
+/home/kodi/AML-assets/catlist.ini   --> Catlist (optional)
+/home/kodi/AML-assets/genre.ini     --> Genre (optional)
+/home/kodi/AML-assets/nplayers.ini  --> Number of players (optional)
+/home/kodi/AML-assets/bestgames.ini --> Best games catalog (optional)
+/home/kodi/AML-assets/series.ini    --> Series catalog (optional)
+/home/kodi/AML-assets/history.dat   --> History DAT (optional)
+/home/kodi/AML-assets/mameinfo.dat  --> MAME Info DAT (optional)
+/home/kodi/AML-assets/gameinit.dat  --> Gameinit DAT (optional)
+/home/kodi/AML-assets/command.dat   --> Command DAT (optional)[/code]
+
+Catver.ini, Catlist.ini, Genre.ini, NPlayers.ini, Bestgames.ini and Series.ini are optional but recommended.
+
+[list]
+[*]If you configure Catver.ini then filter [i]Machines by Category (Catver)[/i] becomes available. You can download catver.ini [url=http://www.progettosnaps.net/catver/]from progretto-SNAPS[/url].
+[*]If you configure Catlist.ini then filter [i]Machines by Category (Catlist)[/i] becomes available. You can download catver.ini [url=http://www.progettosnaps.net/catver/]from progretto-SNAPS[/url].
+[*]If you configure Genre.ini then filter [i]Machines by Category (Genre)[/i] becomes available. You can download catver.ini [url=http://www.progettosnaps.net/catver/]from progretto-SNAPS[/url].
+[*]If you configure Nplayers.ini then filter [i]Machines by Number of players[/i] becomes available. You can download this file [url=http://nplayers.arcadebelgium.be/]from Arcade Belgium[/url].
+[*]If you configure Bestgames.ini then filter [i]Machines by Score[/i] becomes available. You can download this file [url=http://www.progettosnaps.net/bestgames/]from progretto-SNAPS[/url].
+[*]If you configure Series.ini then filter [i]Machines by Series[/i] becomes available. You can download this file [url=http://www.progettosnaps.net/series/]from progretto-SNAPS[/url].
+[/list]
+
+AML 0.9.4 supports History.dat, MAMEInfo.dat, Gameinit.dat and Command.dat. All these files are optional.
+
+[list]
+[*]You can download History.dat [url=https://www.arcade-history.com/?page=download]from Arcade History[/url].
+[*]You can download MAMEInfo.dat [url=http://mameinfo.mameworld.info/]from MASH's MAMEINFO[/url].
+[*]You can download Gameinit.dat [url=http://www.progettosnaps.net/gameinit/]from progretto-SNAPS[/url].
+[*]You can download Command.dat [url=http://www.progettosnaps.net/command/]from progretto-SNAPS[/url].
+[/list]
+
+[b]Software Lists hash path[/b] is a subdirectory inside the MAME installation directory which contains the Software Lists XML databases.
+ 
+[list]
+[*][i]Linux users[/i] in Debian/Ubuntu it is typically located in [b][i]/usr/share/games/mame/hash/[/i][/b].
+[*][i]Windows users[/i] if you installed MAME in [b][i]E:\MAME[/i][/b] then the [b]Software Lists hash path[/b] would be located in [b][i]E:\MAME\hash\[/i][/b].
+[/list]
+
+The Software Lists ROMs/CHDs must be in a subdirectory whose name must match each Software List name, like in the following example:
+[code]/home/kodi/AML-SL-ROMs/32x/game_1.zip      --> ROMs for 32x Software List
+/home/kodi/AML-SL-ROMs/32x/game_2.zip      
+...
+/home/kodi/AML-SL-ROMs/megadriv/game_1.zip --> ROMs for megadriv Software List
+/home/kodi/AML-SL-ROMs/megadriv/game_2.zip
+...[/code]
+
+Remember to update your [i]mame.ini[/i] configuration file to point to the correct directories where you have placed your ROMs/CHDs. Otherwise MAME won't work at all.
+
+[color=#708090][b]Setting up MAME assets and Software List assets[/b][/color]
+
+Place MAME assets/artwork in the following directories:
+
+[code]/home/kodi/AML-assets/artpreviews/   --> MAME artpreview PNG files
+/home/kodi/AML-assets/artwork/       --> MAME artwork ZIP files
+/home/kodi/AML-assets/cabinets/      --> MAME cabinets
+/home/kodi/AML-assets/clearlogos/    --> MAME clearlogos/wheels
+/home/kodi/AML-assets/covers_SL/     --> Software Lists covers/boxfronts
+/home/kodi/AML-assets/cpanels/       --> MAME control panels
+/home/kodi/AML-assets/fanarts/       --> AML will create MAME Fanarts here
+/home/kodi/AML-assets/fanarts_SL/    --> AML will create SL Fanarts here
+/home/kodi/AML-assets/flyers/        --> MAME flyers
+/home/kodi/AML-assets/manuals/       --> MAME machine PDF/CBZ/CBR manuals
+/home/kodi/AML-assets/manuals_SL/    --> SL items PDF/CBZ/CBR manuals
+/home/kodi/AML-assets/marquees/      --> MAME marquees
+/home/kodi/AML-assets/PCBs/          --> MAME PCBs
+/home/kodi/AML-assets/samples/       --> MAME Sample ZIP files
+/home/kodi/AML-assets/snaps/         --> MAME in-game screenshots
+/home/kodi/AML-assets/snaps_SL/      --> Software Lists in-game screenshots
+/home/kodi/AML-assets/titles/        --> MAME title screenshots
+/home/kodi/AML-assets/titles_SL/     --> Software Lists in-game screenshots
+/home/kodi/AML-assets/videosnaps/    --> MAME trailers (MP4 format)
+/home/kodi/AML-assets/videosnaps_SL/ --> Software Lists trailers (MP4 format)
+[/code]
+
+When configuring AML, [b]MAME assets path[/b] in this example would be [b][i]/home/kodi/AML-assets/[/i][/b].
+
+MAME machines have a broad range of assets, including Cabinets, Clearlogos, Control Panels, Flyers, PCBs, in-game snaps and title screenshots. Software Lists, however, only have Covers/Boxfronts, in-game snaps and title screenshots. The covers, snaps and titles of each software list must be in their own subdirectory like in this example:
+
+[code]/home/kodi/AML-assets/covers_SL/32x/       --> Covers for 32x Software List
+/home/kodi/AML-assets/covers_SL/megadriv/  --> Covers for megadriv Software List
+...
+/home/kodi/AML-assets/snaps_SL/32x/        --> Snaps for 32x Software List
+/home/kodi/AML-assets/snaps_SL/megadriv/   --> Snaps for megadriv Software List
+...[/code]
+
+Note that the Software List artwork collections ZIP or Torrent files follow this naming scheme so you only have to decompress or copy the ZIP file/torrent in the appropiate directory.
+
+AML doesn't have (and [i]never[/i] will have) asset/artwork scrapers. You can however download full MAME artwork collections from here:
+
+[list]
+[*][url=http://www.progettosnaps.net/]Progretto SNAPs MAME Artwork[/url] The definitive place in the universe for MAME (and Software Lists) assets.
+[*][url=https://archive.org/details/MameArtwork]Internet Archive:[/url] The Internet Archive is full of treasures! Make sure you do a comprehensive search!
+[*][url=http://www.pleasuredome.org.uk/]Pleasuredome[/url] Look for the MAME EXTRAs torrent. It includes a complete and up-to-date MAME artwork collection based on the contents of Progretto SNAPs [i](*)[/i].
+[*][url=http://emumovies.com/]EmuMovies[/url] Has some good artwork collections for MAME [i](*)[/i].
+[*][url=http://www.hyperspin-fe.com/files/category/2-hyperspin-media/]HyperSpin Media[/url] Forum for HyperSpin users containing artpacks. Clearlogos are called 'Wheels' in HyperSpin parlance [i](*)[/i].
+[/list]
+[i](*) Registration Required[/i]
+
+[color=#708090][b]Setting up Advanced MAME Launcher (Easy mode)[/b][/color]
+
+1) Install and run AML for the first time.
+
+2) Open AML settings, in the tab Paths configure the [b]MAME executable[/b] and the [b]ROMs path[/b].
+
+3) (Optional) Configure the [b]MAME assets path[/b], [b]MAME CHDs path[/b], [b]Software Lists hash path[/b], [b]Software Lists ROMs path[/b], [b]Software Lists CHDs path[/b], [b]Samples path[/b], [b]Catver.ini path[/b], [b]Catlist.ini path[/b], [b]Genre.ini path[/b], [b]nplayers.ini[/b], [b]bestgames.ini[/b], [b]series.ini[/b].
+
+4) In AML root window select any item, open the context menu, select "Setup plugin". Execute, in consecutive order:
+
+4.1) [b]Extract MAME.xml ...[/b] extracts the MAME.xml database from MAME.
+
+4.2) [b]Build all databases[/b] converts the MAME XML database into JSON format, strips out unneeded information to boost performance, generates the filter parent/clone lists and processes the Software List XML databases.
+
+4.3) [b]Scan everyting[/b] scans your MAME machine ROMs, CHDs and Samples, Software Lists ROMs and CHDs, and MAME machines and Software Lists assets/artwork. Sets all tags having a [b]?[/b] to the appropriate value.
+
+If everything is OK you are now able to navigate all MAME ROMs (arcade/computer machines and Software Lists).
+
+[color=#708090][b]Setting up Advanced MAME Launcher (Advanced mode)[/b][/color]
+
+The [b]Setup plugin[/b], [b]Step by step ...[/b] menu allows you to execute the AML database setup process step by step, as opposed to automatically. For example, if you install/copy new MAME assets you can execute "Scan MAME assets/artwork ..." to bring the MAME machine artwork database up-to-date. Alternatively, you can run [b]Scan everyting[/b] to bring all ROMs/assets databases up-to-date but it will take much longer.

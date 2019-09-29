@@ -1,0 +1,36 @@
+[size=x-large]New AML release 0.9.8[/size]
+
+AML 0.9.8 is now in the Kodi official addon repository. Release 0.9.8 just contains some bug fixes and code refactoring to meet the Kodi repository standards. AML should work OK on both Kodi Krypton and Kodi Leia.
+
+The policy for new releases will be to update AML on the forum first, specially if there are a lot of new features and/or changes, and about a couple of weeks later update the Kodi repository if no serious bugs are found. Bug fix releases will be uploaded to the Kodi repo right away. [B]From now on, AML will keep you Favourite machines, Recently Played and Most Played machines between upgrades, no need for more database wipe outs[/B].
+
+[size=large][color=#0020ff]Upgrading AML to release 0.9.8[/color][/size]
+
+1) Install AML 0.9.8 using the ZIP file or download it from Kodi addon repository.
+
+2) Follow the steps of Extracting MAME XML, Build all databases and Scan everything and build plots. Extracting MAME XML resets the ROM Audit Statistics so if you use them you also need to repeat the ROM audit.
+
+3) Open AML settings, go to the "Utilities" tab and click on "Check/Update all objects". This will bring your MAME Favourites, MAME Most Played, etc. up to date with the last version of the database.
+
+[size=large][color=#0020ff]Advanced MAME Launcher | version 0.9.8 | 23 June 2018[/color][/size]
+
+[code]FEATURE  Documentation in README.md improved.
+
+FEATURE  [LEIA] Kodi Leia will cache the Python interpreter which means submodules will only
+         be executed once and cached. sys.argv must be propagated from the entry point code
+         into the submodules.
+         See https://github.com/xbmc/xbmc/pull/13814
+         and https://forum.kodi.tv/showthread.php?tid=303073&pid=2729071#pid2729071
+
+FIX      Changed source code files to remove BOM. This is necessary to pass Travis tests of
+         Kodi official repo.
+
+FIX      ActivateWindow(busydialog) and Dialog.Close(busydialog) have been deprecated.
+         See https://github.com/xbmc/xbmc/pull/13958
+         and https://github.com/xbmc/xbmc/pull/13954
+         and https://github.com/xbmc/xbmc/pull/10699
+
+FIX      Do not use the xbmc.Player() in launcher addons. Instead, use functions like
+         xbmc.getCondVisibility("Player.HasMedia"), xbmc.executebuiltin("PlayerControl(stop)"), etc.
+         Change proposed by enen92.
+         See https://github.com/xbmc/repo-plugins/pull/1886#discussion_r196591764[/code]

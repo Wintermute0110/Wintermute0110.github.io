@@ -1,0 +1,41 @@
+[size=x-large]New AML release 0.9.3[/size]
+
+The main feature of this release is the speed: the browsing is now much faster than before thanks to a redesigned ROM database. Many other things have been improved here and there, particularly launching of Software List ROMs. There is a new "Parents only" view mode that launches machines from a parent view (clones can be accessed from the context menu "Show clones"). Also, there are new MAME Favourite machines and Software Lists Favourite ROMs sections to store your treasured machine/ROMs!
+
+[b]NOTE[/b] AML is still under heavy development and the format of the databases may change in the future. Do not make huge lists of Favourites because there could be incompatibilities with future versions (in other words, it may be possible that you will need to wipe out your favourites in order to upgrade AML).
+
+The instructions on the first and second post need and update to follow up with 0.9.3 version but you should be able to figure out the new menus and settings :;):
+
+[size=large][color=#0020ff]Release notes and upgrade[/color][/size]
+
+In order to not to accumulate cruft, it is recommended that [b]before[/b] you upgrade to AML 0.9.3 you delete the PLUGIN_DATA_DIRECTORY. On Linux is is located in:
+[code]/home/your_username/.kodi/userdata/addon_data/plugin.program.advanced.MAME.launcher[/code]
+
+On Windows
+[code]C:\Users\your_username\AppData\Roaming\Kodi\userdata\addon_data\plugin.program.advanced.MAME.launcher[/code]
+
+After deleting the directory then install AML using the ZIP file. You will need to configure the plugin (MAME executable and paths), rebuild the databases and scan for ROMs/assets again.
+
+[size=large][color=#0020ff]Advanced Emulator Launcher | version 0.9.3 | 31 May 2017[/color][/size]
+[code]FEATURE Ability to choose default Icon and Fanart for MAME and SL ROMs in addon settings.
+
+FEATURE "Parent only" view mode.
+
+FEATURE Plugin speed has been increased a lot owing to a brand new database design.
+
+FEATURE Unified catalog system and new machine rendering method.
+Requires wiping of ADDON_DATA_DIR to avoid problems.
+
+FEATURE Properties can be configured for every individual list in AML.
+
+FEATURE New Status Device flag. Marks wheter a device is mandatory or not.
+
+FEATURE Show database statistics.
+
+FEATURE Favourite MAME machines.
+
+FEATURE Favourite Software Lists ROMs.
+
+FEATURE Scan SL assets/artwork.
+
+FEATURE Manage MAME Favourites.[/code]

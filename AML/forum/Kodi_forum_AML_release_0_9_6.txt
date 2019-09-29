@@ -1,0 +1,45 @@
+[size=x-large]New AML release 0.9.6[/size]
+
+New AML release! Compared with previous releases 0.9.6 does not introduce big changes. The main feature is support for Most Played and Recently played MAME machines and Software List items. Parents with kids will be happy to hear that support for [inline]Mature.ini[/inline] has been added and now Mature MAME machines can be completely filtered out. Mature.ini is included in the ZIP file that contains Catver.ini. Finally, the usability of AML has been improved. Now, if the database is not built AML will print a message telling the user what to do, etc., which I think will be great for new users of the addon.
+
+If everything is all right and nobody reports any serious issue I will include AML 0.9.6 in the official Kodi repo. The policy for new releases will be to update AML on the forum first and about one week later update the Kodi repository. From now on, AML will keep you Favourite machines, Recently Played and Most Played machines (no need for more database wipe outs) between upgrades.
+
+[size=large][color=#0020ff]Upgrading AML to release 0.9.6[/color][/size]
+
+1) Install AML 0.9.6 using the ZIP file.
+
+2) Follow the steps of Extracting MAME XML, Build all databases and Scan everything and build plots. Extracting MAME XML resets the ROM audit statistics so if you want to see those you also need to repead the ROM audit.
+
+3) Open AML settings, go to the "I/O" tab and click on "Check/Update all objects". This will bring your MAME Favourites, MAME Most Played, etc. up to date with the last version of the database.
+
+[size=large][color=#0020ff]Advanced Emulator Launcher | version 0.9.6 | 25 May 2018[/color][/size]
+
+[code]FEATURE  Improve the user experience when the addon is just installed. Check if databases
+         have been built, check for errors, etc.
+
+FEATURE  Add a isMature field to MAME DB. Take the mature information from mature.ini included
+         in the Catver.ini ZIP file.
+
+FEATURE  Option in settings to completely hide Mature machines and filter categories.
+
+FEATURE  Asset hashed database. This will speed up launching MAME machines. Note that the asset
+         DB must be opened for the Most Played and Recently Played DBs.
+
+FEATURE  Prettify the "Display rotation" filter (use Horizontal/Vertical instead of numbers).
+
+FEATURE  Include number of buttons in controls and some other control information.
+
+FEATURE  Add the Samples of each machine to the ROM database.
+
+FEATURE  Audit the ROM samples inside ZIP files.
+
+FEATURE  Implement "Most played MAME machines"
+
+FEATURE  Implement "Recently played MAME machines"
+
+FEATURE  Option in settings to update all MAME and SL Favourite ROMs. Useful for plugin upgrades.
+
+FEATURE  Implement "Most played SL ROMs"
+
+FEATURE  Implement "Recently played SL ROMs"
+[/code]

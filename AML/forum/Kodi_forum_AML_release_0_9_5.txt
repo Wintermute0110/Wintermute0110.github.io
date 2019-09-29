@@ -1,0 +1,80 @@
+[size=x-large]New AML release 0.9.5[/size]
+
+New AML release!
+
+[b]NOTE[/b] AML is still under heavy development and the format of the databases may change in the future. Do not make huge lists of Favourites because there could be incompatibilities with future versions (in other words, it may be possible that you will need to wipe out your favourites in order to upgrade AML).
+
+The instructions on the first and second post of this thread need and update to follow up with all the new features of AML 0.9.5. You you should be able to figure out the new menus and settings :;): Over the following weeks, I will try to improve the documentation and create a wiki in Github.
+
+Some of the most important new features are ...
+
+[color=#0020ff][b]Option to disable the ROM/Asset cache[/b][/color]
+
+AML 0.9.4 introduced the ROM/Asset cache. This cache speeds up the plugin considerably but the price to pay is that the cache must be regenerated any time a change is made to the database. Also, the cache requires the creation of about 12,000 JSON files. AML 0.9.5 by default has this cache disabled, which slows down the plugin a bit. However, you can enable/disable and any time. Just remember to regenerate the cache manually after enabling it if you disabled it previously.
+
+[color=#0020ff][b]Check AML configuration[/b][/color]
+
+AML has many paths and it could be easy to make a mistake. AML can now check the current configuration for errors. The option in in the addon settings, I/O tab.
+
+[color=#0020ff][b]PDF manual viewer[/b][/color]
+
+The PDF Manual viewer has been improved a lot! Now AML is capable of opening and introspect the PDF files. However, not all the CODECS in the PDF file are supported yet and there could be manuals (composed of images) that cannot be read. I plan to add more PDF CODECS in the future.
+
+[color=#0020ff][b]ROM and CHD auditor[/b][/color]
+
+Several bugs have been fixed in the ROM Auditor and now I can proudly say that it works well. AML has been extensively tested with a full ROM Split set and CHD Merged set. If you have different sets and the auditor does strange things please report a bug.
+
+[size=large][color=#0020ff]Upgrading AML from 0.9.4 to 0.9.5[/color][/size]
+
+AML 0.9.5 requires a complete wipe out of any previous AML installation. However, you will keep your settings and Favourite lists.
+
+1) First, uninstall any previous AML you may have installed.
+
+2) Delete everything in the AML plugin data directory [inline]PLUGIN_DATA_DIRECTORY[/inline] EXCEPT [inline]Favourite_Machines.json[/inline], [inline]Favourite_SL_ROMs.json[/inline] and [inline]settings.xml[/inline].
+
+On Linux, [inline]PLUGIN_DATA_DIRECTORY[/inline] is is located in [inline]/home/your_username/.kodi/userdata/addon_data/plugin.program.advanced.MAME.launcher[/inline]
+
+On Windows, [inline]PLUGIN_DATA_DIRECTORY[/inline] is is located in [inline]C:\Users\your_username\AppData\Roaming\Kodi\userdata\addon_data\plugin.program.advanced.MAME.launcher[/inline]
+
+3) After deleting the directory then install AML 0.9.5 using the ZIP file. Then, follow the usual steps of extracting the MAME XML, generate the databases, scan, etc.
+
+[size=large][color=#0020ff]Advanced MAME Launcher | version 0.9.5 | 11 May 2018[/color][/size]
+
+[code]FEATURE  Option to disable the ROM and asset caches.
+
+FEATURE  CRC32 hash collision detector for MAME and SL ROMs.
+
+FEATURE  MAME ROM and asset cache disable by default. They may be enabled by user that want to
+         increase the loading speed. This will be very useful for development because
+         cache rebuilding takes a long time.
+
+FEATURE  Check if AML configuration is OK or not, and warn the user about warnings/errors.
+
+FEATURE  Improved PDF manual rendering. Use the library pdfrw for image extraction.
+
+FEATURE  Clean ROM cache before rebuilding cache.
+
+FEATURE  Clean asset cache before rebuilding cache.
+
+FEATURE  Clean filters directory before rebuilding custom filters.
+
+FEATURE  MAME audit statistics.
+
+FEATURE  SL audit statistics.
+
+FEATURE  Support for SL Merged ROM/CHD sets (currently only Split).
+
+FEATURE  Added audit timestamps (MAME machines and Software Lists).
+
+FEATURE  Move driver aristmk5.cpp (Aristocrat gambling machines) from Standard to Unusual.
+         Also, adp.cpp, mpu4vid.cpp, cubo.cpp, sfbonus.cpp, peplus.cpp.
+
+FIX      Software List ROM size was stored as string and not as int. This made the SL Audit to
+         completely fail.
+
+FIX      Fixed audit of MAME machine ROMs (wrong function name).
+
+FIX      Lots of fixes to MAME ROM audit engine.
+
+FIX      Lots of fixes to Software Lists audit engine.
+[/code]

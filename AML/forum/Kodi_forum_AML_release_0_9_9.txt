@@ -1,0 +1,105 @@
+[size=x-large]New AML release 0.9.9[/size]
+
+Release 0.9.9 fixes some problems intorduced in MAME 0.205 and has been tested and works perfectly with every recent MAME version up to 0.207. Code has been refactored a bit and there are many small improvements here and there.
+
+Perhaps the main novelty is the addition of two entries in the AML root window, named [b]Utilities[/b] and [b]Global Reports[/b]. Both have functionality previously in the context menus or AML settings. Now I think the user inferface is cleaner and the context menus are not so overloaded.
+
+[size=large][color=#0020ff]Upgrading AML to release 0.9.9[/color][/size]
+
+1) Download AML 0.9.9 from the Kodi addon repository. AML is under the category [b]Program add-ons[/b] and [b]Game add-ons, Game providers[/b].
+
+2) Open the context menu in any root window row, select "Setup Plugin" and then "All in one step". This will extract MAME XML, rebuild all the databases and rescan ZIP/CHD files and assets. You will need to update the Custom filters as well.
+
+3) In the root window, go to "Utilities" and select "Check/Update all Favourite objects." This will bring your MAME Favourites, MAME Most Played, etc. up to date with the last version of the database.
+
+Note that some files in AML data directory have changed. If you want to delete all cruft, then completely wipe out the AML data directory and start from scratch. If you want to keep your MAME Favourites and SL Favourites, then make a backup of the files [inline]Favourite_Machines.json[/inline] and [inline]Favourite_SL_ROMs.json[/inline], and restore these files after the upgrade.
+
+[size=large][color=#0020ff]Advanced MAME Launcher | version 0.9.9 | 22 March 2019[/color][/size]
+
+[code]FEATURE  [CORE] Improve statistics of working, non-working games, etc. for the Main filters.
+
+FEATURE  [CORE] [LEIA] Check out the ListItem constructor offscreen parameter in Leia.
+         The offscreen parameter increases the speed a bit.
+         This requires Kodi version detection and having different code for Krypton/Leia.
+         See https://forum.kodi.tv/showthread.php?tid=329315&pid=2711937#pid2711937
+         and https://forum.kodi.tv/showthread.php?tid=307394&pid=2531524
+
+FEATURE  [CORE] [LEIA] Use the new API function ListItem.setProperties({p1:v1, p2:v2, ...})
+         This requires Kodi version detection and having different code for Krypton/Leia.
+         See https://forum.kodi.tv/showthread.php?tid=332283
+
+FEATURE  [FANARTS] Set an order to print fanart assets. This will allow to have images printed
+         on top of each other.
+
+FEATURE  [CORE] Improve the Samples scanner and report.
+
+FEATURE  [CORE] MAME and SL plots build timestamp.
+
+FEATURE  [CORE] MAME and SL Fanart build timestamp.
+
+FEATURE  [CORE] MAME render and asset cache build timestamp.
+
+FEATURE  [CORE] Move the utilities from the addon settings into the root menu.
+
+FEATURE  [CORE] Move the report viewer from the context menu to the root menu. The context
+         menu is a little bit overloaded and this will alleviate the situation.
+
+FEATURE  [CORE] Use xbmcplugin.addDirectoryItems() instead of xbmcplugin.addDirectoryItem().
+         According to the docs "Large lists benefit over using the standard addDirectoryItem().
+         You may call this more than once to add items in chunks."
+
+FEATURE  [CORE] Configuring every DAT and INI file one by one is tedious. Instead, define
+         a directory where the DATs must be placed and pick the files from there automatically.
+
+FEATURE  [CORE] Add plots for entries in the root window.
+
+FEATURE  [CORE] Renamed the "Machines by Score" filter to "Machines by Rating", to avoid
+         confusing with scores in games.
+
+FEATURE  [CORE] Implement context menu "All in one (Extract, Build and Scan)"
+
+FEATURE  [CORE] Refactoring and code cleaning of the addon setup functions (DB build, scanner).
+
+FEATURE  [CORE] Remove redundant fields from MAME DB 'coins' and 'control_type'. Use new
+         'input' data structure to replace them.
+
+FEATURE  [CORE] At least two directories for samples are needed. MAME includes a default samples
+         directory with some samples used by some machines. Both directories must be configured
+         in mame.ini in order to get all the samples working.
+
+         NOTE This feature was cancelled. Only one Samples directory. If the user wants to have
+         a complete Good audit, then the samples shipped with MAME must be compressed and
+         the ZIP file placed in the unique samples directory. In any case, only three machines
+         are affected.
+
+FEATURE  [FILTERING] Implement <Include>, <Exclude> and <Change> tags.
+         This will require more work than expected. Currently, only parent machines are filtered
+         and clone machines are added after the filtering process. However, to implement
+         Include, Exclude and Change tags, all machines must be included in the filter list.
+         This will require modification of the filter render engine (must be rendered always in
+         flat mode and not in parent/clone mode).
+
+FEATURE  [MANUALS] Progress bar when extracting PDF pages.
+
+FEATURE  [MANUALS] When displaying manuals use cached extracted images if they exist.
+         When the manual is extracted, create a small JSON file with the timestamp of
+         the extraction so it can be compared with the timestamp of the PDF file to
+         test if images must be extracted again.
+
+FIX      In MAME 0.206, some clone merged ROMs are not present in the parent machine, only
+         in the BIOS. For example, in machine adonisce (clone of adonis). Before 0.206, such
+         ROMs were also present on the parent machine. This change in behaviour crashed AML.
+
+FIX      Fixed the AML addon and MAME numerical versioning scheme.
+
+FIX      Fix crash in "Build MAME databases".
+         See https://forum.kodi.tv/showthread.php?tid=304186&pid=2822949#pid2822949
+
+FIX      Some Software List ROMs are compressed using non-ASCII characters and this make
+         the audit engine to crash. I have to investigate how to fix this issue.
+         Maybe use the chardet library https://github.com/Wintermute0110/chardet/tree/master/chardet
+         I think this should reported creating an issue in MAME project in Github.
+         Problematic SL ROM example: SL ibm5170, item wordfndr
+         https://github.com/mamedev/mame/blob/master/hash/ibm5170.xml#L7521
+         The current implementation just ignores non-ASCII files and the audit fails for those
+         SL items.[/code]

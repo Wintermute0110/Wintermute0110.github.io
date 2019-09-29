@@ -1,0 +1,7 @@
+# Directories
+.bundle/
+_site/
+vendor/
+
+# Files
+Gemfile.lock

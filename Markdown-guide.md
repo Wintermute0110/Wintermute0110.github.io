@@ -1,8 +1,31 @@
 ## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/Wintermute0110/Wintermute0110.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+
+### Installing Jekyll on Debian
+
+Install Jekyll version packaged in Debian:
+```
+# apt-get install jekyll
+```
+
+The file `Gemfile` is required and needs some configuration. Then install the Ruby dependencies:
+```
+$ mkdir github-webpages-repo
+$ cd github-webpages-repo
+$ nano Gemfile
+$ bundle install --path vendor/bundle
+```
+
+Start the server process:
+```
+$ jekyll serve --host localhost
+```
+
+If source Markdown files are changed the website is regenerated automatically.
+
+[Getting started with Jekyll on Debian 9 Stretch Linux](https://linuxconfig.org/getting-started-with-jekyll-on-debian-9-stretch-linux)
+[Setting up your GitHub Pages site locally with Jekyll](https://help.github.com/en/articles/setting-up-your-github-pages-site-locally-with-jekyll)
 
 ### Markdown
 
@@ -35,3 +58,12 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+### Table of Contents
+
+In Markdown use
+
+```
+- TOC
+{:toc}
+```

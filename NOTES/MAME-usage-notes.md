@@ -56,8 +56,11 @@ What was the control to switch beteen keyboards when emulating computers???
 
 ## Recommended gamepad mapping ##
 
-<img src="img/MAME_gamepad_grumbel.svg" width="100%">
+This is the typical layout of a gamepad.
 
+<center><img src="img/MAME_gamepad_grumbel.svg" width="80%"></center>
+
+And the recommended MAME control bindings:
 
 | Retropad name | Kodi name     | MAME control                     |
 |---------------|---------------|----------------------------------|

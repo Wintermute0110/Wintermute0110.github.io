@@ -11,7 +11,7 @@ Configuration for arcade emulators.
 
 -------------------------------------------------
 
-### MAME ###
+## MAME
 
 [MAME XML configuration](https://github.com/Wintermute0110/AEL-asset-library/blob/master/autoconfig-linux-console/Arcade - MAME.xml)
 

@@ -1,18 +1,6 @@
 ## Advanced Emulator Launcher wiki
 
-Advanced Emulator Launcher (AEL) is a multi-emulator front-end for Kodi scalable to collections of thousands of ROMs. AEL features include:
-
- * AEL includes offline scrapers for MAME and No-Intro ROM sets and also supports scrapping ROM metadata, thumbs and fanarts online.
-
- * Audit your ROM using No-Intro parent-clone XML DATs. 
-
- * Powerful Favourites management to create your own curated game list among those thousands of ROMs of many systems. 
-
- * Browse all your ROMs by Title (first letter), Year, Genre and Studio.
-
- * Launching of general applications, games and standalone applications is also available.
-
- * Imports Advanced Launcher launchers.xml. Users of Advanced Launcher will get started instantly.
+Advanced Emulator Launcher (AEL) is a multi-emulator, fully-featured front-end and general application launcher for Kodi scalable to collections of thousands of ROMs.
 
 [Go back to index page](../)
 

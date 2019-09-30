@@ -1,20 +1,23 @@
-Configuration for console emulators.
+Configuration and notes for console emulators.
+
+[Go to Setup index page](./Setup-Index)
+
+[Go to AEL index page](/AEL/)
 
 **Table of contents**
 
 - TOC
 {:toc}
 
-[Go to AEL index page](/AEL/)
+<!--
+    Same order as in Setup-Index.md
+-->
 
--------------------------------------------------
-
-<a name="atari-2600"></a>
-### Atari 2600 ###
+## Atari 2600
 
 No-Intro ROMs for Atari 2600 have `a26` extension.
 
-#### Retroarch Stella core (Linux, Windows, Android)
+### Retroarch Stella core (Linux, Windows, Android)
 
 [Stella core INFO file](https://github.com/libretro/libretro-super/blob/master/dist/info/stella_libretro.info).
 Stella supports the following ROM extensions: `a26`, `bin`. Stella can load `zip` files.
@@ -22,21 +25,18 @@ Stella does not require any BIOS.
 
 [Linux Atari 2600 Retroarch XML](https://github.com/Wintermute0110/AEL-asset-library/blob/master/autoconfig-linux-console/Atari%020-%020Atari%0202600%020-%020Retroarch.xml)
 
-#### MAME (Linux, Windows)
+### MAME (Linux, Windows)
 
 | <sub>MAME machine</sub> | <sub>Comments</sub> | <sub>Clone of</sub> | <sub>Media types</sub> |
 |-------------------------|---------------------|---------------------|------------------------|
 | <sub>a2600</sub>        | <sub>Atari 2600 (NTSC)</sub> |                  | <sub>cartridge</sub> |
 | <sub>a2600p</sub>       | <sub>Atari 2600 (NTSC)</sub> | <sub>a2600</sub> | <sub>cartridge</sub> |
 
--------------------------------------------------
-
-<a name="atari-5200"></a>
-### Atari 5200 ###
+## Atari 5200 ###
 
 No-Intro ROMs for Atari 5200 have `a52` extension.
 
-#### Retroarch Atari800 core (Linux, Windows, Android)
+### Retroarch Atari800 core (Linux, Windows, Android)
 
 [Atari800 core INFO file](https://github.com/libretro/libretro-super/blob/master/dist/info/atari800_libretro.info).
 Atari800 supports the following ROM extentions: `xfd`, `atr`, `atx`, `cdm`, `cas`, `bin`, `a52`, `xex`.
@@ -48,7 +48,7 @@ Atari800 can load `zip` files.
 
 [Linux Atari 5200 Retroarch XML](https://github.com/Wintermute0110/AEL-asset-library/blob/master/autoconfig-linux-console/Atari%020-%020Atari%0205200%020-%020Retroarch.xml)
 
-#### MAME (Linux, Windows)
+### MAME (Linux, Windows)
 
 | <sub>MAME machine</sub> | <sub>Comments</sub> | <sub>Clone of</sub> | <sub>Media types</sub> |
 |-------------------------|---------------------|---------------------|------------------------|
@@ -56,7 +56,6 @@ Atari800 can load `zip` files.
 
 -------------------------------------------------
 
-<a name="atari-7800"></a>
 ### Atari 7800 ###
 
 No-Intro ROMs for Atari 7800 have `a78` extension.

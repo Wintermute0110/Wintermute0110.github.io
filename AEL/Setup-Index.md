@@ -36,11 +36,11 @@ A list of supported Retroarch cores is on the [Libretro wiki](http://wiki.libret
 | <sub>Computers</sub> | <sub>[Microsoft MSX2](#computer-msx2)</sub> | <sub>computer-msx2</sub> | <sub>1985</sub> | <sub>No-Intro</sub> |
 | <sub>Computers</sub> | <sub>[Sinclair ZX Spectrum](#computer-spectrum)</sub> | <sub>computer-spectrum</sub> | <sub>xxx</sub> | <sub>No-Intro</sub> |
 | <sub>Consoles</sub> | <sub>[3DO Interactive Multiplayer](./Setup-Console/#console-3do)</sub> | <sub>console-3do</sub> | <sub>1993</sub> | <sub>---</sub> |
-| <sub>Consoles</sub> | <sub>[Amiga CD32](./Setup-Console/#console-cd32)</sub> | <sub>console-cd32</sub> | <sub>xxxx</sub> | <sub>---</sub> |
+| <sub>Consoles</sub> | <sub>[Commodore Amiga CD32](./Setup-Console/#console-cd32)</sub> | <sub>console-cd32</sub> | <sub>xxxx</sub> | <sub>---</sub> |
 | <sub>Consoles</sub> | <sub>[Benesse Pocket Challenge V2](./Setup-Console/#console-bpc)</sub> | <sub>console-bpc</sub> | <sub>20xx</sub> | <sub>No-Intro</sub> |
 | <sub>Consoles</sub> | <sub>[Casio Loopy](./Setup-Console/#console-loopy)</sub> | <sub>console-loopy</sub> | <sub>1995</sub> | <sub>No-Intro</sub> |
 | <sub>Consoles</sub> | <sub>[Casio PV-1000](./Setup-Console/#console-pv1000)</sub> | <sub>console-pv1000</sub> | <sub>1983</sub> | <sub>No-Intro</sub> |
-| <sub>Consoles</sub> | <sub>[Coleco Colecovision](./Setup-Console/#console-coleco)</sub> | <sub>console-coleco</sub> | <sub>1982</sub> | <sub>No-Intro</sub> |
+| <sub>Consoles</sub> | <sub>[Coleco Colecovision](./Setup-Console/#console-cvision)</sub> | <sub>console-cvision</sub> | <sub>1982</sub> | <sub>No-Intro</sub> |
 | <sub>Consoles</sub> | <sub>[Emerson Arcadia 2001](./Setup-Console/#console-arcadia2001)</sub> | <sub>console-arcadia2001</sub> | <sub>1982</sub> | <sub>No-Intro</sub> |
 | <sub>Consoles</sub> | <sub>[Entex Adventure Vision](./Setup-Console/#console-avision)</sub> | <sub>console-avision</sub> | <sub>1982</sub> | <sub>No-Intro</sub> |
 | <sub>Consoles</sub> | <sub>[Epoch Super Cassette Vision](./Setup-Console/#console-scvision)</sub> | <sub>console-scvision</sub> | <sub>1984</sub> | <sub>No-Intro</sub> |
@@ -103,4 +103,4 @@ A list of supported Retroarch cores is on the [Libretro wiki](http://wiki.libret
 | <sub>SONY</sub> | <sub>[SONY Playstation 2](#sony-ps2)</sub> | <sub>sony-ps2</sub> | <sub>2000</sub> | <sub>Redump</sub> |
 | <sub>SONY</sub> | <sub>[SONY Playstation 3](#sony-ps3)</sub> | <sub>sony-ps3</sub> | <sub>2006</sub> | <sub>Redump</sub> |
 | <sub>SONY</sub> | <sub>[SONY Playstation 4](#sony-ps4)</sub> | <sub>sony-ps4</sub> | <sub>2013</sub> | <sub>xxxxx</sub> |
-| <sub>SONY</sub> | <sub>[SONY PSP](#sony-psp)</sub> | <sub>sone-psp</sub> | <sub>2004</sub> | <sub>No-Intro</sub> |
+| <sub>SONY</sub> | <sub>[SONY PSP](#sony-psp)</sub> | <sub>sony-psp</sub> | <sub>2004</sub> | <sub>No-Intro</sub> |

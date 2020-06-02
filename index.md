@@ -27,9 +27,10 @@ Advanced Emulator Launcher is a multi-emulator front-end for Kodi scalable to co
 
 These guides cover the installation of Kodi in Linux on a PC platform Intel NUC. It also focuses on the installation of external emulators such as Retroarch, MAME and Mednafen.
 
- 1. [Linux basic commands and procedures](./LKESG/Basic-commands-and-procedures)
- 2. [Kodi installation in Ubuntu/Debian](./LKESG/Installing-Kodi)
- 3. [Linux gamepad configuration](./LKESG/Gamepad-configuration)
- 4. [Mednafen usage notes](./LKESG/Retroarch)
- 5. [MAME usage notes](./LKESG/MAME)
- 6. [Retroarch usage notes](./LKESG/Retroarch)
+ 1. [Linux installation and configuration](./LKESG/Linux-installation-and-configuration)
+ 2. [Linux basic commands and procedures](./LKESG/Basic-commands-and-procedures)
+ 3. [Kodi installation in Ubuntu/Debian](./LKESG/Installing-Kodi)
+ 4. [Linux gamepad configuration](./LKESG/Gamepad-configuration)
+ 5. [Retroarch usage notes](./LKESG/Retroarch)
+ 6. [MAME usage notes](./LKESG/MAME)
+ 7. [Mednafen usage notes](./LKESG/Mednafen)

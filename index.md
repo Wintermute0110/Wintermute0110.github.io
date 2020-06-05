@@ -1,4 +1,4 @@
-Welcome to the Wintermute0110 documentation hub.
+Welcome to the Wintermute0110 documentation and tutorials hub.
 
 ## Advanced Emulator Launcher
 
@@ -27,10 +27,11 @@ Advanced Emulator Launcher is a multi-emulator front-end for Kodi scalable to co
 
 These guides cover the installation of Kodi in Linux on a PC platform Intel NUC. It also focuses on the installation of external emulators such as Retroarch, MAME and Mednafen.
 
- 1. [Linux installation and configuration](./LKESG/Linux-installation-and-configuration)
+ 1. [Linux installation and initial configuration](./LKESG/Linux-installation-and-configuration)
  2. [Linux basic commands and procedures](./LKESG/Basic-commands-and-procedures)
- 3. [Kodi installation in Ubuntu/Debian](./LKESG/Installing-Kodi)
- 4. [Linux gamepad configuration](./LKESG/Gamepad-configuration)
- 5. [Retroarch usage notes](./LKESG/Retroarch)
- 6. [MAME usage notes](./LKESG/MAME)
- 7. [Mednafen usage notes](./LKESG/Mednafen)
+ 3. [EmulationStation installation in Ubuntu/Debian](./LKESG/Installing-EmulationStation)
+ 4. [Kodi installation in Ubuntu/Debian](./LKESG/Installing-Kodi)
+ 5. [Gamepad configuration](./LKESG/Gamepad-configuration)
+ 6. [Retroarch installation and usage tutorial](./LKESG/Retroarch)
+ 7. [MAME installation and usage tutorial](./LKESG/MAME)
+ 8. [Mednafen installation and usage tutorial](./LKESG/Mednafen)

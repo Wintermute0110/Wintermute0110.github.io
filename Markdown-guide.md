@@ -19,14 +19,15 @@ $ bundle install --path vendor/bundle
 
 Start the server process:
 ```
-$ jekyll serve --host localhost
-```
-
-```
-bundle exec jekyll serve
+$ bundle exec jekyll serve
 ```
 
 If source Markdown files are changed the website is regenerated automatically.
+
+Every once in a while update the Ruby gems with:
+```
+$ bundle update github-pages
+```
 
 [Getting started with Jekyll on Debian 9 Stretch Linux](https://linuxconfig.org/getting-started-with-jekyll-on-debian-9-stretch-linux)
 

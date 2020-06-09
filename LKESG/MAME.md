@@ -17,6 +17,8 @@ If you have doubts check the [MAME FAQ](http://www.mamedev.org/devwiki/index.php
 
 ## Controlling MAME with a gamepad
 
+You will need a keyboard to configure your gamepads in MAME. Once the gamepads are configured the keyboard is not needed.
+
  * The default control configuration file is `~/.mame/cfg/default.cfg`. Delete this file to restore 
    all controls to its default values.
 
@@ -28,46 +30,36 @@ If you have doubts check the [MAME FAQ](http://www.mamedev.org/devwiki/index.php
 
  * <kbd>ENTER</kbd> + <kbd>ESC</kbd> on a `None` command sets the command to its default value.
 
-What was the control to switch beteen keyboards when emulating computers???
+What was the control to switch beteen keyboards when emulating computers??? `SysRq` or `Scr Lk` 
 
-**Menu `Input (general)`, submenu `User Interface`**
+The following table describes the main controls you need to configure in your gamepad and the default key in the keyboard. Bring the MAME menu with the `TAB` key and enter the **Input (general)** menu.
 
-| Name           | Key               | Description           |
-|----------------|-------------------|-----------------------|
-| `Config Menu`  | <kbd>TAB</kbd>    | Brings the MAME menu. |
-| `UI Up`        | <kbd>UP</kbd>     |
-| `UI Down`      | <kbd>DOWN</kbd>   |
-| `UI Left`      | <kbd>LEFT</kbd>   |
-| `UI Right`     | <kbd>RIGHT</kbd>  |
-| `UI Page Up`   | <kbd>PGUP</kbd>   |
-| `UI Page Down` | <kbd>PGDN</kbd>   |
-| `UI Select`    | <kbd>RETURN</kbd> | 
-| `UI Cancel`    | <kbd>ESC</kbd>    | Go back in menu. Exits MAME. |
-
-**Menu `Input (general)`, submenu `Player 1 Controls`**
-
-| Name         | Key    |
-|--------------|--------|
-| `P1 Up`      | <kbd>UP</kbd> |
-| `P1 Down`    | <kbd>DOWN</kbd>  |
-| `P1 Left`    | <kbd>LEFT</kbd> |
-| `P1 Right`   | <kbd>RIGHT</kbd> |
-| `P1 Button1` | <kbd>LCONTROL</kbd> |
-| `P1 Button2` | <kbd>LALT</kbd> |
-| `P1 Button3` | <kbd>SPACE</kbd> |
-| `P1 Button4` | <kbd>LSHIFT</kbd> |
-| `P1 Button5` | <kbd>Z</kbd> |
-| `P1 Button6` | <kbd>X</kbd> |
-| `P1 Start`   | <kbd>1</kbd> |
-| `P1 Select`  | <kbd>5</kbd> |
-
-**Menu `Input (general)`, submenu `Other Controls`**
-
-| Name             | Key    |
-|------------------|--------|
-| `1 Player Start` | <kbd>1</kbd> |
-| `Coin 1`         | <kbd>5</kbd> |
-| `Service`        | <kbd>F2</kbd> |
+| Sub menu          | Name           | Key               | Description           |
+|-------------------|----------------|-------------------|-----------------------|
+| User interface    | `Config Menu`  | <kbd>TAB</kbd>    | Open/close the MAME menu |
+| User interface    | `UI Up`        | <kbd>UP</kbd>     |
+| User interface    | `UI Down`      | <kbd>DOWN</kbd>   |
+| User interface    | `UI Left`      | <kbd>LEFT</kbd>   |
+| User interface    | `UI Right`     | <kbd>RIGHT</kbd>  |
+| User interface    | `UI Page Up`   | <kbd>PGUP</kbd>   |
+| User interface    | `UI Page Down` | <kbd>PGDN</kbd>   |
+| User interface    | `UI Select`    | <kbd>RETURN</kbd> | 
+| User interface    | `UI Cancel`    | <kbd>ESC</kbd>    | Go back in menu and exit MAME |
+| Player 1 Controls | `P1 Up`      | <kbd>UP</kbd> |
+| Player 1 Controls | `P1 Down`    | <kbd>DOWN</kbd>  |
+| Player 1 Controls | `P1 Left`    | <kbd>LEFT</kbd> |
+| Player 1 Controls | `P1 Right`   | <kbd>RIGHT</kbd> |
+| Player 1 Controls | `P1 Button1` | <kbd>LCONTROL</kbd> |
+| Player 1 Controls | `P1 Button2` | <kbd>LALT</kbd> |
+| Player 1 Controls | `P1 Button3` | <kbd>SPACE</kbd> |
+| Player 1 Controls | `P1 Button4` | <kbd>LSHIFT</kbd> |
+| Player 1 Controls | `P1 Button5` | <kbd>Z</kbd> |
+| Player 1 Controls | `P1 Button6` | <kbd>X</kbd> |
+| Player 1 Controls | `P1 Start`   | <kbd>1</kbd> | Start for console machines |
+| Player 1 Controls | `P1 Select`  | <kbd>5</kbd> | Select for console machines |
+| Other controls    | `1 Player Start` | <kbd>1</kbd>  | Start for arcade machines |
+| Other controls    | `Coin 1`         | <kbd>5</kbd>  | Insert coin for arcade machines |
+| Other controls    | `Service`        | <kbd>F2</kbd> | Service menu of arcade machines |
 
 ## Recommended gamepad mapping
 

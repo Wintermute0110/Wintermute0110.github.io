@@ -17,28 +17,61 @@ Tell about the key combination Alt+Crtl+1 to switch from graphical to console mo
 
 ## Normal user, super user, and rebooting the system
 
+
 ## Installing software and upgrading your system
+
+
+## Upgrading your system
+
+From time to time upgrade the sotware in your HTPC. Execute:
+
+```
+# apt update
+# apt dist-upgrade
+# apt autoremove
+# apt clean
+```
+
+## Terminal emulator
+
+Use `sakura`, it is a lightweight terminal emulator with few dependencies. With right click you can open the context menu to configure it. I recommend to use a font like **Monospace** o **Noto Mono**.
 
 ## Editing files
 
+Use `nano` in the text-mode console.
+
+In the graphical interface ...
+
 ## Managing files: Midnight Commander
+
+```
+apt install mc
+```
 
 ## Services
 
-Services (also called <emphasis>daemons</emphasis>) are programs running in the
-background that carry out many tasks. For example, the session manager (the graphical
+Services are programs running in the background that carry out many tasks. For example, the session manager (the graphical
 program that greets you and prompts for use name and password and starts either XBMC
 or a desktop session like KDE) is a service. It is useful to know how to start, stop,
 and reload servicces.
 
-XBMCUbuntu uses `upstart` to run services. To start a service, type as root:
+Ubuntu/Debian use `systemd` to run and manage services. To start a service, type as root:
+
 ```
-# start {service_name}
+# systemctl
 ```
 
 To stop a service, use the <command>stop {service_name}</command> command. <command>restart {service_name}</command> reloads a service. This is very useful when you change some configuration and want to make those changes effecctive whithout rebooting the system. To list available services in your system type
+
 ```
 # initctl list
+```
+
+```
+# systemctl start display-manager
+# systemctl stop display-manager
+# systemctl restart display-manager
+# systemctl status display-manager
 ```
 
 ## Passwordless SSH login

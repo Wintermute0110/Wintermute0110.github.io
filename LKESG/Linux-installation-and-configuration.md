@@ -29,15 +29,15 @@ Other commands must be run with **root** privileges. In this case the prompt end
 root@pc:~# dd bs=4M conv=fdatasync status=progress if=path/to/input.iso of=/dev/sdd
 ```
 
-You can also use **sudo** to run privileged commands. `sudo dd bs=4M ...` is equivalent to the previous example.
+You can also use **sudo** to run privileged commands. `# sudo dd bs=4M ...` is equivalent to the previous example (do not type the `#` character which indicates the command must be run by the **root** user).
 
-In Ubuntu the root user does not have a password. Sometimes using **sudo** all the time is inconvenient, specially when you need to use many privileged commands in a row. To become the user `root` you can type `sudo su`. To exit the **root** session and return to the unprivilieged user session type `exit`.
+In Ubuntu the root user does not have a password by default. Sometimes using **sudo** all the time is inconvenient, specially when you need to use many privileged commands in a row. To become the user `root` you can type `$ sudo su`. To exit the **root** session and return to the unprivileged user session type `exit`.
 
 ### User name and HTPC computer name
 
-When you install Ubuntu Linux you are asked for a regular or unprivilieged user name. In this guide I use the `kodi` user name. The home directory is `/home/kodi`. Note that you can choose the user name you want, however **BE AWARE** you will need to change some configuration files.
+When you install Ubuntu Linux you are asked for a regular or unprivileged user name. In this guide I use the `kodi` user name with home directory `/home/kodi`. Note that you can choose the user name you want, however **BE AWARE** that you will need to change some configuration files and file path names to mach the user name.
 
-In this guide the HTPC computer will be named `htpc`. Again, you can use the named you want but pay attention because you will to change some commands and/or configuration files. For example, to connect to your HTPC computer using SSH you can user `kodi@htpc` where `kodi` is the user name and `htpc` is the HTPC computer name. If you used different values for the user name or computer name you will need to change or adapt the instructions of this guide accordingly.
+In this guide your HTPC computer will be named `htpc`. Again, you can use the name you want but pay attention because you will need to change some commands and/or configuration files to match your HTPC name. For example, to connect to your HTPC computer using SSH you can use `kodi@htpc` where `kodi` is the user name and `htpc` is the HTPC computer name. If you use different values for the user name or computer name you will need to change or adapt the instructions of this guide accordingly.
 
 ## Preparing the installation media
 
@@ -114,7 +114,7 @@ kodi@htpc:~$ ls /etc/netplan
 00-installer-config.yaml
 ```
 
-In this case edit the file using `# nano 00-installer-config.yaml`. 
+In this case edit the file using `# nano /etc/netplan/00-installer-config.yaml`. 
 
 ```
 # File /etc/netplan/00-installer-config.yaml
@@ -159,24 +159,24 @@ NOTE Ubuntu server does not install the `wpasupplicant` package. This package ne
 ## Installing software
 
 ```
-# apt install ssh software-properties-common alsa-utils lm-sensors linux-firmware git
-# apt install dbus-x11 openbox pastebinit udisks2 avahi-daemon
-# apt install xorg xserver-xorg-legacy xserver-xorg-video-intel mesa-utils 
-# apt install libva2 i965-va-driver intel-media-va-driver vainfo
-# apt install vulkan-tools
-# apt install xdg-screensaver
+root@htpc:~# apt install ssh software-properties-common alsa-utils lm-sensors linux-firmware git
+root@htpc:~# apt install dbus-x11 openbox pastebinit udisks2 avahi-daemon
+root@htpc:~# apt install xorg xserver-xorg-legacy xserver-xorg-video-intel mesa-utils 
+root@htpc:~# apt install libva2 i965-va-driver intel-media-va-driver vainfo
+root@htpc:~# apt install vulkan-tools
+root@htpc:~# apt install xdg-screensaver
 ```
 
 `xdg-screensaver` is used by Retroarch to control the screensaver.
 
-`apt` install tons of packages. I think recommended packages are also installed by default.
+`apt` install tons of packages by default. I think recommended packages are installed by default.
 
 ## Misc configuration
 
 Allow **anybody** to start the X server:
 
 ```
-# dpkg-reconfigure xserver-xorg-legacy
+root@htpc:~# dpkg-reconfigure xserver-xorg-legacy
 ```
 
 Now edit `/etc/X11/Xwrapper.config` and add the following into a new line at the end of the file:
@@ -188,12 +188,12 @@ needs_root_rights=yes
 Give privileges to the **kodi** user you created in the installation:
 
 ```
-# usermod -a -G cdrom,audio,video,plugdev,users,dialout,dip,input kodi
+root@htpc:~# usermod -a -G cdrom,audio,video,plugdev,users,dialout,dip,input kodi
 ```
 
 You can check the groups the user kodi belongs with:
 ```
-# groups kodi
+root@htpc:~# groups kodi
 kodi : kodi adm ...
 ```
 
@@ -206,7 +206,7 @@ kodi             -       nice            -1
 At this point you can test the X server (graphical interface). You will need a mouse to use the X server.
 
 ```
-$ startx /usr/bin/openbox-session
+kodi@htpc:~$ startx /usr/bin/openbox-session
 ```
 
 The screen will turn black (don't panic) and you will see the mouse pointer in the middle of the screen. With a right click you can open the Openbox context menu and launch a terminal. Use `glxinfo` and `vainfo` to check that the OpenGL acceleration and VA-API are working well.
@@ -251,7 +251,7 @@ NOTE On a default Ubuntu Focal Fossa installation the kodi user is allowed to us
 By default the UTC is used. Kodi and many emulators require that the time is correctly set to work properly. To set the correct time execute:
 
 ```
-# dpkg-reconfigure tzdata
+root@htpc:~# dpkg-reconfigure tzdata
 ```
 
 By default `systemd` automatically sets the time of your HTPC from the network so the only thing you need to do is to configure the correct time zone where you are located.
@@ -263,7 +263,7 @@ By default `systemd` automatically sets the time of your HTPC from the network s
 Plymouth seems to be already installed but it is not enabled. It doesn't hurt to make sure it is installed:
 
 ```
-# apt install plymouth plymouth-theme-ubuntu-logo plymouth-themes
+root@htpc:~# apt install plymouth plymouth-theme-ubuntu-logo plymouth-themes
 ```
 
 Edit the file `/etc/initramfs-tools/modules` and add at the end:
@@ -286,8 +286,8 @@ If there are more arguments then add `splash` at the end separated with one spac
 To change the plymouth theme execute:
 
 ```
-# update-alternatives --config default.plymouth
-# update-initramfs -u
+root@htpc:~# update-alternatives --config default.plymouth
+root@htpc:~# update-initramfs -u
 ```
 
 To search for themes use `apt search plymouth theme` and then install the themes you want with `sudo apt install`.
@@ -303,14 +303,14 @@ The default console size is rather small which can be inconvenient if your HTPC 
 Execute:
 
 ```
-# dpkg-reconfigure console-setup
+root@htpc:~# dpkg-reconfigure console-setup
 ```
 
 Make sure you choose **UTF-8** as the encoding, choose the default in the character set, choose **VGA** as the font for the console, finally choose the `16x28` or `16x32` size. To roll back you changes and set the default values, execute `dpkg-reconfigure console-setup` and choose **Fixed** font and `8x16` size.
 
 ## (Optional) Unneeded software cleanup
 
-`ModemManager` ...
+`ModemManager`, `NetworkManager`, ...
 
 ## Links and references
 
@@ -334,7 +334,7 @@ I think `apt` installs the recommended/suggested packaged. When I reboot the HTP
 
 Actually it could not be a bad thing to have gnome installed.
 
-**systemd** places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`
+**systemd** places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`.
 
 Just after the installation:
 

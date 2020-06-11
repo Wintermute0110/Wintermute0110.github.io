@@ -9,9 +9,9 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-In this chaper I cover the installation of EmulationStation on Ubuntu Linux.
+In this chapter I cover the installation of EmulationStation as a front-end for your games in your HTPC. You will need a working HTPC with Ubuntu Linux installed as described in [Linux installation and initial configuration](./LKESG/Linux-installation-and-configuration).
 
-## Installation of the EmulationStation executable
+## Installation of EmulationStation (compile from source)
 
 ```
 $ cd /home/kodi/
@@ -36,7 +36,7 @@ $ ln -s /home/kodi/EmulationStation-Install/retropie-EmulationStation/emulations
 
 The EmulationStation executable is `/home/kodi/bin/emulationstation.sh`
 
-## Autoboot EmulationStation
+## Start EmulationStation when the machine boots
 
 Create the **EmulationStation** service file:
 
@@ -59,7 +59,7 @@ Restart = on-abort
 WantedBy = multi-user.target
 ```
 
-Now replace the `display-manager.service` from `gdm3.service` to the EmulationStation service:
+Now replace the current `display-manager.service` from `gdm3.service` to the EmulationStation service:
 
 ```
 # rm /etc/systemd/system/display-manager.service
@@ -76,12 +76,16 @@ Create the file `/home/kodi/.config/openbox/autostart`:
 openbox --exit
 ```
 
-## Current problems
+## Setting up EmulationStation
 
-EmulationStation cannot reboot or poweroff the system.
+Recommended theme is Batocera or Retropie default theme (carbon).
 
-EmulationStation does weird things when clicking on reboot or shutdown. For example, the ES process never finishes. I must investigate the source code to see what's going on. To test it use the `emulationstation.sh` file and add echo messages to simulation system reboot/shutdown.
+Create a basic es_systems XML for testing.
 
 ## Notes
 
 The first time you run EmulationStation you need to configure an input device which may be a keyboard or a gamepad. I recommend you always configure the keyboard first and then configure as many gamepads as you want. You can control EmulationStation with any of the configured devices.
+
+## What to do next?
+
+If you want to use EmulationStation as your frontend you need to setup some emulators as backends, for example Retroarch, MAME or Mednafen.

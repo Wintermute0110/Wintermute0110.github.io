@@ -13,28 +13,75 @@ In this chapter I cover the installation of EmulationStation as a front-end for 
 
 ## Installation of EmulationStation (compile from source)
 
+First clone a repository I made to simplify the installation of the Retropie fork of EmulationStation:
+
 ```
 $ cd /home/kodi/
 $ git clone https://github.com/Wintermute0110/EmulationStation-Install.git
-$ cd EmulationStation-Install
 ```
 
-```
-# ./install-build-dependencies.sh
-```
+Install the required software and libraries required to build EmulationStation:
 
 ```
-$ git clone https://github.com/RetroPie/EmulationStation.git retropie-EmulationStation
-$ cd retropie-EmulationStation
+$ cd /home/kodi/EmulationStation-Install
+$ sudo install-build-dependencies.sh
+```
+
+Get the EmulationStation source code:
+
+```
+$ cd /home/kodi/EmulationStation-Install
+$ git clone https://github.com/RetroPie/EmulationStation.git retropie-ES
+$ cd retropie-ES
 $ git submodule update --init --recursive
+```
+
+Before compilation it is necessary to change a couple of lines of C++ code. Use `nano es-core/src/platform.cpp` and in the function `void processQuitMode()` comment the following lines by adding a `//`. The final result must look like this:
+
+```c++
+       case QuitMode::REBOOT:
+                LOG(LogInfo) << "Rebooting system";
+                touch("/tmp/es-sysrestart");
+                // runRestartCommand();
+                break;
+        case QuitMode::SHUTDOWN:
+                LOG(LogInfo) << "Shutting system down";
+                touch("/tmp/es-shutdown");
+                // runShutdownCommand();
+                break;
+```
+
+Now build the EmulationStation executable with:
+
+```
+$ cd /home/kodi/EmulationStation-Install/retropie-ES
 $ cmake .
 $ make -j8
-$ mkdir /home/kodi/bin
-$ cp emulationstation.sh /home/kodi/bin/emulationstation.sh
-$ ln -s /home/kodi/EmulationStation-Install/retropie-EmulationStation/emulationstation /home/kodi/bin/emulationstation
 ```
 
-The EmulationStation executable is `/home/kodi/bin/emulationstation.sh`
+Finally, create a soft link to the EmulationStation executable and copy a helper script required to reset/power off your HTPC using D-Bus. The emulation station executable `emulationstation` must be in the same directory as the script `emulationstation.sh`, that's why we create the soft link:
+
+```
+$ cd /home/kodi/EmulationStation-Install
+$ mkdir /home/kodi/bin
+$ cp emulationstation.sh /home/kodi/bin/emulationstation.sh
+$ chmod 755 /home/kodi/bin/emulationstation.sh
+$ ln -s /home/kodi/EmulationStation-Install/retropie-ES/emulationstation /home/kodi/bin/emulationstation
+```
+
+Now you need to configure your `es_systems.cfg`, install some EmulationStation themes and configure your keyboard and gamepad.
+
+## Setting up EmulationStation
+
+The recommended theme is Batocera or Retropie default theme (carbon).
+
+TODO: Create a basic es_systems XML for testing.
+
+TODO: Running EmulationStation for the first time
+
+The first time you run EmulationStation you need to configure an input device which may be a keyboard or a gamepad. I recommend you always configure the keyboard first and then configure as many gamepads as you want. You can control EmulationStation with any of the configured devices.
+
+TODO: Use Filezilla to copy ROMs to the HTPC.
 
 ## Start EmulationStation when the machine boots
 
@@ -59,7 +106,7 @@ Restart = on-abort
 WantedBy = multi-user.target
 ```
 
-Now replace the current `display-manager.service` from `gdm3.service` to the EmulationStation service:
+Now replace the current `display-manager.service` with the EmulationStation service:
 
 ```
 # rm /etc/systemd/system/display-manager.service
@@ -75,16 +122,6 @@ Create the file `/home/kodi/.config/openbox/autostart`:
 /home/kodi/bin/emulationstation.sh
 openbox --exit
 ```
-
-## Setting up EmulationStation
-
-Recommended theme is Batocera or Retropie default theme (carbon).
-
-Create a basic es_systems XML for testing.
-
-## Notes
-
-The first time you run EmulationStation you need to configure an input device which may be a keyboard or a gamepad. I recommend you always configure the keyboard first and then configure as many gamepads as you want. You can control EmulationStation with any of the configured devices.
 
 ## What to do next?
 

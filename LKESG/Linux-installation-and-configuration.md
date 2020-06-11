@@ -9,13 +9,43 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-In this chaper I cover the installation of Ubuntu Linux on a PC. After finish this chapter you will have a working HTPC with the network configured and ready to install Kodi, Retroarch, MAME and EmulationStation.
+In this chaper I cover the installation of Ubuntu Linux on a PC architecture with an Intel graphics card. After finish this chapter you will have a working home theater PC (HTPC) with the network configured and ready to install Kodi, Retroarch, MAME or EmulationStation.
+
+In this guide I assume you have a Linux desktop or laptop as your main computer. Windows users will need to google a bit for additional procedures in some steps of this guide. For example, to connect to the HTPC computer using SSH Linux users can do it natively, Windows users need to use additional software such as [PuTTY](https://www.putty.org/).
+
+## Before you begin
+
+### Unprivileged user commands and root commands
+
+Some commands must be run by an unprivileged user. In this case the prompt ends with the `$` character.
+
+```
+wintermute@pc:~$ lsblk
+```
+
+Other commands must be run with **root** privileges. In this case the prompt ends with a `#` character.
+
+```
+root@pc:~# dd bs=4M conv=fdatasync status=progress if=path/to/input.iso of=/dev/sdd
+```
+
+You can also use **sudo** to run privileged commands. `sudo dd bs=4M ...` is equivalent to the previous example.
+
+In Ubuntu the root user does not have a password. Sometimes using **sudo** all the time is inconvenient, specially when you need to use many privileged commands in a row. To become the user `root` you can type `sudo su`. To exit the **root** session and return to the unprivilieged user session type `exit`.
+
+### User name and HTPC computer name
+
+When you install Ubuntu Linux you are asked for a regular or unprivilieged user name. In this guide I use the `kodi` user name. The home directory is `/home/kodi`. Note that you can choose the user name you want, however **BE AWARE** you will need to change some configuration files.
+
+In this guide the HTPC computer will be named `htpc`. Again, you can use the named you want but pay attention because you will to change some commands and/or configuration files. For example, to connect to your HTPC computer using SSH you can user `kodi@htpc` where `kodi` is the user name and `htpc` is the HTPC computer name. If you used different values for the user name or computer name you will need to change or adapt the instructions of this guide accordingly.
 
 ## Preparing the installation media
 
+We will use a USB drive to install Ubuntu 20.40 Focal Fossa.
+
 **Step 1) Download the installation ISO image** 
 
-Use one of the Ubuntu mirrors to download the ISO image of **Ubuntu 20.04 LTS (Focal Fossa) 64-bit Server install image**. The Server install image installs only the minimum set of packages required to run Linux, as oppossed to the Desktop image which installs a lot of clutter software you do not need on an HTPC.
+Use one of the Ubuntu mirrors to download the ISO image of **Ubuntu 20.04 LTS (Focal Fossa) 64-bit Server install image**. The server install image installs only the minimum set of packages required to run Linux, as oppossed to the Ubuntu Desktop image which installs a lot of clutter software you do not need on an HTPC.
 
 [Ubuntu 20.04 LTS (Focal Fossa) installation images](https://ftp.riken.jp/Linux/ubuntu-releases/focal)
 
@@ -37,7 +67,7 @@ sdd      8:48   1   3.8G  0 disk
 └─sdd2   8:50   1   3.7M  0 part 
 ```
 
-One trick is to execute `lsblk` before you insert the USB drive, and then again with the USB drive inserted. The device name is the one that show up. Dismount any partitions of the UBS drive if they are mounted with `umount`.
+One trick is to execute `lsblk` before you insert the USB drive, and then again with the USB drive inserted. The device name of the USB drive is the new one that show up. Dismount any partitions of the UBS drive if they are mounted with `umount`, in some systems partitions are mounted automatically when you insert removable drives.
 
 Use `dd` to copy the installation ISO image into the USB drive. `sdX` is the device name of the USB drive, substitute the `X` with the appropiate letter. **BE CAREFUL** `dd` is a destructive command that will erase all the contents of the USB drive. If you specify the wrong device name you can wipe the hard disk of your computer. The `sync` command after `dd` is not strictly necessary but better safe than sorry.
 
@@ -173,7 +203,7 @@ Edit `/etc/security/limits.conf` and add before the end. Remember kodi is the us
 kodi             -       nice            -1
 ```
 
-At this point you can test the x server (graphical interface). You will need a mouse to use the X server.
+At this point you can test the X server (graphical interface). You will need a mouse to use the X server.
 
 ```
 $ startx /usr/bin/openbox-session
@@ -216,7 +246,7 @@ ResultActive=yes
 
 NOTE On a default Ubuntu Focal Fossa installation the kodi user is allowed to use `reboot` and `poweroff` and only for logged in users in a console. Kodi, on the other hand, uses **D-bus** and hence the polkit configuration in this section.
 
-## Changing the time zone (Optinal)
+## (Optional) Changing the time zone
 
 By default the UTC is used. Kodi and many emulators require that the time is correctly set to work properly. To set the correct time execute:
 
@@ -228,7 +258,7 @@ By default `systemd` automatically sets the time of your HTPC from the network s
 
 [archlinux wiki: systemd-timesyncd](https://wiki.archlinux.org/index.php/systemd-timesyncd)
 
-## Install Plymouth (Optional)
+## (Optional) Install Plymouth
 
 Plymouth seems to be already installed but it is not enabled. It doesn't hurt to make sure it is installed:
 
@@ -262,11 +292,11 @@ To change the plymouth theme execute:
 
 To search for themes use `apt search plymouth theme` and then install the themes you want with `sudo apt install`.
 
----------------
+----------
 
 Plymouth documentation can be found in `/usr/share/doc/plymouth/`, to read it execute `zless /usr/share/doc/plymouth/README.Debian`.
 
-## Change the console font size (Optional)
+## (Optional) Change the console font size
 
 The default console size is rather small which can be inconvenient if your HTPC is connected to a big screen.
 
@@ -276,13 +306,25 @@ Execute:
 # dpkg-reconfigure console-setup
 ```
 
-Make sure you choose **UTF-8** as the encoding, choose the default in the character set, choose **VGA** as the font for the console, finally choose the `16x28` or `16x32` size. To roll back you changes, execute `dpkg-reconfigure` again and choose **Fixed** font and `8x16` size.
+Make sure you choose **UTF-8** as the encoding, choose the default in the character set, choose **VGA** as the font for the console, finally choose the `16x28` or `16x32` size. To roll back you changes and set the default values, execute `dpkg-reconfigure console-setup` and choose **Fixed** font and `8x16` size.
+
+## (Optional) Unneeded software cleanup
+
+`ModemManager` ...
 
 ## Links and references
+
+### Tutorials and guides
 
 [Intel VAAPI howto with Leia v18 nightly based on Ubuntu 18.04 server](https://forum.kodi.tv/showthread.php?tid=231955)
 
 [odroid-xu4-setup](https://github.com/yimyom/odroid-xu4-setup)
+
+### Specific tasks
+
+[Ubuntu wiki: Privileges](https://wiki.ubuntu.com/Security/Privileges)
+
+[Debian wiki: SystemGroups](https://wiki.debian.org/SystemGroups)
 
 ## Random notes
 

@@ -328,6 +328,8 @@ Make sure you choose **UTF-8** as the encoding, choose the default in the charac
 
 ## Random notes
 
+**TODO** Move this and other notes into a NOTES.md file.
+
 This are some internal notes. Ignore them!
 
 I think `apt` installs the recommended/suggested packaged. When I reboot the HTPC after the basic configuration gnome has been installed and shows up! Recommendations are standard installed with apt. This can be prevented using the switch `--no-install-recommends`

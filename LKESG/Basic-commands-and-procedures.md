@@ -98,6 +98,10 @@ $ systemctl list-dependencies multi-user.target
 
 [How To Use Journalctl to View and Manipulate Systemd Logs](https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs)
 
+[systemd.special](https://www.freedesktop.org/software/systemd/man/systemd.special.html) 
+
+[systemd manpages](https://www.freedesktop.org/software/systemd/man/index.html)
+
 ## Passwordless SSH login
 
 In this example your desktop computer is named **laptop** and your username in **laptop** is **wintermute**. You want to setup passwordless SSH connections to your HTPC machine named **htpc** with username **kodi**.

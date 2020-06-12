@@ -29,9 +29,9 @@ These guides cover the installation of Kodi in Linux on a PC platform Intel NUC.
 
  1. [Linux installation and initial configuration](./LKESG/Linux-installation-and-configuration)
  2. [Linux basic commands and procedures](./LKESG/Basic-commands-and-procedures)
- 3. [EmulationStation installation in Ubuntu/Debian](./LKESG/Installing-EmulationStation)
- 4. [Kodi installation in Ubuntu/Debian](./LKESG/Installing-Kodi)
- 5. [Gamepad configuration](./LKESG/Gamepad-configuration)
+ 3. [Gamepad configuration](./LKESG/Gamepad-configuration)
+ 4. [EmulationStation installation in Ubuntu/Debian](./LKESG/EmulationStation)
+ 5. [Kodi installation in Ubuntu/Debian](./LKESG/Kodi)
  6. [Retroarch installation and usage tutorial](./LKESG/Retroarch)
  7. [MAME installation and usage tutorial](./LKESG/MAME)
  8. [Mednafen installation and usage tutorial](./LKESG/Mednafen)

@@ -73,15 +73,37 @@ Now you need to configure your `es_systems.cfg`, install some EmulationStation t
 
 ## Setting up EmulationStation
 
-The recommended theme is Batocera or Retropie default theme (carbon).
+### Installing a theme
 
-TODO: Create a basic es_systems XML for testing.
+The recommended EmulationStation theme is the default [Batocera theme](https://github.com/batocera-linux/batocera-themes) or the default [Retropie theme Carbon](https://github.com/RetroPie/es-theme-carbon). To download a theme from Github click on the **Clone or download** green button and then in **Download ZIP**. Themes must be placed in `/home/kodi/.emulationstation/themes/`, each theme on its own subdirectory. When started, EmulationStation scans this directory for themes automatically.
 
-TODO: Running EmulationStation for the first time
+You can use Filezilla (Linux) or WinSCP (Windows) to copy files and create directories from/to your HTPC.
+
+### Create a basic es_systems XML for testing
+
+TODO Create a fake es_systems.cfg and some directories with fake ROMs so ES will show something when started.
+
+### Running EmulationStation for the first time
 
 The first time you run EmulationStation you need to configure an input device which may be a keyboard or a gamepad. I recommend you always configure the keyboard first and then configure as many gamepads as you want. You can control EmulationStation with any of the configured devices.
 
-TODO: Use Filezilla to copy ROMs to the HTPC.
+Create the file `/home/kodi/.config/openbox/autostart`:
+
+```
+# File /home/kodi/.config/openbox/autostart
+
+# Start EmulationStation
+/home/kodi/bin/emulationstation.sh
+openbox --exit
+```
+
+From the text console you can start Emulation station with:
+
+```
+$ startx /usr/bin/openbox-session
+```
+
+Press **F4** on the keyboard to exit EmulationStation at any time.
 
 ## Start EmulationStation when the machine boots
 
@@ -113,15 +135,14 @@ Now replace the current `display-manager.service` with the EmulationStation serv
 # ln -s /etc/systemd/system/EmulationStation.service /etc/systemd/system/display-manager.service
 ```
 
-Create the file `/home/kodi/.config/openbox/autostart`:
+-----
 
+If you need to stop EmulationStation use the following command:
 ```
-# File /home/kodi/.config/openbox/autostart
+$ sudo systemctl stop display-manager.service
+```
 
-# Start EmulationStation
-/home/kodi/bin/emulationstation.sh
-openbox --exit
-```
+**IMPORTANT** If you update your `es_systems.cfg` file EmulationStation must be not running. After making changes to the EmulationStation files reboot your system with `reboot` to be safe.
 
 ## What to do next?
 

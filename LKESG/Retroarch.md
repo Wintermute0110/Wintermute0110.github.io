@@ -9,54 +9,29 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-## RetroArch
-
-RetroArch is a multi-system emulator that
-keeps separated the emulator graphical user interface from the emulation
-engine (referred as <emphasis>cores</emphasis> in RetroArch).
-This emulator is very friendly with HTPC setups because you can configure
-all the settings from your joystick, among other things. It takes a bit
-of effort to set it up, but once this is done you can emulate a vast
-number of systems easily. The main cores currently 
-implemented in RetroArch are
-
-<itemizedlist mark='bullet'>
-<command>libretro-bsnes</command> bSNES/Higan (Super Nintendo)
-<command>libretro-bnes</command> bNES/Higan (Nintendo 8 bit)
-<command>libretro-genplus</command> Genesis Plus GX (Sega Master System/MegaDrive)
-<command>libretro-pcsx-rearmed</command> PCSX ReARMed (PlayStation1)
-<command>libretro-mednafen</command> Mednafen many cores
-<command>libretro-picodrive</command> Picodrive (Sega 8/16bit/32X/MegaCD)
-<command>libretro-mupen64plus</command> Mupen64Plus (Nintendo 64)
-<command>libretro-meteor</command> Meteor (GameBoy Advance)
-<command>libretro-vba-next</command> VBA Next (GameBoy Advance)
-</itemizedlist>
+RetroArch is a multi-system emulator that keeps separated the emulator graphical user interface from the emulation engine (referred as *cores* in RetroArch). This emulator is very friendly with HTPC setups because you can configure all the settings from your joystick, among other things. It takes a bit of effort to set it up, but once this is done you can emulate a vast number of systems easily. 
 
 A full list of the supported cores is [here](http://www.libretro.com/index.php/ecosystem/"). This list is a bit outdated and a lot of work is currently going on. Have a look here for the [GitHub repository](https://github.com/libretro/RetroArch/) where you can always find the latest information. The best source of RetroArch documentation is the [GitHub Wiki](https://github.com/libretro/RetroArch/wiki").
 
-There is a PPA offering Retroarch packages. However, it is not very difficult
-to build it from source. Also, be aware that the configuration depends on
-the installation path of the executables!
+There is a PPA offering Retroarch packages. However, it is not very difficult to build it from source. Also, be aware that the configuration depends on the installation path of the executables.
 
-### Compiling RetroArch (Manual method)
+## Compiling RetroArch (Manual method)
 
 This is a step by step guide similar to the one found [here](https://github.com/libretro/RetroArch/wiki/Compilation-guide-%28Linux%29).
 
-
- * Create the folder <filename>~/bin/emu-libretro-super</filename>
-   ```
+Create the folder `~/bin/emu-libretro-super`
+```
 $ mkdir ~/bin
 $ mkdir ~/bin/emu-libretro-super
 $ cd ~/bin/emu-libretro-super
 ```
 
- * Fetch <command>libretro-super</command> from GitHub
+Fetch `libretro-super` from GitHub
 ```
 $ git clone git://github.com/libretro/libretro-super.git
 ```
 
- * Edit `./libretro-super/libretro-fetch.sh` to install only the wanted emulation cores. At the end of the file you will see
-
+Edit `./libretro-super/libretro-fetch.sh` to install only the wanted emulation cores. At the end of the file you will see
 ```
 ...
 fetch_project "$REPO_BASE/libretro/RetroArch.git" "retroarch" "libretro/RetroArch"
@@ -69,9 +44,9 @@ fetch_project "$REPO_BASE/libretro/fba-libretro.git" "libretro-fba" "libretro/FB
 ...
 ```
 
-   Now place a sharp # in front of the cores you don't want. For example, if among those cores you only want Genplus GX
+Now place a sharp # in front of the cores you don't want. For example, if among those cores you only want Genplus GX
 
-   ```
+```
 ...
 fetch_project "$REPO_BASE/libretro/RetroArch.git" "retroarch" "libretro/RetroArch"
 
@@ -83,28 +58,27 @@ fetch_project "$REPO_BASE/libretro/Genesis-Plus-GX.git" "libretro-genplus" "libr
 ...
 ```
 
- * Now grab the source code of the cores you want to compile and RetroArch graphical user interface RGUI
+Now grab the source code of the cores you want to compile and RetroArch graphical user interface RGUI
 ```
 $ cd libretro-super
 $ sh libretro-fetch.sh
 ```
 
- * Before compiling, install the mandatory dependencies (that is, software you need in order to build programs) required to build the cores. As root, execute
+Before compiling, install the mandatory dependencies (that is, software you need in order to build programs) required to build the cores. As root, execute
 
-   ```
+```
 # apt-get install build-essential
    ```
 
- * Now compile the cores. If you choose to compile all the cores, then it can take a while.
+Now compile the cores. If you choose to compile all the cores, then it can take a while.
 ```
 $ sh libretro-build.sh
 ```
 
-It's not necessary to edit retroarch-build.sh to avoid compilation of uninstalled
-cores. The script automatically compiles only the cores that have been fetched.
+It's not necessary to edit retroarch-build.sh to avoid compilation of uninstalled cores. The script automatically compiles only the cores that have been fetched.
 
 
- * To compile RetroArch graphical interface, <command>RGUI</command>, first install some more dependencies. RetroArch's dependencies can be tested with
+To compile RetroArch graphical interface, <command>RGUI</command>, first install some more dependencies. RetroArch's dependencies can be tested with
 ```
 $ cd retroarch
 $ ./configure
@@ -120,12 +94,12 @@ to install RGUI's optional dependencies
 $ apt-get install libxml2-dev libfreetype6-dev nvidia-cg-dev libsdl1.2-dev
 ```
 
- * Compile <command>RGUI
+Compile <command>RGUI
 ```
 $ sh retroarch-build.sh
 ```
 
- * After compilation, test RetroArch
+After compilation, test RetroArch
 ```
 $ cd retroarch
 $ ./retroarch --features
@@ -143,8 +117,7 @@ $ cp retroarch/retroarch /home/wintermute0110/bin
 
 Also copy the info files to /home/xbmc/bin/libretro/info/, so RetroArch gives nice information about each core.
 
-### Compiling RetroArch (Scripted method)
-
+## Compiling RetroArch (Scripted method)
 
 Create directory <filename>~/bin/emu-libretro-super</filename>
 
@@ -182,19 +155,14 @@ Install Retroarch cores, info files, and RGUI executable
 <screen>$ ./install-retroarch</screen>
 ```
 
-### Basic RetroArch setup
+## Basic RetroArch setup
 
-The main configuration file is located on 
-`~/.config/retroarch/retroarch.cfg`.
-Execute RetroArch once to create a default configuration file. There 
-is an example of a configuration file located in [Github](https://github.com/libretro/RetroArch/blob/master/retroarch.cfg").
-Create a directory named `~/.retroarch` to store RetroArch files (BIOS, saved games, screenshots, etc.) and then
+The main configuration file is located on `~/.config/retroarch/retroarch.cfg`. Execute RetroArch once to create a default configuration file. There is an example of a configuration file located in [Github](https://github.com/libretro/RetroArch/blob/master/retroarch.cfg"). Create a directory named `~/.retroarch` to store RetroArch files (BIOS, saved games, screenshots, etc.) and then
 
 <emphasis>Core and info directories</emphasis>: configure the 
 following
 
 ```
-<programlisting>
 ...
 # Path to a libretro implementation.
 # This core will be loaded by default on launching RGUI.
@@ -207,8 +175,6 @@ libretro_directory = ~/bin/bin-libretro/
 # displayed on RGUI for every core (file types supported, systems supported, etc.).
 libretro_info_path = "~/bin/bin-libretro/"
 ...
-</programlisting>
-
 ```
 
 
@@ -259,10 +225,9 @@ $ mkdir ~/.retroarch/screenshot
 </screen>
 
 Change the following option in <filename>~/.config/retroarch/retroarch.cfg</filename>
-<programlisting>
+```
 screenshot_directory = "~/.retroarch/screenshot/"
-</programlisting>
-
+```
 
 
 <emphasis>ROM browser directory</emphasis> is where your ROMs are. You can
@@ -270,23 +235,19 @@ always navigate using RGUI, but if you configure it loading ROMs will be
 much faster.
 
 Change the following option in <filename>~/.config/retroarch/retroarch.cfg</filename>
-<programlisting>
+```
 rgui_browser_directory = "~/ROMs"
-</programlisting>
-
-
+```
 
 <emphasis>Cheats database (optional, avoids one warning when running RetroArch)</emphasis> 
 stores cheats for your games. Firsly, create a file named 
 <filename>~/.retroarch/cheat_database.xml</filename> and insert
 ```
-<programlisting language="XML" role="XML">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;codelist>
-&lt;game>
-&lt;/game>
-&lt;/codelist>
-</programlisting>
+<?xml version="1.0" encoding="UTF-8"?>
+<codelist>
+<game>
+</game>
+</codelist>
 ```
 
 Change the following option in <filename>~/.config/retroarch/retroarch.cfg</filename>
@@ -294,7 +255,7 @@ Change the following option in <filename>~/.config/retroarch/retroarch.cfg</file
 cheat_database_path = "~/.retroarch/cheat_database.xml"
 ```
 
-### Running RetroArch from the command line
+## Running RetroArch from the command line
 
 If you run <command>retroarch</command> without any argument, RGUI
 user interface will show up. From here you can load cores, games, configuring
@@ -321,28 +282,25 @@ For example, to execute a Super Nintendo ROM you type
 $ ./retroarch -L ~/bin/bin-libretro/bsnes_accuracy_libretro.so Mario_World.zip
 ```
 
-### Basic RetroArch usage
+## Basic RetroArch usage
 
 This is a list of the basic default controls in RGUI
 
 ```
-<keycap>Arrows</keycap> navigate through RetroArch's RGUI.
-<keycap>X</keycap> Accept/OK.
-<keycap>Z</keycap> back.
-<keycap>F1</keycap> while in game, show RGUI interface (and
-pauses the game).
-<keycap>ESC</keycap> Exits RetroArch.
+Arrows  Navigate through RetroArch's RGUI
+X       Accept/OK
+Z       Back
+F1      While playing a game, pauses the game and shows up Retroarch menu
+ESC     Exits RetroArch.
 ```
 
 If you wish to test RetroArch, first load an appropiate core in Core..., and then load the ROM in Load content (CoreName)... Once you configure your joystick, you will be able to control most RetroArch settings and load cores/games with the joystick.
 
-### Control configuration
+## Control configuration
 
 To configure the joystick, use the RGUI interface xxxxx.
 
-Next, configure one joystick button to access the RGUI interface and other
-to exit RetroArch. The easiest way to do it is editing the file 
-<filename>~/.config/retroarch/retroarch.conf</filename>
+Next, configure one joystick button to access the RGUI interface and other to exit RetroArch. The easiest way to do it is editing the file `~/.config/retroarch/retroarch.conf`
 
 ```
 ...
@@ -356,10 +314,10 @@ input_menu_toggle_axis = "nul"
 ...
 ```
 
-### PSX BIOS
+## PSX BIOS
 
 WRITE ME
 
-### Sega MegaCD BIOS
+## Sega MegaCD BIOS
  
 WRITE ME

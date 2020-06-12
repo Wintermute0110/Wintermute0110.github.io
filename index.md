@@ -35,3 +35,4 @@ These guides cover the installation of Kodi in Linux on a PC platform Intel NUC.
  6. [Retroarch installation and usage tutorial](./LKESG/Retroarch)
  7. [MAME installation and usage tutorial](./LKESG/MAME)
  8. [Mednafen installation and usage tutorial](./LKESG/Mednafen)
+ 9. [Links and references](./LKESG/References)

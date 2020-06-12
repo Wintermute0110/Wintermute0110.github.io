@@ -294,7 +294,7 @@ To search for themes use `apt search plymouth theme` and then install the themes
 
 ----------
 
-Plymouth documentation can be found in `/usr/share/doc/plymouth/`, to read it execute `zless /usr/share/doc/plymouth/README.Debian`.
+Plymouth documentation can be found in `/usr/share/doc/plymouth/`, to read it execute `$ zless /usr/share/doc/plymouth/README.Debian`.
 
 ## (Optional) Change the console font size
 

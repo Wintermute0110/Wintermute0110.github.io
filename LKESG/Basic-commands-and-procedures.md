@@ -35,17 +35,17 @@ From time to time upgrade the software in your HTPC. Execute:
 # apt clean
 ```
 
-## Terminal emulator
+## Terminal emulator in the X server
 
 Use `sakura`, it is a lightweight terminal emulator with few dependencies. With right click you can open the context menu to configure it. I recommend to use a font like **Monospace** o **Noto Mono**.
 
-## Editing files
+## Editing files in the text console
 
 Use `nano` in the text-mode console.
 
 In the graphical interface ...
 
-## Managing files: Midnight Commander
+## Managing files in the text console with Midnight Commander
 
 ```
 apt install mc
@@ -109,48 +109,69 @@ In this example your desktop computer is named **laptop** and your username in *
 **Step 1) Create a passwordless public-private key pair**
 
 ```
-wintermute@laptop:~$ ssh-keygen -t rsa -f ~/.ssh/wintermute-NUC -N ""
+wintermute@laptop:~$ ssh-keygen -t rsa -f ~/.ssh/wintermute-laptop -N ""
 ```
 
-**Step 2) Add the private key into the archive default file for private keys**
+This command creates the private key in `wintermute-laptop` and the public key in `wintermute-laptop.pub`. The private key file `~/.ssh/wintermute-laptop` looks like:
 
 ```
-laptop:~$ cd ~/.ssh/
-laptop:~/.ssh$ cat wintermute-NUC >> id_rsa
-laptop:~/.ssh$ chmod 600 id_rsa
+$ cat ~/.ssh/wintermute-laptop
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAsmU24mTyq564/AuXuzcIr5E8YXkDqJPXSzCcfLX1IqGYGhKn
+...
+P+7kPvjL3BqZS2UJwoJcMAoVnc0a24F3IuGKTpDLgQr1HDV7vtCJXA==
+-----END RSA PRIVATE KEY-----
+```
+
+The public key `wintermute-laptop.pub` contains one very long line of text and looks like:
+
+```
+ssh-rsa AAAAB...fYa7 wintermute@laptop
+```
+
+**Step 2) Add the private key into the default SSH file for private keys**
+
+```
+wintermute@laptop:~$ cd ~/.ssh/
+wintermute@laptop:~/.ssh$ cat wintermute-laptop >> id_rsa
+wintermute@laptop:~/.ssh$ chmod 600 id_rsa
 ```
 
 **Step 3) Add the public key into the `authorized_keys` file into the remote host**
 
 ```
-laptop:~/.ssh$ ssh wintermute@NUC mkdir -p ~/.ssh
-laptop:~/.ssh$ cat wintermute-NUC.pub | ssh wintermute@NUC "cat - >> ~/.ssh/authorized_keys"
+wintermute@laptop:~/.ssh$ ssh kodi@htpc mkdir -p ~/.ssh
+wintermute@laptop:~/.ssh$ cat wintermute-laptop.pub | ssh kodi@htpc "cat - >> ~/.ssh/authorized_keys"
 ```
 
-The first command creates the directory `~/.ssh/` in the remote host NUC in the unlikely case that it has not been created yet. You can safely avoid this command if the directory already exists.
+The first command creates the directory `~/.ssh/` in the remote host **htpc**. You can safely skip this command if the directory already exists.
 
-**Step 4) Test your setup. You should be able to SSH to your HTPC without being asked for a password**
+**Step 4) Test your setup**
+
+You should be able to SSH to your HTPC without being asked for a password.
 
 ```
-laptop:~$ ssh wintermute@NUC
+wintermute@laptop:~$ ssh kodi@htpc
 Welcome to Ubuntu 14.04 LTS - XBMCbuntu (GNU/Linux 3.13.0-29-generic x86_64)
-
-Documentation:  https://help.ubuntu.com/
 
 Last login: Sat Jul  5 01:16:52 2014 from 192.168.11.3
 NUC:~$
 ```
 
-It is very important to set the correct permissions and ownership in the `authorized_keys` file in the remote host. For a user named wintermute they should be:
+If you get into trouble check that the `authorized_keys` file in the remote host has the correct permissions and ownership. For a user named `kodi` it should be:
 
 ```
-$ ls -l authorized_keys
+$ ls -l ~/.ssh/authorized_keys
 bla bla bla
 ```
 
-If wrong, permissions and ownership can be changed with the following commands.
+If permissions and ownership are wrong, changed them with the following commands:
 
 ```
-$ chown wintermute:wintermute authorized_keys
-$ chmod 600 authorized_keys
+$ chown kodi:kodi ~/.ssh/authorized_keys
+$ chmod 600 ~/.ssh/authorized_keys
 ```
+
+**Step 5) Connect to more computers**
+
+You can use your public/private key to connect to more than one computer. Just copy the public key into as many hosts as you want.

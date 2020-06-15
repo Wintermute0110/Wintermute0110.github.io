@@ -13,27 +13,7 @@ In this chaper I cover the installation of Ubuntu Linux on a PC architecture wit
 
 In this guide I assume you have a Linux desktop or laptop as your main computer. Windows users will need to google a bit for additional procedures in some steps of this guide. For example, to connect to the HTPC computer using SSH Linux users can do it natively, Windows users need to use additional software such as [PuTTY](https://www.putty.org/).
 
-## Before you begin
-
-### Unprivileged user commands and root commands
-
-Some commands must be run by an unprivileged user. In this case the prompt ends with the `$` character.
-
-```
-wintermute@pc:~$ lsblk
-```
-
-Other commands must be run with **root** privileges. In this case the prompt ends with a `#` character.
-
-```
-root@pc:~# dd bs=4M conv=fdatasync status=progress if=path/to/input.iso of=/dev/sdd
-```
-
-You can also use **sudo** to run privileged commands. `# sudo dd bs=4M ...` is equivalent to the previous example (do not type the `#` character which indicates the command must be run by the **root** user).
-
-In Ubuntu the root user does not have a password by default. Sometimes using **sudo** all the time is inconvenient, specially when you need to use many privileged commands in a row. To become the user `root` you can type `$ sudo su`. To exit the **root** session and return to the unprivileged user session type `exit`.
-
-### User name and HTPC computer name
+## User name and HTPC computer name
 
 When you install Ubuntu Linux you are asked for a regular or unprivileged user name. In this guide I use the `kodi` user name with home directory `/home/kodi`. Note that you can choose the user name you want, however **BE AWARE** that you will need to change some configuration files and file path names to mach the user name.
 
@@ -203,29 +183,49 @@ Edit `/etc/security/limits.conf` and add before the end. Remember kodi is the us
 kodi             -       nice            -1
 ```
 
+Now create the file `/home/kodi/.xinitrc` that will be used by `startx`.
+
+```
+# File /home/kodi/.xinitrc
+
+# Execute an Openbox window manager session.
+# Openbox will execute the contents of /home/kodi/.config/openbox/autostart
+exec openbox-session
+```
+
+Now create the file `/home/kodi/.config/openbox/autostart`:
+
+```
+# File /home/kodi/.config/openbox/autostart
+# Commands here are blocking. Use a trailing & to run concurrently.
+
+# The screensaver can cause problems with EmulationStation or Kodi.
+# Disable the screensaver and the power management.
+# To check the status of the screensaver use the command `$ xset q`
+xset s off -dpms &
+```
+
 At this point you can test the X server (graphical interface). You will need a mouse to use the X server.
 
 ```
-kodi@htpc:~$ startx /usr/bin/openbox-session
+kodi@htpc:~$ startx
 ```
 
-The screen will turn black (don't panic) and you will see the mouse pointer in the middle of the screen. With a right click you can open the Openbox context menu and launch a terminal. Use `glxinfo` and `vainfo` to check that the OpenGL acceleration and VA-API are working well.
+The screen will turn black (don't panic) and you will see the mouse pointer in the middle of the screen. With a right click you can open the Openbox context menu and launch a terminal. Use `glxinfo`, `vulkaninfo` and `vainfo` to check that the OpenGL acceleration, Vulkan acceleration and VA-API are working well.
 
-## Connecting to the HTPC with SSH
+With the graphic system active you can press **Control + Alt + F1** to return to the text console. From the text console you can use **Alt + Right_arrow** or **Alt + Left_arrow** to switch from one text terminal to another. By default there are 6 text terminals named from `tty1` to `tty6` and the X server runs on `tty7`. In other words, if you keep pressing **Alt + Right_arrow** you go back to the graphic system when you reach terminal 7.
 
-In the Linux desktop/laptop edit the file `/etc/hosts` and append at the end.
+To exit the X server bring up the Openbox context menu and click on **Exit**. You will return to the text console.
 
-```
-192.168.0.20   htpc
-```
+To reboot the system use the command `reboot`. To power off your HTPC use the command `poweroff` or press once the power button. By default in Ubuntu Focal Fossa both commands can be run by normal users logged into the system.
 
-Change the IP address to the one you have assigned in your router to the HTPC computer. I recommend to assign a static IP address so it does not change. To learn the MAC address of the WiFi interface use the `ip a` command in the HTPC.
+-----
 
-After that, you can connect to your HTPC with `ssh kodi@htpc`.
+[ArchLinux wiki Display Power Management Signaling](https://wiki.archlinux.org/index.php/Display_Power_Management_Signaling)
 
 ## Set permissions to shutdown, suspend and mount disks
 
-Create the file `/etc/polkit-1/localauthority/50-local.d/custom-actions.pkla`.
+Kodi and EmulationStation will use D-Bus to reboot and power off your HTPC and it is necessary to give privileges to the Kodi user. Create the file `/etc/polkit-1/localauthority/50-local.d/custom-actions.pkla`.
 
 ```
 # File /etc/polkit-1/localauthority/50-local.d/custom-actions.pkla root:root 644
@@ -244,7 +244,17 @@ ResultInactive=yes
 ResultActive=yes
 ```
 
-NOTE On a default Ubuntu Focal Fossa installation the kodi user is allowed to use `reboot` and `poweroff` and only for logged in users in a console. Kodi, on the other hand, uses **D-bus** and hence the polkit configuration in this section.
+## (Optional) Connecting to the HTPC with SSH
+
+In your Linux desktop/laptop edit the file `/etc/hosts` and append at the end.
+
+```
+192.168.0.20   htpc
+```
+
+Change the IP address to the one you have assigned in your router to the HTPC computer. I recommend to assign a static IP address so it does not change when you reboot your computers. To learn the MAC address of the WiFi interface of your HTPC use the `ip a` command in the HTPC. After that, you can connect to your HTPC with `ssh kodi@htpc`.
+
+If you don't modify `/etc/hosts` then you need to use the **IP adress** of your HTPC instead of the network name.
 
 ## (Optional) Changing the time zone
 

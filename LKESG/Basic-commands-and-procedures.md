@@ -11,6 +11,24 @@ author: Wintermute0110
 
 This section describes some commands and procedures that you will use most when configuring you XBMC setup using this guide.
 
+## Unprivileged user commands and root commands
+
+Some commands must be run by an unprivileged user. In this case the prompt ends with the `$` character.
+
+```
+wintermute@pc:~$ lsblk
+```
+
+Other commands must be run with **root** privileges. In this case the prompt ends with a `#` character.
+
+```
+root@pc:~# dd bs=4M conv=fdatasync status=progress if=path/to/input.iso of=/dev/sdd
+```
+
+You can also use **sudo** to run privileged commands. `# sudo dd bs=4M ...` is equivalent to the previous example (do not type the `#` character which indicates the command must be run by the **root** user).
+
+In Ubuntu the root user does not have a password by default. Sometimes using **sudo** all the time is inconvenient, specially when you need to use many privileged commands in a row. To become the user `root` you can type `$ sudo su`. To exit the **root** session and return to the unprivileged user session type `exit`.
+
 ## Basic Linux commands and keystrokes
 
 Tell about the key combination Alt+Crtl+1 to switch from graphical to console mode and similar stuff...

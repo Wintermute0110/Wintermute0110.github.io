@@ -9,9 +9,11 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-In this chaper I cover the installation of Ubuntu Linux on a PC architecture with an Intel graphics card. After finish this chapter you will have a working home theater PC (HTPC) with the network configured and ready to install Kodi, Retroarch, MAME or EmulationStation.
+In this chaper I cover the installation of Ubuntu Linux on a PC architecture with an Intel graphics card. After finishing this chapter you will have a working home theater personal computer (HTPC) with the network configured and ready to install Kodi or EmulationStation as your frontend and optionally some emulators such as Retroarch, MAME or Mednafen.
 
 In this guide I assume you have a Linux desktop or laptop as your main computer. Windows users will need to google a bit for additional procedures in some steps of this guide. For example, to connect to the HTPC computer using SSH Linux users can do it natively, Windows users need to use additional software such as [PuTTY](https://www.putty.org/).
+
+During normal use of your HTPC your will control it with a gamepad. However, a keyboard and mouse will be required during the installation and configuration.
 
 ## User name and HTPC computer name
 
@@ -66,7 +68,7 @@ Switch on the power on the NUC. If necessary access the BIOS and configure it to
 
  * Wireless interface was not autodetected. Ethernet wired interfaces can be configured in the installation program.
 
- * By default the server installation creates a small `/boot/efi/` partition and then another big parition to be mounted as root with `ext4` filesystem.
+ * By default the server installation creates a small `/boot/efi/` partition and then another big parition to be mounted as root with `ext4` filesystem. No swap partition is created.
 
  * As the **server's name** type something like **htpc**.
  
@@ -74,9 +76,21 @@ Switch on the power on the NUC. If necessary access the BIOS and configure it to
 
  * Install OpenSSH to be able to connect to the HTPC using SSH.
 
- * Once the installation finished you are asked to remove the USB drive and then the machine is rebooted. After that Ubuntu Linux is installed and you can log into the system using your username/password.
+ * Once the installation has finished you are asked to remove the USB drive and then the machine is rebooted. After that Ubuntu Linux is installed and you can log into the system using your username/password. The graphical interface is not installed yet so you have the text-based console.
 
-## Configuration of the wireless interface
+ * **TODO** is trim enabled for SSDs? Check this out.
+
+## Network configuration
+
+### Configuration of the wired Ethernet interface
+
+-----
+
+**TODO** Rewrite this section to use `systemd-networkd` and remove `netplan`, `NetworkManager`, etc. `systemd-networkd` has a built-in DHCP client. `systemd-networkd` requires `wpa_supplicant`. `systemd-networkd` allows to setup comples networks setups such as packet routers with NAT.
+
+[Archwiki: Systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd)
+
+### (Optional) Configuration of the wireless interface
 
 **Step 1) Identify the name of the wifi interface**
 
@@ -151,7 +165,7 @@ root@htpc:~# apt install xdg-screensaver
 
 `apt` install tons of packages by default. I think recommended packages are installed by default.
 
-## Misc configuration
+## Basic HTPC configuration
 
 Allow **anybody** to start the X server:
 
@@ -211,13 +225,9 @@ At this point you can test the X server (graphical interface). You will need a m
 kodi@htpc:~$ startx
 ```
 
-The screen will turn black (don't panic) and you will see the mouse pointer in the middle of the screen. With a right click you can open the Openbox context menu and launch a terminal. Use `glxinfo`, `vulkaninfo` and `vainfo` to check that the OpenGL acceleration, Vulkan acceleration and VA-API are working well.
+The screen will turn black (don't panic) and you will see the mouse pointer in the middle of the screen. With a right click you can open the Openbox context menu and launch a graphic terminal. In the graphic terminal type `glxinfo`, `vulkaninfo` and `vainfo` to check that the OpenGL acceleration, Vulkan acceleration and VA-API are working well.
 
-With the graphic system active you can press **Control + Alt + F1** to return to the text console. From the text console you can use **Alt + Right_arrow** or **Alt + Left_arrow** to switch from one text terminal to another. By default there are 6 text terminals named from `tty1` to `tty6` and the X server runs on `tty7`. In other words, if you keep pressing **Alt + Right_arrow** you go back to the graphic system when you reach terminal 7.
-
-To exit the X server bring up the Openbox context menu and click on **Exit**. You will return to the text console.
-
-To reboot the system use the command `reboot`. To power off your HTPC use the command `poweroff` or press once the power button. By default in Ubuntu Focal Fossa both commands can be run by normal users logged into the system.
+To exit the X server bring up the Openbox context menu with a mouse right click and click on **Exit**. You will return to the text console.
 
 -----
 

@@ -25,15 +25,15 @@ Advanced Emulator Launcher is a multi-emulator front-end for Kodi scalable to co
 
 **Work in progress**
 
-These guides cover the installation of Kodi in Linux on a PC platform Intel NUC. It also focuses on the installation of external emulators such as Retroarch, MAME and Mednafen.
+These guides cover the installation of Kodi in Linux on a PC platform computer such as an Intel NUC. It also covers the installation of external emulators such as Retroarch, MAME and Mednafen.
 
- 1. [Linux installation and initial configuration](./LKESG/Linux-installation-and-configuration)
- 2. [Linux basic commands and procedures](./LKESG/Basic-commands-and-procedures)
- 3. [Linux advanced configuration](./LKESG/Linux-advanced-configuration)
- 4. [Gamepad configuration](./LKESG/Gamepad-configuration)
- 5. [EmulationStation installation in Ubuntu/Debian](./LKESG/EmulationStation)
- 6. [Kodi installation in Ubuntu/Debian](./LKESG/Kodi)
- 7. [Retroarch installation and usage tutorial](./LKESG/Retroarch)
- 8. [MAME installation and usage tutorial](./LKESG/MAME)
- 9. [Mednafen installation and usage tutorial](./LKESG/Mednafen)
- 10. [Links and references](./LKESG/References)
+  1. [Linux basic commands and procedures](./LKESG/Basic-commands-and-procedures)
+  2. [Linux installation and initial configuration](./LKESG/Linux-installation-and-configuration)
+  3. [Linux advanced configuration](./LKESG/Linux-advanced-configuration)
+  4. [Gamepad configuration](./LKESG/Gamepad-configuration)
+  5. [EmulationStation installation in Ubuntu/Debian](./LKESG/EmulationStation)
+  6. [Kodi installation in Ubuntu/Debian](./LKESG/Kodi)
+  7. [Retroarch installation and usage tutorial](./LKESG/Retroarch)
+  8. [MAME installation and usage tutorial](./LKESG/MAME)
+  9. [Mednafen installation and usage tutorial](./LKESG/Mednafen)
+  10. [Links and references](./LKESG/References)

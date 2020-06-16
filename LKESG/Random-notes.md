@@ -195,6 +195,10 @@ iptables -t nat -F
 iptables -t nat -X
 ```
 
+```
+# File /etc/dnsmasq.conf
+```
+
 ## Autofs
 
 **TODO**

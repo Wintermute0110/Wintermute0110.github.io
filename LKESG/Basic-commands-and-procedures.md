@@ -9,7 +9,7 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-This section describes some commands and procedures that you will use most when configuring you XBMC setup using this guide.
+This section describes some very basic commands and procedures that you will a lot when configuring your HTPC with this guide. If something is not explained in other sections of this guide have first a look here.
 
 ## Unprivileged user commands and root commands
 
@@ -29,17 +29,43 @@ You can also use **sudo** to run privileged commands. `# sudo dd bs=4M ...` is e
 
 In Ubuntu the root user does not have a password by default. Sometimes using **sudo** all the time is inconvenient, specially when you need to use many privileged commands in a row. To become the user `root` you can type `$ sudo su`. To exit the **root** session and return to the unprivileged user session type `exit`.
 
-## Basic Linux commands and keystrokes
+## Configuration files
 
-Tell about the key combination Alt+Crtl+1 to switch from graphical to console mode and similar stuff...
+Lines starting with a `#` are comments and can be safely skipped. For example:
+
+```
+# File /home/kodi/.xinitrc
+
+# Execute an Openbox window manager session.
+# Openbox will execute the contents of /home/kodi/.config/openbox/autostart
+exec openbox-session
+```
+
+is equivalent to:
+
+```
+exec openbox-session
+```
+
+In this guide all configuration files start with a line such as `# File ...` that shows where you have to place the configuration file.
+
+## Basic Linux keyboard shortcuts
+
+By default the Linux system in your HTPC will start in text mode because the graphic server is not installed by default. After introducing your username and password you can start typing commands in the text console. By default there are 6 text terminals named from `tty1` to `tty6`. You can switch to a different text console with **Alt + Fx**, where `x` is a number from 1 to 6. Also you can use **Alt + Right_arrow** or **Alt + Left_arrow** to cycle from one text terminal to another. 
+
+When the graphic server is active you can press **Control + Alt + F1** to return to the text console. The graphic server runs in terminal 7 so to go back to the graphic server cycle over the text consoles until you reach the terminal 7.
+
+## Rebooting and powering off your HTPC
+
+To reboot the system use the command `reboot`. To power off your HTPC use the command `poweroff` or press the power button. By default in Ubuntu Focal Fossa both commands can be run by normal users logged into the system.
 
 ## Installing software and upgrading your system
 
 ```
-# apt update ...
-# apt search ...
-# apt install ...
-# apt remove ...
+# apt update
+# apt search keyword1 keyword2 ...
+# apt install package_name
+# apt remove package_name
 ```
 
 -----
@@ -61,7 +87,9 @@ Use `sakura`, it is a lightweight terminal emulator with few dependencies. With 
 
 Use `nano` in the text-mode console.
 
-In the graphical interface ...
+## Editing files in the graphic server
+
+In the graphic server **TODO**
 
 ## Managing files in the text console with Midnight Commander
 
@@ -69,7 +97,7 @@ In the graphical interface ...
 apt install mc
 ```
 
-## Services
+## Systemd services
 
 Services are programs running in the background that carry out many tasks. For example, the session manager (the graphical program that greets you and prompts for use name and password) is a service. Most Linux distributions nowadays, including Ubuntu and Debian, use `systemd` to run and manage services.
 
@@ -104,9 +132,11 @@ Targets are equivalent to runlevels. The system can be only on one runlevel at a
 ```
 $ systemctl list-unit-files --type=target
 $ systemctl get-default
-$ sudo systemctl set-default multi-user.target
+# systemctl set-default multi-user.target
 $ systemctl list-dependencies multi-user.target
 ```
+
+`systemd` places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. The first directory can be changed by the user but the latter should never be modified as it has the system defaults installed by packages. The configuration files in the first directory takes precedence over the latter.
 
 -----
 

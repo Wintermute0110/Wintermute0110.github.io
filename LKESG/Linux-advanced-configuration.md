@@ -9,13 +9,25 @@ author: Wintermute0110
 
 [Go to main page](../)
 
+In this section I explain how to setup more complex configurations suchs as configuring audio with multiple sound cards or use your HTPC as a network route to connect the HTPC with a NAS using the wired Ethernet port.
+
 ## Use your HTPC as a network router
+
+**TODO** Rewrite this section to use `systemd-networkd`.
+
 
 Connecting the NAS to the Buffalo router makes the network almost unusable for watching pictures or movies. Maximum speed of the wireless connection is about 1 Mbyte/s. To solve this, I will connect the NAS to the Gigabit ethernet port of the Intel NUC. The Intel NUC will act as a router so the NAS can be accesed from the wireless network.
 
 The Buffalo has an option to do routing (move packets to subnetworks). For example,
 
 ```
+
+ |-----------------|    |-----------------|
+ | Wireless router |    |                 |
+ |                 |    |                 |
+ |                 |    |                 |
+ |-----------------|    |-----------------|
+
 Buffalo wireless network: 192.168.11.1/255.255.255.0
  |
 Intel NUC wlan0: 192.168.11.7/255.255.255.0
@@ -27,84 +39,9 @@ Intel NUC eth0: 192.168.12.1/255.255.255.0
 NAS: 192.168.12.2/255.255.255.0
 ```
 
-In the network computers, the file /etc/hosts can be edited to include the following DNS entries (append at the end).
-
-```
----------- /etc/dnsmasq.conf ----------
-# Wintermute0110 custom DNS
-192.168.11.7   NUC
-192.168.12.4   NAS
-------------------------------------------------------------------------------
-```
-
-a) First thing is to install a DHCP server on the Intel NUC, to configure the NAS.
-ArchLinux wiki (https://wiki.archlinux.org/index.php/router) proposes dnsmasq.
-
-```
----------- /etc/dnsmasq.conf ----------
-# Configuration file for dnsmasq.
-
-interface=eth0
-expand-hosts
-domain=internal.net
-
-# DHCP configuration
-dhcp-range=192.168.12.2,192.168.12.255,255.255.255.0,1h
-dhcp-host=10:6f:3f:cb:46:b4,192.168.12.4
-------------------------------------------------------------------------------
-```
-
-b) Next, configure /etc/network/interfaces. If an interface is configured here,
-then Network Manager will ignore it (which is good).
-
-```
-# File /etc/network/interfaces
-# interfaces(5) file used by ifup(8) and ifdown(8)
-auto lo eth0 wlan0
-iface lo inet loopback
-
-# Manual configuration of the interfaces for routing
-iface eth0 inet static
-  address 192.168.12.1
-  netmask 255.255.255.0
-  network 192.168.12.0
-  broadcast 192.168.12.255
-  up /etc/init.d/dnsmasq start
-  down /etc/init.d/dnsmasq stop
-
-iface wlan0 inet dhcp
-  wpa-ssid ESSID-NAME
-  wpa-psk your_password
-  up   echo "1" > /proc/sys/net/ipv4/ip_forward
-  down echo "0" > /proc/sys/net/ipv4/ip_forward
-```
-
-With this configuration, the interfaces should be automatically initiated
-during boot.
-
-NOTE: in Ghotam XBMCBuntu DNS stopped working, because of a bad /etc/resolv.conf.
-Since I use static network configration and ifup/ifdown scripts, I 
-deactivated Network Manager using
-```
-# stop network-manager
-```
-
-Create an override file for the upstart job:
-```
-# echo "manual" | sudo tee /etc/init/network-manager.override
-```
-
-and deleted /etc/resolv.conf. Then, I regenerated /etc/resolv.conf with dhclient
-```
-# dhclient -v wlan0
-```
-
-I am not completely sure if Network Manager was responsible of this (managing
-wlan0 and or eth0, which were supposed to be unmanaged). Now it seems to work well.
-
 ## Automount files from a network attached storage (NAS)
 
-**TODO describe how to use autofs**
+**TODO Rewrite this section to use systemd automount to mount sshfs filesystems**
 
 ## Advanced sound configuration
 

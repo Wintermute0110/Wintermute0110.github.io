@@ -2,6 +2,7 @@
 .bundle/
 _site/
 vendor/
+html/*.html
 
 # Files
 Gemfile.lock

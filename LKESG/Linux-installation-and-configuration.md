@@ -15,6 +15,8 @@ In this guide I assume you have a Linux desktop or laptop as your main computer.
 
 During normal use of your HTPC your will control it with a gamepad. However, a keyboard and mouse will be required during the installation and configuration.
 
+In Linux/Unix usually here are several ways of doing things, each with its pros and cons. In this guide I will use `systemd` as much as possible to configure services.
+
 ## User name and HTPC computer name
 
 When you install Ubuntu Linux you are asked for a regular or unprivileged user name. In this guide I use the `kodi` user name with home directory `/home/kodi`. Note that you can choose the user name you want, however **BE AWARE** that you will need to change some configuration files and file path names to mach the user name.
@@ -62,35 +64,74 @@ root@pc:~# sync
 
 ## Installation of Ubuntu Linux
 
-Connect the NUC HDMI port to your TV or monitor. Connect a USB keyboard. The keyboard will be used for the installation and configuration. During normal you will use a gamepad to control Kodi or EmulationStation. However, a keyboard may be needed very occasionally. Finally, connect the USB drive you created in the previous step.
+Connect the NUC HDMI port to your TV or monitor. Connect a USB keyboard. The keyboard will be used for the installation and configuration. During normal use you will use a gamepad to control Kodi or EmulationStation. However, a keyboard may be needed very occasionally for configuration purposes. When configuring the X server (graphical environment) a mouse will be needed. Finally, connect the USB drive you created in the previous step. To setup the wireless interface we need to download some software not installed by default, so during the installation process connect an Ethernet cable to the wired Ethernet adapter.
 
 Switch on the power on the NUC. If necessary access the BIOS and configure it to boot from the USB drive. If you experience problems during the installation have a look to the [Install Ubuntu Server](https://ubuntu.com/tutorials/tutorial-install-ubuntu-server) guide.
 
- * Wireless interface was not autodetected. Ethernet wired interfaces can be configured in the installation program.
+ * Ethernet wired interfaces can be configured in the installation program.
 
- * By default the server installation creates a small `/boot/efi/` partition and then another big parition to be mounted as root with `ext4` filesystem. No swap partition is created.
+ * Wireless interface is not autodetected in the installation program.
 
- * As the **server's name** type something like **htpc**.
- 
- * Create a regular user, for example with username **kodi**.
+ * In the **Guided storage configuration** select **Use an entire disk** and leave the defaults. By default the server installation creates a small `/boot/efi/` partition and then another big parition to be mounted as root with `ext4` filesystem. No swap partition is created.
+
+ * In the **Profile setup** screen, type **Kodi** as **Your name**, **htpc** as your server's name, **kodi** as your user name, and choose a simple password such as **linux**.
 
  * Install OpenSSH to be able to connect to the HTPC using SSH.
 
+ * In the **Featured Server Snaps** screen do not install anything.
+
  * Once the installation has finished you are asked to remove the USB drive and then the machine is rebooted. After that Ubuntu Linux is installed and you can log into the system using your username/password. The graphical interface is not installed yet so you have the text-based console.
 
- * **TODO** is trim enabled for SSDs? Check this out.
+**TODO** is trim enabled for SSDs? Check this out.
+
+## Initial unneeded software cleanup
+
+**RATIONALE** The less unnecessary software the better, your HTPC will consume less memory and will boot faster.
+
+**Step 1) Remove snap**
+
+To remove the new Ubuntu package manager called `snap` type the following commands. This will completely remove snap, snapd, all installed snap packages and their data, and never again suggest snap packages in the software store.
+
+```
+$ sudo rm -rf /var/cache/snapd/
+$ sudo apt autoremove --purge snapd
+```
+
+**Step 2) Remove DM Multipath**
+
+Linux DM Multipath is used in servers in a datacenter for load-balancing an redudancy of block devices. We don't need this in an HTPC.
+
+```
+$ sudo apt autoremove --purge multipath-tools
+```
+
+**NOTE** The virtual package `ubuntu-server` and some other will also be removed.
+
+**Step 3) Remove Unattended Upgrades**
+
+You want to make sure your HTPC does not automatically upgrade software at the most incovenient moment.
+
+```
+$ sudo apt autoremove --purge unattended-upgrades
+```
 
 ## Network configuration
 
-### Configuration of the wired Ethernet interface
+If you are using the wired Ethernet port to connect to the internet follow the steps in the next subsection. If you want to use WiFi to connect to the Internet then first configure the wired interface and after that proceed with the configuration of the wireless adapter. The reason is that we need to download the `wpasupplicant` package which is not installed by default and it is required for the wireless adapter to work.
+
+### Wired Ethernet interface configuration
+
+**RATIONALE** The wired interface should be detected and configured during the installation process. However, by default Ubuntu Focal Fossa uses `netplan` to manage the network and we will switch to `systemd-networkd`.
+
+**Step 1)** 
 
 -----
 
 **TODO** Rewrite this section to use `systemd-networkd` and remove `netplan`, `NetworkManager`, etc. `systemd-networkd` has a built-in DHCP client. `systemd-networkd` requires `wpa_supplicant`. `systemd-networkd` allows to setup comples networks setups such as packet routers with NAT.
 
-[Archwiki: Systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd)
+[archlinux wiki: Systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd)
 
-### (Optional) Configuration of the wireless interface
+### (Optional) Wireless interface configuration
 
 **Step 1) Identify the name of the wifi interface**
 
@@ -100,55 +141,6 @@ eno1   lo   wlp0s20f3
 ```
 
 Wireless interface names start with `w`. In this case the interface name is `wlp0s20f3`.
-
-**Step 2) Edit the network configuration file**
-
-```
-kodi@htpc:~$ ls /etc/netplan
-00-installer-config.yaml
-```
-
-In this case edit the file using `# nano /etc/netplan/00-installer-config.yaml`. 
-
-```
-# File /etc/netplan/00-installer-config.yaml
-network:
-  ethernets:
-    eth0:
-      dhcp4: true
-      optional: true
-  version: 2
-  wifis:
-    wlp3s0:
-      optional: true
-      access-points:
-        "SSID-NAME-HERE":
-          password: "PASSWORD-HERE"
-      dhcp4: true
-```
-
-**Step 3) Apply changes and test network**
-
-```
-# netplan apply
-```
-
-If there are issues use:
-
-```
-# netplan --debug apply
-```
-
-Test the network with:
-
-```
-# ip a
-# ping google.com
-```
-
-NOTE Ubuntu server does not install the `wpasupplicant` package. This package needs to be installed over the wired network before the WiFi can be used. To check if the package is installed use `$ dpkg -l | grep wpa`.
-
-[Ubuntu 20.04: Connect to WiFi from command line with Netplan](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line)
 
 ## Installing software
 
@@ -328,4 +320,4 @@ Make sure you choose **UTF-8** as the encoding, choose the default in the charac
 
 ## (Optional) Unneeded software cleanup
 
-`ModemManager`, `NetworkManager`, `unattended upgrades`, ...
+`ModemManager`, `NetworkManager`, ...

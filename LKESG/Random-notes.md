@@ -84,6 +84,68 @@ After=multi-user.target rescue.service rescue.target display-manager.service
 AllowIsolate=yes
 ```
 
+# Wireless interface configuration with netplan
+
+**Step 1) Identify the name of the wifi interface**
+
+```
+kodi@htpc:~$ ls /sys/class/net
+eno1   lo   wlp0s20f3
+```
+
+Wireless interface names start with `w`. In this case the interface name is `wlp0s20f3`.
+
+**Step 2) Edit the network configuration file**
+
+```
+kodi@htpc:~$ ls /etc/netplan
+00-installer-config.yaml
+```
+
+In this case edit the file using `# nano /etc/netplan/00-installer-config.yaml`. 
+
+```
+# File /etc/netplan/00-installer-config.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: true
+      optional: true
+  version: 2
+  wifis:
+    wlp3s0:
+      optional: true
+      access-points:
+        "SSID-NAME-HERE":
+          password: "PASSWORD-HERE"
+      dhcp4: true
+```
+
+**Step 3) Apply changes and test network**
+
+```
+# netplan apply
+```
+
+If there are issues use:
+
+```
+# netplan --debug apply
+```
+
+Test the network with:
+
+```
+# ip a
+# ping google.com
+```
+
+NOTE Ubuntu server does not install the `wpasupplicant` package. This package needs to be installed over the wired network before the WiFi can be used. To check if the package is installed use `$ dpkg -l | grep wpa`.
+
+-----
+
+[Ubuntu 20.04: Connect to WiFi from command line with Netplan](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line)
+
 # Old configuration files for Ubuntu Bionic Beaver 18.04
 
 In the old NUC configuration Openbox was started by the session manager `lightdm`. Network was managed with `ifupdown`. The NUC uses the 5G Wifi network.

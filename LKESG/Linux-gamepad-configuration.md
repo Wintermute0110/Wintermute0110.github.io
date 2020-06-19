@@ -9,9 +9,7 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-Nowadays most gamepads will work out of the box with Linux but ocasionally your may run into trouble. Here I will give you some examples about how to test your gamepads and how to connect/associate Bluetooth gamepads.
-
-More specific details about gamepad configuration are given in the Kodi, EmulationStation, Retroarch and MAME sections.
+Nowadays most gamepads will work out of the box with Linux but ocasionally your may run into trouble. Here I will give you some examples about how to test your gamepads and how to connect/associate Bluetooth gamepads. More specific details about gamepad configuration are given in the Kodi, EmulationStation, Retroarch and MAME sections.
 
 ## Logitech F710
 
@@ -49,38 +47,19 @@ $ jstest /dev/input/js0
 
 these are the buttons and axis of the joystick (when the MODE LED is off)
 
-<table frame="all">
-<tgroup cols="4">
-<thead>
-  <row><entry>Axis name</entry><entry>Description</entry>
-       <entry>Button name</entry><entry>Description</entry></row>
-</thead>
-<tbody>
-  <row><entry>Axis 0</entry><entry>Left analog horizontal</entry>
-       <entry>Button 00</entry><entry>A</entry></row>
-  <row><entry>Axis 1</entry><entry>Left analog vertical</entry>
-       <entry>Button 01</entry><entry>B</entry></row>
-  <row><entry>Axis 2</entry><entry>Back left button (L2 trigger)</entry>
-       <entry>Button 02</entry><entry>X</entry></row>
-  <row><entry>Axis 3</entry><entry>Right analog horizontal</entry>
-       <entry>Button 03</entry><entry>Y</entry></row>
-  <row><entry>Axis 4</entry><entry>Right analog vertical</entry>
-       <entry>Button 04</entry><entry>Back left (L1)</entry></row>
-  <row><entry>Axis 5</entry><entry>Back right button (R2 trigger)</entry>
-       <entry>Button 05</entry><entry>Back right (R1)</entry></row>
-  <row><entry>Axis 6</entry><entry>D-pad horizontal (hat)</entry>
-       <entry>Button 06</entry><entry>BACK</entry></row>
-  <row><entry>Axis 7</entry><entry>D-pad vertical (hat)</entry>
-       <entry>Button 07</entry><entry>START</entry></row>
-  <row><entry></entry><entry></entry>
-       <entry>Button 08</entry><entry>Logicool button</entry></row>
-  <row><entry></entry><entry></entry>
-       <entry>Button 09</entry><entry>Left analog pad center</entry></row>
-  <row><entry></entry><entry></entry>
-       <entry>Button 10</entry><entry>Right analog pad center</entry></row>
-</tbody>
-</tgroup>
-</table>
+| Axis name | Description | Button name | Description |
+|-----|-----|-----|-----|
+| Axis 0 | Left analog horizontal | Button 00 | A |
+| Axis 1 | Left analog vertical | Button 01 | B |
+| Axis 2 | Back left button (L2 trigger) | Button 02 | X |
+| Axis 3 | Right analog horizontal | Button 03 | Y |
+| Axis 4 | Right analog vertical | Button 04 | Back left (L1) |
+| Axis 5 | Back right button (R2 trigger) | Button 05 | Back right (R1) |
+| Axis 6 | D-pad horizontal (hat) | Button 06 | BACK |
+| Axis 7 | D-pad vertical (hat) | Button 07 | START |
+| | | |  |  | Button 08 | Logicool button |
+| | | |  |  | Button 09 | Left analog pad center |
+| | | |  |  | Button 10 | Right analog pad center |
 
 XBMC needs a joystick mapping file. There are some examples in <filename>/usr/share/xbmc/</filename>. The appropiate file should be copied to <filename>~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml</filename>
 
@@ -94,15 +73,15 @@ ArchLinux has a very nice description about how to set up kernel modules here ht
 
 To show information about a module
 
-<screen>
+```
 $ modinfo module_name
-</screen>
+```
 
 To list the options that are set for a loaded module
 
-<screen>
+```
 $ systool -v -m module_name
-</screen>
+```
 
 For the Logicool_Wireless_Gamepad_F710, the module xpad is loaded. You can modify the module's operation with three parameters:
 
@@ -135,34 +114,20 @@ options xpad triggers_to_buttons=1
 
 With the triggers_to_buttons option ON, the configuration of the joystick, as seen by <command>jstest</command>, is
 
-<table frame="all">
-<tgroup cols="4">
-<thead>
-  <row><entry>Axis name</entry><entry>Description</entry>
-       <entry>Button name</entry><entry>Description</entry></row>
-</thead>
-<tbody>
-  <row><entry>Axis 0</entry><entry>Left analog horizontal</entry>
-       <entry>Button 00</entry><entry>A</entry></row>
-  <row><entry>Axis 1</entry><entry>Left analog vertical</entry>
-       <entry>Button 01</entry><entry>B</entry></row>
-  <row><entry>Axis 2</entry><entry>Right analog horizontal</entry>
-       <entry>Button 02</entry><entry>X</entry></row>
-  <row><entry>Axis 3</entry><entry>Right analog vertical</entry>
-       <entry>Button 03</entry><entry>Y</entry></row>
-  <row><entry>Axis 4</entry><entry>D-pad horizontal (hat)</entry>
-       <entry>Button 04</entry><entry>Back left (L1)</entry></row>
-  <row><entry>Axis 5</entry><entry>D-pad vertical (hat)</entry>
-       <entry>Button 05</entry><entry>Back right (R1)</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 06</entry><entry>Back left trigger (L2)</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 07</entry><entry>Back right trigger (R2)</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 08</entry><entry>BACK</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 09</entry><entry>START</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 10</entry><entry>Logicool button</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 11</entry><entry>Left analog pad center</entry></row>
-  <row><entry></entry><entry></entry><entry>Button 12</entry><entry>Right analog pad center</entry></row>  
-</tbody>
-</tgroup>
-</table>
+| Axis name | Description | Button name | Description |
+|-----|-----|-----|-----|
+| Axis 0 | Left analog horizontal | Button 00 | A |
+| Axis 1 | Left analog vertical | Button 01 | B |
+| Axis 2 | Right analog horizontal | Button 02 | X |
+| Axis 3 | Right analog vertical | Button 03 | Y |
+| Axis 4 | D-pad horizontal (hat) | Button 04 | Back left (L1) |
+| Axis 5 | D-pad vertical (hat) | Button 05 | Back right (R1) |
+|  |  | Button 06 | Back left trigger (L2) |
+|  |  | Button 07 | Back right trigger (R2) |
+|  |  | Button 08 | BACK |
+|  |  | Button 09 | START |
+|  |  | Button 10 | Logicool button |
+|  |  | Button 11 | Left analog pad center |
+|  |  | Button 12 | Right analog pad center |
 
 Note that in XBMC and some other programs, the button and axis numbers starts counting from 1 and not from 0. This should be taken into account when doing the configuration.

@@ -69,7 +69,7 @@ $ chmod 755 /home/kodi/bin/emulationstation.sh
 $ ln -s /home/kodi/EmulationStation-Install/retropie-ES/emulationstation /home/kodi/bin/emulationstation
 ```
 
-Now you need to configure your `es_systems.cfg`, install some EmulationStation themes and configure your keyboard and gamepad.
+Now you need to configure your `es_systems.cfg`, install some EmulationStation themes and configure your keyboard and gamepad to control EmulationStation.
 
 ## Setting up EmulationStation
 
@@ -81,26 +81,54 @@ You can use Filezilla (Linux) or WinSCP (Windows) to copy files and create direc
 
 ### Create a basic es_systems XML for testing
 
-TODO Create a fake es_systems.cfg and some directories with fake ROMs so ES will show something when started.
+Create a fake `es_systems.cfg` file.
+
+```
+<?xml version="1.0"?>
+<!-- File /home/kodi/.emulationstation/es_systems.cfg -->
+<systemList>
+  <system>
+    <name>megadrive</name>
+    <fullname>Sega Mega Drive</fullname>
+    <path>/home/kodi/roms/megadrive</path>
+    <extension>.smd .bin .gen .md .zip</extension>
+    <command>ls %ROM%</command>
+    <platform>megadrive</platform>
+    <theme>megadrive</theme>
+  </system>
+  </system>
+</systemList>
+```
+
+Create a directory for your MegaDrive ROMs and create one fake ROM:
+
+```
+$ mkdir -p /home/kodi/roms/megadrive
+$ touch "/home/kodi/roms/megadrive/Sonic The Hedgehog 2 (World).zip"
+```
+
+This is just for testing, nothing will launch when you click on your ROM. Later you can replace `es_systems.cfg` with a real one and place real ROMs.
 
 ### Running EmulationStation for the first time
 
-The first time you run EmulationStation you need to configure an input device which may be a keyboard or a gamepad. I recommend you always configure the keyboard first and then configure as many gamepads as you want. You can control EmulationStation with any of the configured devices.
+The first time you run EmulationStation you need to configure an input device which may be a keyboard or a gamepad. I recommend you always configure the keyboard first and then configure as many gamepads as you want. You can control EmulationStation with any of the configured devices, however if you do not configure any control device you cannot control ES at all!
 
 Create the file `/home/kodi/.config/openbox/autostart`:
 
 ```
 # File /home/kodi/.config/openbox/autostart
 
+# Other configuration you may have in autostart...
+
 # Start EmulationStation
 /home/kodi/bin/emulationstation.sh
 openbox --exit
 ```
 
-From the text console you can start Emulation station with:
+From the text console you can start EmulationStation with:
 
 ```
-$ startx /usr/bin/openbox-session
+$ startx
 ```
 
 Press **F4** on the keyboard to exit EmulationStation at any time.
@@ -135,15 +163,39 @@ Now replace the current `display-manager.service` with the EmulationStation serv
 # ln -s /etc/systemd/system/EmulationStation.service /etc/systemd/system/display-manager.service
 ```
 
------
+Enable the system to start the graphical system at boot time:
 
-If you need to stop EmulationStation use the following command:
+```
+# systemctl set-default graphical.target
+```
+
+Check the default target:
+
+```
+$ systemctl get-default
+graphical.target
+```
+
+If you want your HTPC to start in text mode (not graphical system) to do some testing then:
+
+```
+# systemctl set-default multi-user.target
+```
+
+## Updating EmulationStation files
+
+When updating EmulationStation files, for example `~/.emulationstation/es_systems.cfg`, EmulationStation must be not running. If you need to stop EmulationStation use the following command:
+
 ```
 $ sudo systemctl stop display-manager.service
 ```
 
-**IMPORTANT** If you update your `es_systems.cfg` file EmulationStation must be not running. After making changes to the EmulationStation files reboot your system with `reboot` to be safe.
+You can start EmulationStation again with:
+
+```
+$ sudo systemctl start display-manager.service
+```
 
 ## What to do next?
 
-If you want to use EmulationStation as your frontend you need to setup some emulators as backends, for example Retroarch, MAME or Mednafen.
+If you want to use EmulationStation as your frontend you need to setup some emulators as backends, for example `Retroarch`, `MAME` or `Mednafen`.

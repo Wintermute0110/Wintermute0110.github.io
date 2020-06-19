@@ -30,7 +30,7 @@ These guides cover the installation of Kodi in Linux on a PC platform computer s
   1. [Linux basic commands and procedures](./LKESG/Linux-basic-commands-and-procedures)
   2. [Linux installation and initial configuration](./LKESG/Linux-installation-and-configuration)
   3. [Linux advanced configuration](./LKESG/Linux-advanced-configuration)
-  4. [Gamepad configuration](./LKESG/Gamepad-configuration)
+  4. [Linux gamepad configuration](./LKESG/Linux-gamepad-configuration)
   5. [EmulationStation installation in Ubuntu/Debian](./LKESG/EmulationStation)
   6. [Kodi installation in Ubuntu/Debian](./LKESG/Kodi)
   7. [Retroarch installation and usage tutorial](./LKESG/Retroarch)

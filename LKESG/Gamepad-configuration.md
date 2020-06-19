@@ -9,11 +9,13 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-## Gamepad configuration
+Nowadays most gamepads will work out of the box with Linux but ocasionally your may run into trouble. Here I will give you some examples about how to test your gamepads and how to connect/associate Bluetooth gamepads.
 
-### Logitech F710
+More specific details about gamepad configuration are given in the Kodi, EmulationStation, Retroarch and MAME sections.
 
-The wireless joystick I have is a Logitech F710. More info and documentation on http://gaming.logitech.com/en-us/product/f710-wireless-gamepad
+## Logitech F710
+
+The wireless joystick I have is a Logitech F710. More info and documentation [here](http://gaming.logitech.com/en-us/product/f710-wireless-gamepad)
 
 This is the output of `dmesg` just after the joystick is plugged in
 
@@ -38,9 +40,7 @@ This is the output of `dmesg` just after the joystick is plugged in
 
 Linux detects this joystick as a Generic X-Box pad.
 
-In Ubuntu (and Debian) the package <command>joystick</command> provides some console 
-  tools to map the joystick buttons and to calibrate the joystick. There is also a graphical
-  calibration tool in package <command>jstest-gtk</command>.
+In Ubuntu (and Debian) the package <command>joystick</command> provides some console tools to map the joystick buttons and to calibrate the joystick. There is also a graphical calibration tool in package <command>jstest-gtk</command>.
 
 Executing 
 ```
@@ -82,25 +82,15 @@ these are the buttons and axis of the joystick (when the MODE LED is off)
 </tgroup>
 </table>
 
-XBMC needs a joystick mapping file. There are some examples 
-in <filename>/usr/share/xbmc/</filename>. The appropiate file should be 
-copied to <filename>~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml</filename>
+XBMC needs a joystick mapping file. There are some examples in <filename>/usr/share/xbmc/</filename>. The appropiate file should be copied to <filename>~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml</filename>
 
-In my case I used <filename>joystick.Logitech.RumblePad.2.xml</filename>. 
-After rebooting XBMC... the
-joystick doesn't work. I enabled logging and rebooted. And then it started working!!!
-Maybe the calibration of the joystick is not good...
+In my case I used <filename>joystick.Logitech.RumblePad.2.xml</filename>. After rebooting XBMC... the joystick doesn't work. I enabled logging and rebooted. And then it started working!!! Maybe the calibration of the joystick is not good...
 
-The kernel driver for this Logitech Joystick is <command>xpad</command>. 
-The user space driver <command>xboxdrv</command> has many configuration options 
-and also support button remmaping.
+The kernel driver for this Logitech Joystick is <command>xpad</command>. The user space driver <command>xboxdrv</command> has many configuration options and also support button remmaping.
 
-One interesting thing is to configure L2 and R2 as buttons rather than
-analog triggers. To do that with xpad, use the option XXXX (according
-to the documentation only works for non recognised XBox joysticks).
+One interesting thing is to configure L2 and R2 as buttons rather than analog triggers. To do that with xpad, use the option XXXX (according to the documentation only works for non recognised XBox joysticks).
 
-ArchLinux has a very nice description about how to set up kernel modules
-here https://wiki.archlinux.org/index.php/kernel_modules
+ArchLinux has a very nice description about how to set up kernel modules here https://wiki.archlinux.org/index.php/kernel_modules
 
 To show information about a module
 
@@ -114,8 +104,7 @@ To list the options that are set for a loaded module
 $ systool -v -m module_name
 </screen>
 
-For the Logicool_Wireless_Gamepad_F710, the module xpad is loaded. You can 
-modify the module's operation with three parameters:
+For the Logicool_Wireless_Gamepad_F710, the module xpad is loaded. You can modify the module's operation with three parameters:
 
 <itemizedlist mark='bullet'>
 <command>dpad_to_buttons</command> Map D-PAD to buttons rather 
@@ -128,16 +117,14 @@ modify the module's operation with three parameters:
     unknown pads.
 </itemizedlist>
 
-Activating the option triggers_to_buttons makes the analog back triggers to
-behave like buttons and not axis
+Activating the option triggers_to_buttons makes the analog back triggers to behave like buttons and not axis
 
 ```
 $ rmmod xpad
 $ modprobe xpad triggers_to_buttons=1
 ```
 
-To make this permanent, create the file <filename>/etc/modprobe.d/F710.conf</filename> 
-and insert
+To make this permanent, create the file <filename>/etc/modprobe.d/F710.conf</filename> and insert
 
 ```
 # Logitech F710 Wireless joystick
@@ -146,8 +133,7 @@ and insert
 options xpad triggers_to_buttons=1
 ```
 
-With the triggers_to_buttons option ON, the configuration of the joystick,
-as seen by <command>jstest</command>, is
+With the triggers_to_buttons option ON, the configuration of the joystick, as seen by <command>jstest</command>, is
 
 <table frame="all">
 <tgroup cols="4">
@@ -179,6 +165,4 @@ as seen by <command>jstest</command>, is
 </tgroup>
 </table>
 
-Note that in XBMC and some other programs, the button and axis numbers starts 
-counting from 1 and not from 0. This should be taken into account when doing
-the configuration.
+Note that in XBMC and some other programs, the button and axis numbers starts counting from 1 and not from 0. This should be taken into account when doing the configuration.

@@ -7,15 +7,21 @@ author: Wintermute0110
 - TOC
 {:toc}
 
-# Post installation notes for Ubuntu Focal Fossa 20.04
+# Post installation notes for Ubuntu Focal Fossa 20.04 after first installation
 
-I think `apt` installs the recommended/suggested packaged. When I reboot the HTPC after the basic configuration gnome has been installed and shows up! Recommendations are standard installed with apt. This can be prevented using the switch `--no-install-recommends`
+ * Package A recommends Package B, if the package maintainer judges that most users would not want A without also having the functionality provided by B.
 
-Actually it could not be a bad thing to have gnome installed. Graphical editor, terminal, etc., are ready to use.
+ * Package A suggests Package B if B contains files that are related to (and usually enhance) the functionality of A.
 
-**systemd** places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`.
+ * `apt` and `apt-get` install the recommended packages by default. This can be prevented using the switch `--no-install-recommends`.
 
-Just after the installation:
+ * By default `apt install xorg` install a basic GNOME environment, including the session manager gdm3 and tons of packages like NetworkManager, ModemManager, pulseaudio, and many others. This is because xorg has a dependency `gnome-terminal | xterm | x-terminal-emulator`.
+
+ * The previous can be prevented with `apt install xorg lxterminal`. `lxterminal` is a very light terminal emulator from the LXDE project (Openbox is the window manager of LXDE) and fulfills the `x-terminal-emulator` dependency. Mesa is installed and all `xserver-xorg-video-*` packages.
+
+**systemd** places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. `/etc/systemd/system/` 
+
+systemd configuration after first installation (GNOME was installed as a dependency of xorg):
 
 ```
 In /etc/systemd/system/
@@ -136,8 +142,8 @@ If there are issues use:
 Test the network with:
 
 ```
-# ip a
-# ping google.com
+$ ip a
+$ ping google.com
 ```
 
 NOTE Ubuntu server does not install the `wpasupplicant` package. This package needs to be installed over the wired network before the WiFi can be used. To check if the package is installed use `$ dpkg -l | grep wpa`.

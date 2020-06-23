@@ -9,7 +9,9 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-This section describes some very basic commands and procedures that you will a lot when configuring your HTPC with this guide. If something is not explained in other sections of this guide have first a look here.
+This section describes some very basic commands and procedures that you will use a lot when configuring your HTPC with this guide. If something is not explained in other sections of this guide have first a look here.
+
+The [Raspberry Pi Documentation](https://github.com/raspberrypi/documentation) project has some very informative tutorials specifically for the Pi but many things are also applicable for any Linux distribution. I recommand to have a look to [introduction to the terminal](https://github.com/raspberrypi/documentation/tree/master/usage/terminal) and [Linux commands](https://github.com/raspberrypi/documentation/blob/master/linux/usage/commands.md).
 
 ## Unprivileged user commands and root commands
 
@@ -53,7 +55,7 @@ In this guide all configuration files start with a line such as `# File ...` tha
 
 By default the Linux system in your HTPC will start in text mode because the graphic server is not installed by default. After introducing your username and password you can start typing commands in the text console. By default there are 6 text terminals named from `tty1` to `tty6`. You can switch to a different text console with **Alt + Fx**, where `x` is a number from 1 to 6. Also you can use **Alt + Right_arrow** or **Alt + Left_arrow** to cycle from one text terminal to another. 
 
-When the graphic server is active you can press **Control + Alt + F1** to return to the text console. The graphic server runs in terminal 7 so to go back to the graphic server cycle over the text consoles until you reach the terminal 7.
+When the X server is active you can press **Control + Alt + Fx** to return to the text console. The X server runs in terminal 7 so to go back to the graphic server cycle over the text consoles until you reach the terminal 7.
 
 ## Rebooting and powering off your HTPC
 
@@ -81,7 +83,7 @@ From time to time upgrade the software in your HTPC. Execute:
 
 ## Terminal emulator in the X server
 
-Use `sakura`, it is a lightweight terminal emulator with few dependencies. With right click you can open the context menu to configure it. I recommend to use a font like **Monospace** o **Noto Mono**.
+`lxterminal` is a lightweight terminal emulator with few dependencies. With right click you can open the context menu to configure it. I recommend to use a font like **Monospace** o **Noto Mono**.
 
 ## Editing files in the text console
 
@@ -89,7 +91,9 @@ Use `nano` in the text-mode console.
 
 ## Editing files in the graphic server
 
-In the graphic server **TODO**
+In the X server use `mousepad`, `pluma`, `featherpad` or `geany`.
+
+`mousepad`, `pluma` and `geany` are based on the GTK library and `featherpad` uses Qt.
 
 ## Managing files in the text console with Midnight Commander
 
@@ -135,6 +139,8 @@ $ systemctl get-default
 # systemctl set-default multi-user.target
 $ systemctl list-dependencies multi-user.target
 ```
+
+To boot the system in text mode use the command `# systemctl set-default multi-user.target` and to boot the system in graphical mode use `# systemctl set-default graphical.target`. The `multi-user.target` is installed by default, the `graphical.target` must be configured before you can use it.
 
 `systemd` places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. The first directory can be changed by the user but the latter should never be modified as it has the system defaults installed by packages. The configuration files in the first directory takes precedence over the latter.
 

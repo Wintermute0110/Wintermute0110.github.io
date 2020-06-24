@@ -82,7 +82,31 @@ Switch on the power on the NUC. If necessary access the BIOS and configure it to
 
  * Once the installation has finished you are asked to remove the USB drive and then the machine is rebooted. After that Ubuntu Linux is installed and you can log into the system using your username/password. The graphical interface is not installed yet so you have the text-based console.
 
-**TODO** is trim enabled for SSDs? Check this out.
+## (Optional) SSD hard disks
+
+In Ubuntu Focal Fossa SSD triming is set to run once a week with a systemd service/timer.
+
+**Step 1) Lower usage of swap**
+
+**TODO** Change the value of swappiness from default 60 to 5. Edit the file `/etc/sysctl.conf`
+
+**Step 2) Disable file access time**
+
+**TODO** Describe how to edit `/etc/fstab` to add `noatime`.
+
+To verify the mounting options of currently mounted filesystems use `cat /proc/mounts | grep /dev/`.
+
+It looks than in Debian and Ubuntu Focal Fossa the option `relatime` is enabled by default. I recommend to use `relatime` instead of `noatime`.
+
+-----
+
+[ask ubuntu: Is TRIM enabled on my Ubuntu 18.04 installation?](https://askubuntu.com/questions/1034169/is-trim-enabled-on-my-ubuntu-18-04-installation)
+
+[Debian wiki: SSDOptimization](https://wiki.debian.org/SSDOptimization#Mounting_SSD_filesystems)
+
+[SSD: how to optimize your Solid State Drive for Linux Mint and Ubuntu](https://easylinuxtipsproject.blogspot.com/p/ssd.html)
+
+[Ubuntu help: What is swappiness and how do I change it?](https://help.ubuntu.com/community/SwapFaq#What_is_swappiness_and_how_do_I_change_it.3F)
 
 ## Initial unneeded software cleanup
 
@@ -162,7 +186,18 @@ DHCP=ipv4
 $ sudo systemctl enable systemd-networkd.service
 ```
 
-**Step 5) Reboot the machine and test the network**
+**Step 5) Verify that systemd-resolved is runnning**
+
+Check that `/etc/resolv.conf` 
+
+```
+$ ls -l /etc/resolv.conf
+.....
+```
+
+Verify that `systemd-resolved` is running with `$ systemctl status systemd-resolved.service`. You should see a line like `Active: active (running) since ...`. If not, then enable the service with `$ sudo systemctl enable systemd-resolved.service`.
+
+**Step 6) Reboot the machine and test the network**
 
 Reboot the machine with `$ reboot`. Then, test the network with:
 
@@ -178,7 +213,7 @@ COMPLETE
 Press **Ctrl + C** to stop the `ping` command.
 
 
-**Step 6) Install the package wpasupplicant**
+**Step 7) Install the package wpasupplicant**
 
 This is only required if you plan to configure the wireless interface.
 
@@ -203,7 +238,7 @@ Wireless interface names start with `w`. In this case the interface name is `wlp
 
 **Step 2) Create the systemd-networkd configuration file**
 
-Verify that the directory `/etc/systemd/network` is empty with `ls -l /etc/systemd/network`. Create the following configuration file with `$ sudo nano /etc/systemd/network/20-wired.network`. Change the line `Name=eno1` to mach the name of your wired interface name.
+Create the following configuration file with `$ sudo nano /etc/systemd/network/30-wireless.network`. Change the line `Name=wlp0s20f3` to mach the name of your wired interface name.
 
 ```
 # File /etc/systemd/network/30-wireless.network

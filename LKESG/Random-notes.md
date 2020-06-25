@@ -264,12 +264,66 @@ iptables -t nat -X
 ```
 
 ```
-# File /etc/dnsmasq.conf
+# /etc/dnsmasq.conf
+# Configuration file for on NUC
+#
+interface=eth0
+
+# eth0 is up before wlan0 and thus the default /etc/resolv.conf is invalid.
+# Create a resolv.conf file with the valid DNS server.
+# Don't forget to edit /etc/default/dnsmasq or this line will be ignored!
+resolv-file=/home/kodi/bin/router_resolv.conf
+
+# Never forward plain names (without a dot or domain part)
+domain-needed
+
+# Never forward addresses in the non-routed address spaces.
+bogus-priv
+
+# DHCP configuration
+dhcp-range=192.168.12.2,192.168.12.255,255.255.255.0,10h
+
+# Permanent IP addresses
+# NAS Synology, NAS Linkstation
+dhcp-host=00:11:32:3f:8a:cb,192.168.12.10
+dhcp-host=10:6f:3f:cb:46:b4,192.168.12.20
+```
+
+```
+kodi@nuc:~$ ls -l /etc/resolv.conf 
+-rw-r--r-- 1 root root 23 Sep 12  2016 /etc/resolv.conf
+```
+
+```
+kodi@nuc:~$ cat /etc/resolv.conf 
+nameserver 192.168.0.1
 ```
 
 ## Autofs
 
-**TODO**
+`/etc/autofs.conf` has not been edited and contains the default values.
+
+```
+kodi@nuc:~$ cat /etc/auto.master 
+# Mount NAS.
+/synology      /etc/auto.synology      --timeout=60
+```
+
+```
+kodi@nuc:~$ cat /etc/auto.synology 
+# Mount NAS using NFS in /synology/media/
+media  -rw,user,soft,intr,rsize=8192,wsize=8192 192.168.12.10:/volume1/media/
+```
+
+```
+kodi@nuc:~$ ls -l /synology
+drwxrwxrwx 28 root root 4096 Feb 21 22:42 media
+```
+
+-----
+
+[Gentoo wiki: AutoFS](https://wiki.gentoo.org/wiki/AutoFS)
+
 
 ## Misc
 

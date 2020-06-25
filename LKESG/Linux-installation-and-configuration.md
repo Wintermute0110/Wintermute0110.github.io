@@ -389,7 +389,7 @@ kodi@htpc:~$ startx
 
 The screen will turn black (don't panic) and you will see the mouse pointer in the middle of the screen. With a right click you can open the Openbox context menu and launch a graphic terminal. In the graphic terminal type `glxinfo`, `vulkaninfo` and `vainfo` to check that the OpenGL acceleration, Vulkan acceleration and VA-API are working well.
 
-<center><img src="img/openbox_and_terminal.png"></center> 
+![openbox_and_terminal](img/openbox_and_terminal.png)
 
 To exit the X server bring up the Openbox context menu with a mouse right click and click on **Exit**. You will return to the text console.
 

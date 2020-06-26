@@ -11,11 +11,13 @@ author: Wintermute0110
 
 Nowadays most gamepads will work out of the box with Linux but ocasionally your may run into trouble. Here I will give you some examples about how to test your gamepads and how to connect/associate Bluetooth gamepads. More specific details about gamepad configuration are given in the Kodi, EmulationStation, Retroarch and MAME sections.
 
-## Logitech F710
+## Logitech F710 gamepad
 
-The wireless joystick I have is a Logitech F710. More info and documentation [here](http://gaming.logitech.com/en-us/product/f710-wireless-gamepad)
+### Standard configuration
 
-This is the output of `dmesg` just after the joystick is plugged in
+The wireless joystick I have is a Logitech F710. More info and documentation can be found [here](http://gaming.logitech.com/en-us/product/f710-wireless-gamepad).
+
+This is the output of `dmesg` just after the joystick is plugged in (change this to use `journald -k -f`)
 
 ```
 [ 1161.417155] usb 2-1.7: new full-speed USB device number 6 using ehci_hcd
@@ -36,11 +38,14 @@ This is the output of `dmesg` just after the joystick is plugged in
 [ 1177.880532] input: Generic X-Box pad as /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7:1.0/input/input6
 ```
 
-Linux detects this joystick as a Generic X-Box pad.
+In this case Linux detects this joystick as a Generic X-Box pad. The kernel driver for this Logitech Joystick is `xpad`.
 
-In Ubuntu (and Debian) the package <command>joystick</command> provides some console tools to map the joystick buttons and to calibrate the joystick. There is also a graphical calibration tool in package <command>jstest-gtk</command>.
+In Ubuntu and Debian the package `joystick` provides some console tools to test and calibrate your joystick.
 
-Executing 
+There is also a graphical calibration tool in package `jstest-gtk`.
+
+Executing:
+
 ```
 $ jstest /dev/input/js0
 ```
@@ -61,58 +66,34 @@ these are the buttons and axis of the joystick (when the MODE LED is off)
 | | | |  |  | Button 09 | Left analog pad center |
 | | | |  |  | Button 10 | Right analog pad center |
 
-XBMC needs a joystick mapping file. There are some examples in <filename>/usr/share/xbmc/</filename>. The appropiate file should be copied to <filename>~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml</filename>
+### Advanced configuration with the xpad driver
 
-In my case I used <filename>joystick.Logitech.RumblePad.2.xml</filename>. After rebooting XBMC... the joystick doesn't work. I enabled logging and rebooted. And then it started working!!! Maybe the calibration of the joystick is not good...
+**NOTE** When I originally wrote this section the F710 gamepad was recognised as a generic gamepad. Modern kernels have support for it and so the `triggers_to_buttons` options does not work. Check this out.
 
-The kernel driver for this Logitech Joystick is <command>xpad</command>. The user space driver <command>xboxdrv</command> has many configuration options and also support button remmaping.
+One interesting thing is to configure **L2** and **R2** as buttons rather than analog triggers. To do that with xpad, use the module parameter `triggers_to_buttons`. According to the documentation only works for non recognised XBox joysticks. You can modify the module xpad operation with three parameters:
 
-One interesting thing is to configure L2 and R2 as buttons rather than analog triggers. To do that with xpad, use the option XXXX (according to the documentation only works for non recognised XBox joysticks).
+ * `dpad_to_buttons` Map D-PAD to buttons rather than axes for unknown pads.
 
-ArchLinux has a very nice description about how to set up kernel modules here https://wiki.archlinux.org/index.php/kernel_modules
+ * `triggers_to_buttons` Map triggers to buttons rather than axes for unknown pads.
 
-To show information about a module
+ * `sticks_to_null` Do not map sticks at all for unknown pads.
 
-```
-$ modinfo module_name
-```
-
-To list the options that are set for a loaded module
-
-```
-$ systool -v -m module_name
-```
-
-For the Logicool_Wireless_Gamepad_F710, the module xpad is loaded. You can modify the module's operation with three parameters:
-
-<itemizedlist mark='bullet'>
-<command>dpad_to_buttons</command> Map D-PAD to buttons rather 
-    than axes for unknown pads.
-
-<command>triggers_to_buttons</command> Map triggers to buttons 
-    rather than axes for unknown pads.
-
-<command>sticks_to_null</command> Do not map sticks at all for 
-    unknown pads.
-</itemizedlist>
-
-Activating the option triggers_to_buttons makes the analog back triggers to behave like buttons and not axis
+Activating the option `triggers_to_buttons` makes the analog back triggers to behave like buttons and not axis:
 
 ```
 $ rmmod xpad
 $ modprobe xpad triggers_to_buttons=1
 ```
 
-To make this permanent, create the file <filename>/etc/modprobe.d/F710.conf</filename> and insert
+To make this change permanent, create the file `/etc/modprobe.d/joystick-F710.conf` and insert
 
 ```
 # Logitech F710 Wireless joystick
-# Make back triggers to behave like buttons and not axes
-# Useful for Playstation emulators
+# Make back triggers to behave like buttons and not axes.
 options xpad triggers_to_buttons=1
 ```
 
-With the triggers_to_buttons option ON, the configuration of the joystick, as seen by <command>jstest</command>, is
+With the `triggers_to_buttons` option ON, the configuration of the joystick as seen by `jstest` is now:
 
 | Axis name | Description | Button name | Description |
 |-----|-----|-----|-----|
@@ -130,4 +111,12 @@ With the triggers_to_buttons option ON, the configuration of the joystick, as se
 |  |  | Button 11 | Left analog pad center |
 |  |  | Button 12 | Right analog pad center |
 
-Note that in XBMC and some other programs, the button and axis numbers starts counting from 1 and not from 0. This should be taken into account when doing the configuration.
+-----
+
+[Kernel xpad.c source code](https://github.com/torvalds/linux/blob/master/drivers/input/joystick/xpad.c)
+
+### Advanced configuration with the xboxdrv driver
+
+The user space driver `xboxdrv` has many configuration options and also support button remmaping. `xboxdrv` can be installed with the package of the same name.
+
+## Bluetooth gamepads

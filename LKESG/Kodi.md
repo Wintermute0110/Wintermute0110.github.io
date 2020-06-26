@@ -51,6 +51,14 @@ to
 
 `eval` is a shell builtin command. Then -c option sets the maximum size of core files.
 
+## (Optional) Use a gamepad to control Kodi
+
+XBMC needs a joystick mapping file. There are some examples in `/usr/share/xbmc/`. The appropiate file should be copied to `~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml`
+
+In my case I used `joystick.Logitech.RumblePad.2.xml`. After rebooting XBMC... the joystick doesn't work. I enabled logging and rebooted. And then it started working!!! Maybe the calibration of the joystick is not good...
+
+
+
 <!--
 ===============================================================================
 * ADDING MP3 music

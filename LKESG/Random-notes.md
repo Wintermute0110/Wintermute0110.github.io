@@ -241,8 +241,8 @@ iptables -t nat -X
 
 # Enable NAT with iptables
 iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
-# iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 # iptables -A FORWARD -i eth0 -o wlan0 -j ACCEPT
+# iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 ```
 
 ```
@@ -264,14 +264,14 @@ iptables -t nat -X
 ```
 
 ```
-# /etc/dnsmasq.conf
+# File /etc/dnsmasq.conf
 # Configuration file for on NUC
-#
 interface=eth0
 
 # eth0 is up before wlan0 and thus the default /etc/resolv.conf is invalid.
 # Create a resolv.conf file with the valid DNS server.
 # Don't forget to edit /etc/default/dnsmasq or this line will be ignored!
+# NOTE 2020: I think this is not needed.
 resolv-file=/home/kodi/bin/router_resolv.conf
 
 # Never forward plain names (without a dot or domain part)
@@ -299,7 +299,7 @@ kodi@nuc:~$ cat /etc/resolv.conf
 nameserver 192.168.0.1
 ```
 
-## Automount with autofs
+## Automount NFS with autofs
 
 `/etc/autofs.conf` has not been edited and contains the default values.
 
@@ -324,7 +324,7 @@ drwxrwxrwx 28 root root 4096 Feb 21 22:42 media
 
 [Gentoo wiki: AutoFS](https://wiki.gentoo.org/wiki/AutoFS)
 
-## Automount with systemd and fstab
+## Automount SSHFS with systemd and fstab
 
 ```
 # /etc/fstab: static file system information.

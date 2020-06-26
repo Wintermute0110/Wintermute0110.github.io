@@ -163,7 +163,7 @@ Now replace the current `display-manager.service` with the EmulationStation serv
 # ln -s /etc/systemd/system/EmulationStation.service /etc/systemd/system/display-manager.service
 ```
 
-Enable the system to start the graphical system at boot time:
+Enable the HTPC to start the X server at boot time:
 
 ```
 # systemctl set-default graphical.target

@@ -9,9 +9,14 @@ author: Wintermute0110
 
 [Go to main page](../)
 
-## Installing Kodi
+## Installing Kodi using Ubuntu packages
 
 TODO
+
+## Installing Kodi using them Team Kodi PPA
+
+TODO
+
 
 ## Compiling Kodi from source
 
@@ -24,14 +29,6 @@ TODO
 ## (Optional) Configure Kodi to use VA-API hardware acceleration
 
 **TODO See Kodi forum post**
-
-## (Optional) Verify that Kodi is using a window manager
-
-**TODO Rewrite**
-
-To test if XBMC is running within the window manager `OpenBox`, in XBMC go to `Settings`, `System`, `Video Output` and select windowed display mode. XBMC should display with a window border and you will see the desktop (which should containg anyting at all except a gray background). Now, outside the XBMC window, right click and a pop-up menu will show up. This pop-up menu allows you to launch a web browser (`Chromium` by default) and the console terminal.
-
-The procedure described above is very important. It will be used to launch and configure the emulators **BEFORE** they can be used by the XBMC launcher plugins. This procedure will be referred as "set XBMC into windowed mode and launch a terminal" in this guide.
 
 ## (Optional) Disable Kodi core dumps
 
@@ -51,37 +48,52 @@ to
 
 `eval` is a shell builtin command. Then -c option sets the maximum size of core files.
 
+## (Optional) Verify that Kodi is using a window manager
+
+**TODO Rewrite**
+
+To test if XBMC is running within the window manager `OpenBox`, in XBMC go to `Settings`, `System`, `Video Output` and select windowed display mode. XBMC should display with a window border and you will see the desktop (which should containg anyting at all except a gray background). Now, outside the XBMC window, right click and a pop-up menu will show up. This pop-up menu allows you to launch a web browser (`Chromium` by default) and the console terminal.
+
+The procedure described above is very important. It will be used to launch and configure the emulators **BEFORE** they can be used by the XBMC launcher plugins. This procedure will be referred as "set XBMC into windowed mode and launch a terminal" in this guide.
+
 ## (Optional) Use a gamepad to control Kodi
 
-XBMC needs a joystick mapping file. There are some examples in `/usr/share/xbmc/`. The appropiate file should be copied to `~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml`
+Kodi needs a joystick mapping file. There are some examples in `/usr/share/xbmc/`. The appropiate file should be copied to `~/.xbmc/userdata/keymaps/joystick.SOMENAME.xml`. In my case I used `joystick.Logitech.RumblePad.2.xml`. 
 
-In my case I used `joystick.Logitech.RumblePad.2.xml`. After rebooting XBMC... the joystick doesn't work. I enabled logging and rebooted. And then it started working!!! Maybe the calibration of the joystick is not good...
+## (Optional) Using Kodi Retroplayer to play your games
 
+**TODO**
 
+## (Optional) Configuring IPTV Simple
 
-<!--
-===============================================================================
-* ADDING MP3 music
-===============================================================================
+**TODO**
 
-========== Album covers ==========
+## (Optional) Music configuration
 
-By default, XBMC only recognises folder.jpg as the album cover. In order to
-expand this list, advancedsettings.xml should be changed
+### Album covers
 
+By default, XBMC only recognises folder.jpg as the album cover. In order to expand this list, advancedsettings.xml should be changed:
+
+```
 <musicthumbs>
-  <add>cover.png|cover.jpg|Cover.png|Cover.jpg|front.png|front.jpg|Front.png|Front.jpg</add>
+    <add>cover.png|cover.jpg|Cover.png|Cover.jpg|front.png|front.jpg|Front.png|Front.jpg</add>
 </musicthumbs>
+```
 
-See http://wiki.xbmc.org/?title=Thumbnails for more information.
+-----
 
-========== Increase number of "recently added" albums ==========
+[Kodi Wiki: Thumbnails](http://wiki.xbmc.org/?title=Thumbnails)
 
-Add this to advancedsettings.xml
+### Increase number of "recently added" albums
 
+Add this to `advancedsettings.xml`
+
+```
 <musiclibrary>
-  <recentlyaddeditems>100</recentlyaddeditems>
+    <recentlyaddeditems>100</recentlyaddeditems>
 </musiclibrary>
+```
 
-See http://wiki.xbmc.org/index.php?title=Advancedsettings.xml for more info.
--->
+-----
+
+[Kodi wiki: Advancedsettings.xml](http://wiki.xbmc.org/index.php?title=Advancedsettings.xml)

@@ -53,15 +53,17 @@ In this guide all configuration files start with a line such as `# File ...` tha
 
 ## Basic Linux keyboard shortcuts
 
-By default the Linux system in your HTPC will start in text mode because the graphic server is not installed by default. After introducing your username and password you can start typing commands in the text console. By default there are 6 text terminals named from `tty1` to `tty6`. You can switch to a different text console with **Alt + Fx**, where `x` is a number from 1 to 6. Also you can use **Alt + Right_arrow** or **Alt + Left_arrow** to cycle from one text terminal to another. 
+By default the Linux system in your HTPC will start in text mode because the X server (graphical environment) is not installed by default. After introducing your username and password you can start typing commands in the text console. By default there are 6 text terminals named from `tty1` to `tty6`. You can switch to a different text console with **Alt + Fx**, where `x` is a number from 1 to 6. Also you can use **Alt + Right_arrow** or **Alt + Left_arrow** to cycle from one text terminal to another. 
 
-When the X server is active you can press **Control + Alt + Fx** to return to the text console. The X server runs in terminal 7 so to go back to the graphic server, cycle over the text consoles until you reach the terminal 7.
+When the X server is active you can press **Control + Alt + Fx** to return to the text console. The X server runs in terminal 7 so to go back to the X server, cycle over the text consoles until you reach the terminal 7.
 
 ## Rebooting and powering off your HTPC
 
 To reboot the system use the command `reboot`. To power off your HTPC use the command `poweroff` or press the power button. By default in Ubuntu Focal Fossa both commands can be run by normal users logged into the system.
 
 ## Installing software and upgrading your system
+
+In Ubuntu/Debian Linux software is managed using advanced packagin tool (APT).
 
 ```
 # apt update
@@ -72,7 +74,7 @@ To reboot the system use the command `reboot`. To power off your HTPC use the co
 
 -----
 
-From time to time upgrade the software in your HTPC. Execute:
+From time to time upgrade the software in your HTPC. `apt update` updates the local database of available packages. `apt dist-upgrade` performs the actual update of the software packages. `apt autoremove` and `apt clean` are cleanup commands to save disk space.
 
 ```
 # apt update
@@ -89,13 +91,15 @@ From time to time upgrade the software in your HTPC. Execute:
 
 Use `nano` in the text-mode console. Use **Ctrl + X** to exit `nano` and press **y** to save the file.
 
-## Editing files in the graphic server
+## Editing files in the X server (graphical environment)
 
-In the X server use `mousepad`, `pluma`, `featherpad` or `geany`. These terminal emulators have few dependencies as opposed to the terminal emulators of GNOME or KDE. If in doubt I recommend to install `mousepad`.
+In the X server use `mousepad`, `pluma`, `featherpad` or `geany`. These text editors are simple have few dependencies as opposed to the editors of GNOME or KDE, which have many features and will install many packages you don't really need in your HTPC. If in doubt I recommend to install `mousepad`.
 
 `mousepad`, `pluma` and `geany` are based on the GTK library and `featherpad` uses Qt.
 
 ## Managing files in the text console with Midnight Commander
+
+Midnight Commander is a Norton Commander clone for Linux and it is very convenient to manage files. In some terminals in the X server the key **F10** (required to exit Midnight Commander) is not available. In this case use **F9** to bring up the menu and the browse to **File** and then **Exit**. To browse the menus in MC you can use the arrow keys.
 
 ```
 apt install mc
@@ -106,15 +110,15 @@ apt install mc
 Services are programs running in the background that carry out many tasks. For example, the session manager (the graphical program that greets you and prompts for use name and password) is a service. Most Linux distributions nowadays, including Ubuntu and Debian, use `systemd` to run and manage services.
 
 ```
-# systemctl start display-manager
-# systemctl stop display-manager
-# systemctl restart display-manager
-# systemctl reload display-manager
+# systemctl start display-manager.service
+# systemctl stop display-manager.service
+# systemctl restart display-manager.service
+# systemctl reload display-manager.service
 ```
 
 ```
-# systemctl enable display-manager
-# systemctl disable display-manager
+# systemctl enable display-manager.service
+# systemctl disable display-manager.service
 ```
 
 ```
@@ -140,9 +144,13 @@ $ systemctl get-default
 $ systemctl list-dependencies multi-user.target
 ```
 
-To boot the system in text mode use the command `# systemctl set-default multi-user.target` and to boot the system in graphical mode use `# systemctl set-default graphical.target`. The `multi-user.target` is installed by default, the `graphical.target` must be configured before you can use it.
+ * To boot the system in text mode use the command `# systemctl set-default multi-user.target`.
+ 
+ * To boot the system in graphical mode use `# systemctl set-default graphical.target`.
+ 
+The `multi-user.target` is installed by default when you install Ubuntu server edition, the `graphical.target` must be configured before you can use it.
 
-`systemd` places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. The first directory can be changed by the user but the latter should never be modified as it has the system defaults installed by packages. The configuration files in the first directory takes precedence over the latter.
+`systemd` places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. The first directory can be changed by the system administrator (you!) but the latter should never be modified as it has the system defaults installed by packages. The configuration files in the first directory take precedence over the latter.
 
 -----
 
@@ -158,7 +166,7 @@ To boot the system in text mode use the command `# systemctl set-default multi-u
 
 ## Passwordless SSH login
 
-In this example your desktop computer is named **laptop** and your username in **laptop** is **wintermute**. You want to setup passwordless SSH connections to your HTPC machine named **htpc** with username **kodi**.
+In this example your desktop computer is named **laptop** and your username in **laptop** is **wintermute**. You want to setup passwordless SSH connections to your HTPC machine named **htpc** with username **kodi**. In other words, you can connect from your laptop to your HTPC with `$ ssh kodi@htpc` and SSH will never ask for a password.
 
 **Step 1) Create a passwordless public-private key pair**
 
@@ -216,10 +224,11 @@ If you get into trouble check that the `authorized_keys` file in the remote host
 
 ```
 $ ls -l ~/.ssh/authorized_keys
-bla bla bla
+kodi@nuc:~$ ls -l ~/.ssh/authorized_keys 
+-rw------- 1 kodi kodi 1489 Dec 12  2015 /home/kodi/.ssh/authorized_keys
 ```
 
-If permissions and ownership are wrong, changed them with the following commands:
+If permissions (`-rw-------`) and/or ownership (`kodi kodi`) are wrong, changed them with the following commands:
 
 ```
 $ chown kodi:kodi ~/.ssh/authorized_keys
@@ -228,7 +237,7 @@ $ chmod 600 ~/.ssh/authorized_keys
 
 **Step 5) Connect to more computers**
 
-You can use your public/private key to connect to more than one computer. Just copy the public key into as many hosts as you want.
+You can use your public/private key to connect to more than one computer. Just copy the public key into the `authorized_keys` of as many hosts as you want.
 
 ## Kernel modules
 
@@ -238,16 +247,24 @@ To show a list of currently loaded modules:
 $ lsmod
 ```
 
-To show information about a module:
+To show information about a module, including the module parameters:
 
 ```
-$ modinfo module_name
+# modinfo i915
 ```
 
-To list the options that are set for a loaded module use `systool`. `systool` is in the `sysfsutils` package.
+To list the options that are set for a currently loaded module use `systool`. `systool` is in the `sysfsutils` package.
 
 ```
-$ systool -v -m module_name
+# systool -v -m i915
 ```
+
+-----
 
 [ArchLinux wiki: kernel modules](https://wiki.archlinux.org/index.php/kernel_modules)
+
+## Recommended Linux software for your HTPC
+
+ * `ncdu` is a text-mode enhanced version of the command `du`. It is very useful to see what directories are consuming more space on disk.
+
+ * `htop` is an improved version of `top`. It is used to see th current CPU usage of your machine, to see what are the processes that are consuming the CPU and many more things.

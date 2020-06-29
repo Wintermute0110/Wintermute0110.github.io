@@ -9,17 +9,21 @@ author: Wintermute0110
 
 # Post installation notes for Ubuntu Focal Fossa 20.04 after first installation
 
- * Package A recommends Package B, if the package maintainer judges that most users would not want A without also having the functionality provided by B.
+ * Package A **recommends** Package B, if the package maintainer judges that most users would not want A without also having the functionality provided by B.
 
- * Package A suggests Package B if B contains files that are related to (and usually enhance) the functionality of A.
+ * Package A **suggests** Package B if B contains files that are related to (and usually enhance) the functionality of A.
+
+ * A recommendation is stronger than a suggestion.
 
  * `apt` and `apt-get` install the recommended packages by default. This can be prevented using the switch `--no-install-recommends`.
+
+ * `apt autoremove package_name` can be used to unistall a package and all its dependencies that do not affect other packages. The option `--purge` can also be used.
 
  * By default `apt install xorg` install a basic GNOME environment, including the session manager gdm3 and tons of packages like NetworkManager, ModemManager, pulseaudio, and many others. This is because xorg has a dependency `gnome-terminal | xterm | x-terminal-emulator`.
 
  * The previous can be prevented with `apt install xorg lxterminal`. `lxterminal` is a very light terminal emulator from the LXDE project (Openbox is the window manager of LXDE) and fulfills the `x-terminal-emulator` dependency. Mesa is installed and all `xserver-xorg-video-*` packages.
 
-**systemd** places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. `/etc/systemd/system/` 
+ * **systemd** places its configuration files in `/etc/systemd/system/` and `/lib/systemd/system/`. `/etc/systemd/system/` can be edited by the user, `/lib/systemd/system/` is reserved for the package maintainers.
 
 systemd configuration after first installation (GNOME was installed as a dependency of xorg):
 

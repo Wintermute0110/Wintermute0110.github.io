@@ -152,6 +152,71 @@ NOTE Ubuntu server does not install the `wpasupplicant` package. This package ne
 
 [Ubuntu 20.04: Connect to WiFi from command line with Netplan](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line)
 
+# Systemd-networkd netplan-generated configuration files
+
+Netplan creates a custom configuration file for `wpa_supplicant` named `/run/netplan/wpa-wlp0s20f3.conf` and a systemd-service to run `wpa_supplicant` with this config file named `/run/systemd/system/netplan-wpa-wlp0s20f3.service`. In addition, the package-default service `wpa_supplicant.service` is enabled and the other services installed by the package disabled.
+
+```
+# File /run/netplan/wpa-wlp0s20f3.conf
+ctrl_interface=/run/wpa_supplicant
+
+network={
+  ssid="*****"
+  key_mgmt=WPA-PSK
+  psk="*****"
+}
+```
+
+```
+# File /run/systemd/system/netplan-wpa-wlp0s20f3.service
+[Unit]
+Description=WPA supplicant for netplan wlp0s20f3
+DefaultDependencies=no
+Requires=sys-subsystem-net-devices-wlp0s20f3.device
+After=sys-subsystem-net-devices-wlp0s20f3.device
+Before=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/sbin/wpa_supplicant -c /run/netplan/wpa-wlp0s20f3.conf -iwlp0s20f3
+```
+
+**[*]** Means that the service file is intalled by the `wpasupplicant` package.
+
+```
+kodi@htpc:~$ cat sysctl-list-unit-files-grep-wpa.log
+[*] wpa_supplicant-nl80211@.service        disabled        enabled
+[*] wpa_supplicant-wired@.service          disabled        enabled
+[*] wpa_supplicant.service                 enabled         enabled
+[*] wpa_supplicant@.service                disabled        enabled
+[*] dbus-fi.w1.wpa_supplicant1.service     enabled         enabled  -> /lib/systemd/system/wpa_supplicant.service
+    netplan-wpa-wlp0s20f3.service          enabled-runtime enabled
+```
+
+```
+kodi@htpc:~$ dpkg -L wpasupplicant | grep service
+/lib/systemd/system/wpa_supplicant-nl80211@.service
+/lib/systemd/system/wpa_supplicant-wired@.service
+/lib/systemd/system/wpa_supplicant.service
+/lib/systemd/system/wpa_supplicant@.service
+/usr/share/dbus-1/system-services/fi.w1.wpa_supplicant1.service
+```
+
+Option `-c` means the path to the configuration file. Option `-u` enables the D-Bus control interface. If enabled, interface definitions may be omitted. Option `-s` Logs output to syslog intead of stdout. Option `-O` Override the ctrl_interface parameter for new interfaces. Option `-i` is the interface to listen to. One `wpa_supplicant` process can control several interfaces or each interface can be controlled with multiple `wpa_supplicant` processes.
+
+```
+kodi@htpc:~$ cat ps-grep-wpa.log
+root         670       1  0 15:40 ?        00:00:00 /sbin/wpa_supplicant -c /run/netplan/wpa-wlp0s20f3.conf -iwlp0s20f3
+root         721       1  0 15:40 ?        00:00:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+kodi        2247    2060  0 22:36 pts/0    00:00:00 grep --color=auto wpa
+```
+
+```
+kodi@htpc:~$ ls -l /etc/resolv.conf
+lrwxrwxrwx 1 root root 39 Apr 23 16:33 /etc/resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
+```
+
 # Old configuration files for Ubuntu Bionic Beaver 18.04
 
 In the old NUC configuration Openbox was started by the session manager `lightdm`. Network was managed with `ifupdown`. The NUC uses the 5G Wifi network.

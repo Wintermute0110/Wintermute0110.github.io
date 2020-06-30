@@ -13,9 +13,11 @@ In this chaper I cover the installation of Ubuntu Linux on a PC architecture wit
 
 In this guide I assume you have a Linux desktop or laptop as your main computer. Windows users will need to google a bit for additional procedures in some steps of this guide. For example, to connect to the HTPC computer using SSH Linux users can do it natively, Windows users need to use additional software such as [PuTTY](https://www.putty.org/).
 
-During normal use of your HTPC your will control it with a gamepad. However, a keyboard and mouse will be required during the installation and configuration.
+During normal use of your HTPC your will control it with a gamepad, ether if you choose Kodi or EmulationStation as the main frontend. However, a keyboard and mouse will be required during the installation and configuration. You can use the wireless interface to connect to the internet, however during the installation a wired connection is necessary to setup the wifi interface. If you want to store your media in a NAS I strongly recommend to connect the NAS and the HTPC with a wired Ethernet connection.
 
-In Linux/Unix usually here are several ways of doing things, each with its pros and cons. In this guide I will use `systemd` as much as possible to configure services.
+This tutorial focuses on using an Intel video card because it is available as an integrated video card in 99% of al PCs and usually works plug-and-play. If you want to use your discrete AMD or NVidia card you need to do some changes related to the video configuration.
+
+In Linux/Unix usually here are several ways of doing things, each with its pros and cons. In this guide I will use `systemd` as much as possible to configure services. This sometimes makes the configuration slighly more complicated that alternatives but saves memory and resources in your HTPC which is good for low-end PCs.
 
 ## User name and HTPC computer name
 
@@ -29,7 +31,7 @@ We will use a USB drive to install Ubuntu 20.40 Focal Fossa.
 
 **Step 1) Download the installation ISO image** 
 
-Use one of the Ubuntu mirrors to download the ISO image of **Ubuntu 20.04 LTS (Focal Fossa) 64-bit Server install image**. The server install image installs only the minimum set of packages required to run Linux, as oppossed to the Ubuntu Desktop image which installs a lot of clutter software you do not need on an HTPC.
+Use one of the Ubuntu mirrors to download the ISO image of **Ubuntu 20.04 LTS Focal Fossa 64-bit Server install image**. The server install image installs only the minimum set of packages required to run Linux, as oppossed to the Ubuntu Desktop image which installs a lot of clutter software you do not need on an HTPC.
 
 [Ubuntu 20.04 LTS (Focal Fossa) installation images](https://ftp.riken.jp/Linux/ubuntu-releases/focal)
 
@@ -72,7 +74,7 @@ Switch on the power on the NUC. If necessary access the BIOS and configure it to
 
  * Wireless interface is not autodetected in the installation program.
 
- * In the **Guided storage configuration** select **Use an entire disk** and leave the defaults. By default the server installation creates a small `/boot/efi/` partition and then another big parition to be mounted as root with `ext4` filesystem. No swap partition is created.
+ * In the **Guided storage configuration** screen select **Use an entire disk** and leave the defaults. By default the server installation creates a small `/boot/efi/` partition and then another big parition to be mounted as root with `ext4` filesystem. No swap partition is created.
 
  * In the **Profile setup** screen, type **Kodi** as **Your name**, **htpc** as your server's name, **kodi** as your user name, and choose a simple password such as **linux**.
 
@@ -276,7 +278,6 @@ Create the `wpasupplicant` configuration file with `$ sudo nano /etc/wpa_supplic
 ```
 # File /etc/wpa_supplicant/wpa_supplicant.conf
 
-# Giving configuration update rights to wpa_cli
 ctrl_interface=/run/wpa_supplicant
 ap_scan=1
 fast_reauth=1
@@ -285,24 +286,60 @@ fast_reauth=1
 network={
     ssid="MYSSID"
     psk="passphrase"
+    key_mgmt=WPA-PSK
 }
 ```
 
-**Step 4) Enable systemd services and configure resolved**
+Now create the `systemd` service to enabled `wpasupplicant` to control your wireless interface with `$ sudo nano /etc/systemd/system/wpa-wlp0s20f3.service`. Do not forget to change the name of your wireless interface to match your system in all places in the configuration file and also in the configuration file name:
 
 ```
-# systemctl enable systemd-networkd
-# systemctl enable wpa_supplicant@wlp1s0
-# systemctl enable systemd-resolved
+# File /etc/systemd/system/wpa-wlp0s20f3.service
 
-# systemctl start systemd-networkd
-# systemctl start wpa_supplicant@wlp1s0
-# systemctl start systemd-resolved
+[Unit]
+Description=WPA supplicant for interface wlp0s20f3
+DefaultDependencies=no
+Requires=sys-subsystem-net-devices-wlp0s20f3.device
+After=sys-subsystem-net-devices-wlp0s20f3.device
+Before=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/sbin/wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -iwlp0s20f3
 ```
+
+**Step 4) Configure systemd-resolved**
+
+Check if `/etc/resolv.conf` points to the `systemd-resolved` file:
+
+```
+$ ls -l /etc/resolv.conf
+COMPLETE ME
+```
+
+If not, execute the following commands:
 
 ```
 # rm /etc/resolv.conf
 # ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+```
+
+**Step 4) Enable systemd services and configure resolved**
+
+First enable all the `systemd` services:
+
+```
+# systemctl enable wpa-wlp0s20f3.service
+# systemctl enable systemd-networkd.service
+# systemctl enable systemd-resolved.service
+```
+
+Check your configuration.
+
+```
+$ systemctl is-enabled wpa-wlp0s20f3.service
+$ systemctl is-enabled systemd-networkd.service
+$ systemctl is-enabled systemd-resolved.service
 ```
 
 **Step 5) Reboot the machine and test the network**
@@ -312,8 +349,6 @@ Reboot the machine with `$ reboot`. After rebooting test the network as describe
 -----
 
 [archlinux wiki: wpa_supplicant](https://wiki.archlinux.org/index.php/wpa_supplicant)
-
-[Wikipedia: List of ISO 3166 country codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
 
 [Manjaro: How to use systemd-networkd to manage your wifi](https://forum.manjaro.org/t/how-to-use-systemd-networkd-to-manage-your-wifi/1557)
 
@@ -330,7 +365,7 @@ root@htpc:~# apt install mesa-utils vulkan-tools vainfo
 root@htpc:~# apt install xdg-utils
 ```
 
-`lxterminal` is a minimalist terminal emulator for the X server with few dependencies. `mousepad` is a good text editor for the graphical system with few dependencies. `xdg-utils` installs `xdg-screensaver` which is used by Retroarch to control the screensaver.
+`lxterminal` is a minimalist terminal emulator for the X server with few dependencies. `mousepad` is a good text editor for the X server with few dependencies. `xdg-utils` installs `xdg-screensaver` which is used by Retroarch to control the screensaver.
 
 **NOTE** The packages `ssh`, `software-properties-common`, `linux-firmware`, `git`, `pastebinit` are installed by default in Ubuntu Focal Fossa server.
 
@@ -360,7 +395,7 @@ root@htpc:~# groups kodi
 kodi : kodi adm ...
 ```
 
-Edit `/etc/security/limits.conf` and add before the end. Remember kodi is the username, not the application. This will allow your user to get the audio thread a bit more priority.
+Edit `/etc/security/limits.conf` and add before the end. Remember kodi is the username, not the application. This will allow your user to get the audio thread a bit more priority. **NOTE** Is this really needed? Move this step to an optional section?
 
 ```
 kodi             -       nice            -1
@@ -462,7 +497,9 @@ By default `systemd` automatically sets the time of your HTPC from the network s
 
 ## (Optional) Install Plymouth
 
-Plymouth seems to be already installed but it is not enabled. It doesn't hurt to make sure it is installed:
+Plymouth enables a graphical boot process as opposed to systemd printing lots of text. Also, by loading the module **i915** for Intel video cards into your initramfs (the first step in the boot process) you enable kernel video mode (KMS) setting which avoids flickering in your display during the boot process.
+
+Plymouth seems to be already installed but it is not enabled in Ubuntu Focal Fossa. It doesn't hurt to make sure it is installed:
 
 ```
 root@htpc:~# apt install plymouth plymouth-theme-ubuntu-logo plymouth-themes
@@ -500,7 +537,7 @@ Plymouth documentation can be found in `/usr/share/doc/plymouth/`, to read it ex
 
 ## (Optional) Change the console font size
 
-The default console size is rather small which can be inconvenient if your HTPC is connected to a big screen. To change the default console font execute:
+The default console size is rather small and can be inconvenient if your HTPC is connected to a big screen or TV. To change the default console font execute:
 
 ```
 root@htpc:~# dpkg-reconfigure console-setup

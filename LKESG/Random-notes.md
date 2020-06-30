@@ -221,7 +221,7 @@ kodi@htpc:~$ ls -l /etc/resolv.conf
 lrwxrwxrwx 1 root root 39 Apr 23 16:33 /etc/resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
 ```
 
-# Old configuration files for Ubuntu Bionic Beaver 18.04
+# Old configuration files for Ubuntu 18.04 Bionic Beaver
 
 In the old NUC configuration Openbox was started by the session manager `lightdm`. Network was managed with `ifupdown`. The NUC uses the 5G Wifi network.
 

@@ -24,7 +24,7 @@ TODO
 
 ## Launching Kodi automatically at boot time
 
-**TODO Rewrite this section to use systemd. See Kodi forum post**
+TODO
 
 ## (Optional) Configure Kodi to use VA-API hardware acceleration
 

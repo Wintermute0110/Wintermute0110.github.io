@@ -174,6 +174,8 @@ Now, reboot your HTPC and test if you can access you NAS from the WiFi network a
 
 -----
 
+**Technicalities and useful links**
+
 Alternative firewall configuration. It is here for reference, ignore it.
 
 ```
@@ -182,79 +184,146 @@ iptables -A FORWARD -s 192.168.0.0/16 -o wlan0 -j ACCEPT
 iptables -A FORWARD -d 192.168.0.0/16 -m state --state ESTABLISHED,RELATED -i wlan0 -j ACCEPT
 ```
 
------
-
 [Build a network router and firewall with Fedora 22 and systemd-networkd](https://fedoramagazine.org/build-network-router-firewall-fedora-22-systemd-networkd/)
 
 [Ubuntu Server Guide: DHCP](https://ubuntu.com/server/docs/network-dhcp)
 
 [Ubuntu Server Guide: Firewall](https://ubuntu.com/server/docs/security-firewall)
 
-## Automount files from a NAS using SSHFS
+## Network mount using SSHFS
+
+In this section we want to mount on-demand the home directory of the `kodi` user in your HTCP named `htpc` into a local directory named `/mnt/htpc/`. The user name in the local computer is `wintermute` and the name of the local computer is `laptop`. The server is `htpc` and the client is `laptop`.
+
+### Mount as a regular user
+
+Create a mountpoint directory in the client machine, for example `/home/wintermute/remotes/myhtpc`.
+
+To mount the remote filesystem use:
 
 ```
-From Archwiki SSHFS#Automounting
-
-Note: Keep in mind that automounting is done through the root user, therefore you cannot use hosts configured in .ssh/config of your normal user.
-
-To let the root user use an SSH key of a normal user, specify its full path in the IdentityFile option.
-
-And most importantly, use each sshfs mount at least once manually while root so the host's signature is added to the /root/.ssh/known_hosts file.
+$ sshfs kodi@htpc:/home/kodi /home/wintermute/remotes/myhtpc
 ```
 
-In this section we want to mount the home directory of the `kodi` user in your HTCP named `htpc` into a local directory named `/mnt/htpc/`. The user name in the local computer is `wintermute` and the name of the local computer is `laptop`. The server is `htpc` and the client is `laptop`.
+To umount the remote filesystem use:
 
-Create the directory `/mnt/htpc/` with `# mkdir /mnt/htpc`. **TODO** What permissions this directory should have? According to `man sshfs` the mounpoint must be owned by the user.
+```
+$ COMPLETE ME
+```
 
-The `systemd` units must be named after the mount points in the local computer. For example, if you want to mount into `/mnt/htpc/` then your `systemd` configuration files must start with `mnt-htpc.`.
+If you run intro trouble use the option `-d` to enable debug output and run sshfs in the foreground (option `-d` implies `-f`):
+
+```
+$ sshfs kodi@htpc:/home/kodi /home/wintermute/remotes/myhtpc -d
+```
+
+`sshfs` will ask for a password everytime you mount the remote filesystem. You can [configure SSH for passwordless login](./Linux-basic-commands-and-procedures#passwordless-ssh-login) so you will not need to type the password everytime. Note that setting up SSH passwordless login is mandatory for on-demand mounting.
+
+### Automount using systemd
+
+**Step 1) Configure passwordless SSH login**
+
+First [configure SSH for passwordless login](./Linux-basic-commands-and-procedures#passwordless-ssh-login) so the user `wintermute` can connect to the HTPC as user `kodi`. Skip this step if you already did so.
+
+**Step 2) Connect to the HTPC as root user**
+
+Connect to your HTPC `kodi` user as the client machine root user:
+
+```
+# ssh kodi@htpc
+```
+
+You will be asked for the `kodi` password and this is OK. SSH asks if you want to add the host fingerprint to the authorized keys file, answer `yes`. The purpose of this step is for the HTPC fingerprint to be added to the root authorized hosts file `/root/.ssh/authorized_keys`. If you connect a second time you will be prompted for the `kodi` user password only.
+
+**Step 3) Configure systemd for automounting**
+
+Create the directory `/mnt/htpc/` with `# mkdir /mnt/htpc`.
+
+Now create the following `systemd` configuration files. The `systemd` units must be named after the mount points in the local computer. For example, if you want to mount into `/mnt/htpc/` then your `systemd` then configuration files must be named `mnt-htpc.automount` and `mnt-htpc.mount`. You need root permissions to create files in `/etc/` so use `$ sudo nano my_file_name` to create the files.
 
 ```
 # File /etc/systemd/system/mnt-htpc.automount
-
 # Note that the timeout is disabled by default.
 
 [Unit]
-Description=Automount kodi@htpc:/home/kodi/ into /mnt/nuc
+Description=Automount kodi@htpc:/home/kodi/ into /mnt/htpc
 
 [Automount]
-Where=/mnt/nuc
+Where=/mnt/htpc
 TimeoutIdleSec=1min
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ```
 # File /etc/systemd/system/mnt-htpc.mount
 
 [Unit]
-Description=Mount kodi@htpc:/home/kodi/ into /mnt/nuc
+Description=Mount kodi@htpc:/home/kodi/ into /mnt/htpc
 
 [Mount]
 What=kodi@htpc:/home/kodi
 Where=/mnt/htpc
 Type=fuse.sshfs
-Options=uid=1000,gid=1000,allow_other,reconnect,IdentityFile=/root/.ssh/kodi-NUC-rsyncbackup
+Options=uid=1000,gid=1000,allow_other,reconnect,IdentityFile=/home/wintermute/.ssh/id_rsa
+
+[Install]
+WantedBy=multi-user.target
 ```
 
-`idmap=user` maps the UID/GID of the remote server user to UID/GID of the mounting client user. However, I think that when using `systemd` to automount the mount user is always `root`. In this case `uid=USER_ID,gid=GROUP_ID` must have the user ID and group ID of the client user.
-
- * `allow_other`, `uid=N` and `gid=N` are options defined in `man mount.fuse`. 
-
- * `reconnect` is defined in `man sshfs`.
-
- * `IdentityFile` is defined in `man ssh_config`. The default is `~/.ssh/id_dsa`, and `~/.ssh/id_rsa`.
-
-**TODO** Use `sshfs` to test that automount works with a normal user. To debug problems use options `--debug` (print debugging information) and `-f` (do not daemonize, stay in foreground).
+I recommend to create a symbolic link into your home directory to access your HTPC remote filesystem conveniently. If you create the symlink into your home directory `/home/wintermute` everytime you do `ls` you get a delay due to the network. We avoid this creating a `~/remotes` directory.
 
 ```
-#!/bin/bash
+$ cd /home/wintermute
+$ mkdir -p remotes
+$ ln -s /mnt/htpc /home/wintermute/remotes/htpc
+```
 
-sshfs kodi@htpc:/home/kodi/ /mnt/htpc -o idmap=user -o reconnect
+**Step 4) Optimization of SSHFS**
+
+The data transfer speed of SSH can be dramatically increased tuning some of the SSH options.
+
+First test that SSH is able to connect to the remote machine with no compression and a faster encryption algorithm:
+
+```
+$ ssh -o Ciphers=aes128-ctr -o Compression=no kodi@htpc
+```
+
+If everything works edit `/etc/systemd/system/mnt-htpc.mount`:
+
+```
+Options=uid=1000,gid=1000,allow_other,reconnect,IdentityFile=/home/wintermute/.ssh/id_rsa,Ciphers=aes128-ctr,Compression=no,ServerAliveInterval=15,ServerAliveCountMax=2
 ```
 
 -----
 
+**Technicalities and useful links**
+
+systemd automount uses the root user to run `ssh` and `sshfs` processes. In other words, each `sshfs` process has an associated `ssh` process to transmit the data over the network. A regular user cannot unmount the filesystem with `umount`. If the directory `/mnt/htpc` is configured to automount with system, just doing `$ ls -l /mnt` triggers the automount.
+
+From the `systemd.mount` manpage:
+
+> Note that the options `User=` and `Group=` are not useful for mount units. systemd passes two parameters to mount(8); the values of `What=` and `Where=`. When invoked in this way, mount(8) does not read any options from `/etc/fstab`, and must be run as `UID 0`.
+
+From Archwiki SSHFS#Automounting:
+
+> Keep in mind that automounting is done through the root user, therefore you cannot use hosts configured in `~/.ssh/config` of your normal user. To let the root user use an SSH key of a normal user, specify its full path in the IdentityFile option. And most importantly, use each sshfs mount at least once manually while root so the host's signature is added to the /root/.ssh/known_hosts file.
+
+ * Option `idmap=user` maps the UID/GID of the remote server user to UID/GID of the mounting client user. However, when using `systemd` to automount the mount user is always `root`. In this case `uid=USER_ID,gid=GROUP_ID` must have the user ID and group ID of the client user.
+
+ * Options `allow_other`, `uid=N` and `gid=N` are options defined in `man mount.fuse`. 
+
+ * Options `reconnect` is defined in `man sshfs`.
+
+ * Option `IdentityFile` is defined in `man ssh_config`. The default is `~/.ssh/id_dsa`, and `~/.ssh/id_rsa`.
+
 [Automatic mounts with systemd](https://blog.tomecek.net/post/automount-with-systemd/)
 
 [Archlinux wiki: SSHFS](https://wiki.archlinux.org/index.php/SSHFS)
+
+[Jake's blog: NAS Performance: NFS vs. SMB vs. SSHFS](https://blog.ja-ke.tech/2019/08/27/nas-performance-sshfs-nfs-smb.html)
+
+[Odds and Ends: Optimizing SSHFS, moving files into subdirectories, and getting placeholder images](https://ideatrash.net/2016/08/odds-and-ends-optimizing-sshfs-moving.html)
 
 [systemd.automount manpage](https://man7.org/linux/man-pages/man5/systemd.automount.5.html)
 
@@ -264,9 +333,70 @@ sshfs kodi@htpc:/home/kodi/ /mnt/htpc -o idmap=user -o reconnect
 
 [mount.fuse manpage](https://man7.org/linux/man-pages/man8/mount.fuse.8.html)
 
-[sshfs manpage](https://manpages.debian.org/experimental/sshfs/sshfs.1.en.html)
+[ssh manpage](https://manpages.debian.org/unstable/openssh-client/ssh.1.en.html)
 
-[ssh_config manpage](https://www.freebsd.org/cgi/man.cgi?ssh_config(5))
+[sshfs manpage](https://manpages.debian.org/unstable/sshfs/sshfs.1.en.html)
+
+[ssh_config manpage](https://manpages.debian.org/unstable/openssh-client/ssh_config.5.en.html)
+
+## Automount files from a NAS using NFS
+
+**NOTE Work in progress**
+
+To access your HTPC to upload/download files SSHFS could be the most convenient system if you have a Linux desktop. However, if you have a network attached storage (NAS) the network filesystem (NFS) may be better. Windows users probably will need to use SAMBA (Windows network) in their NAS.
+
+### Mount manually
+
+To test if NFS is working:
+
+```
+# mount -t nfs 172.16.24.192:/srv/nfs/music /mnt/myshare
+```
+
+### Automount using systemd
+
+**TODO** Can a regular user, for example `kodi`, acess the files? When the `kodi` user creates a file what is the UID/GID in the server?
+
+Disable and stop the `mnt-myshare.mount` unit, and enable and start `mnt-myshare.automount` to automount the share when the mount path is being accessed. Remember that the `systemd` configuration file names must match the name of the mount point directory.
+
+```
+# File /etc/systemd/system/mnt-myshare.automount
+
+[Unit]
+Description=Automount myshare
+
+[Automount]
+Where=/mnt/myshare
+TimeoutIdleSec=1min
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+# File /etc/systemd/system/mnt-myshare.mount
+
+[Unit]
+Description=Mount NFS share at boot
+
+[Mount]
+What=172.16.24.192:/mnt/myshare
+Where=/mnt/myshare
+Options=noatime
+Type=nfs
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+
+-----
+
+[Archlinux wiki: NFS](https://wiki.archlinux.org/index.php/NFS)
+
+[HOWTO setup a small server](http://chschneider.eu/linux/server/nfs.shtml)
+
+[Synology: How to access files on Synology NAS within the local network (NFS)](https://www.synology.com/en-us/knowledgebase/DSM/tutorial/File_Sharing/How_to_access_files_on_Synology_NAS_within_the_local_network_NFS)
 
 ## Advanced sound configuration
 

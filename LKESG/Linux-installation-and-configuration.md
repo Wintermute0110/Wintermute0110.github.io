@@ -395,12 +395,6 @@ root@htpc:~# groups kodi
 kodi : kodi adm ...
 ```
 
-Edit `/etc/security/limits.conf` and add before the end. Remember kodi is the username, not the application. This will allow your user to get the audio thread a bit more priority. **NOTE** Is this really needed? Move this step to an optional section?
-
-```
-kodi             -       nice            -1
-```
-
 Now create the file `/home/kodi/.xinitrc` that will be used by `startx`.
 
 ```
@@ -482,6 +476,14 @@ In your Linux desktop/laptop edit the file `/etc/hosts` and append at the end.
 Change the IP address to the one you have assigned in your router to the HTPC computer. I recommend to assign a static IP address so it does not change when you reboot your computers. To learn the MAC address of the WiFi interface of your HTPC use the `ip a` command in the HTPC. After that, you can connect to your HTPC with `ssh kodi@htpc`.
 
 If you don't modify `/etc/hosts` then you need to use the **IP adress** of your HTPC instead of the network name.
+
+## (Optional) Change priority of user kodi
+
+Edit `/etc/security/limits.conf` and add before the end. Remember `kodi` is the username, not the application. This will allow your user to get the audio thread a bit more priority.
+
+```
+kodi             -       nice            -1
+```
 
 ## (Optional) Changing the time zone
 

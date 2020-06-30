@@ -107,7 +107,7 @@ $ mkdir -p /home/kodi/roms/megadrive
 $ touch "/home/kodi/roms/megadrive/Sonic The Hedgehog 2 (World).zip"
 ```
 
-This is just for testing, nothing will launch when you click on your ROM. Later you can replace `es_systems.cfg` with a real one and place real ROMs.
+This is just for testing, nothing will launch when you click in your ROM. Later you can replace `es_systems.cfg` with a real one and place real ROMs.
 
 ### Running EmulationStation for the first time
 
@@ -135,12 +135,14 @@ Press **F4** on the keyboard to exit EmulationStation at any time.
 
 ## Start EmulationStation when the machine boots
 
+**TODO Move this into the Installation section, renamed it like "Start the X server at boot time". When the user wants to run something the Openbox autostart file is changed.**
+
 Create the **EmulationStation** service file:
 
 ```
 # File /etc/systemd/system/EmulationStation.service
 [Unit]
-Description = EmulationStation using xinit with Openbox WM and D-Bus
+Description = Run EmulationStation using xinit with Openbox WM and D-Bus
 Requires = dbus.service
 After = systemd-user-sessions.service sound.target network-online.target
 
@@ -153,7 +155,7 @@ ExecStart = /usr/bin/xinit /usr/bin/dbus-launch --exit-with-session /usr/bin/ope
 Restart = on-abort
 
 [Install]
-WantedBy = multi-user.target
+WantedBy = graphical.target
 ```
 
 Now replace the current `display-manager.service` with the EmulationStation service:
@@ -174,12 +176,6 @@ Check the default target:
 ```
 $ systemctl get-default
 graphical.target
-```
-
-If you want your HTPC to start in text mode (not graphical system) to do some testing then:
-
-```
-# systemctl set-default multi-user.target
 ```
 
 ## Updating EmulationStation files

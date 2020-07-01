@@ -19,6 +19,8 @@ This tutorial focuses on using an Intel video card because it is available as an
 
 In Linux/Unix usually here are several ways of doing things, each with its pros and cons. In this guide I will use `systemd` as much as possible to configure services. This sometimes makes the configuration slighly more complicated that alternatives but saves memory and resources in your HTPC which is good for low-end PCs.
 
+**NOTE** It is important that you switch off your monitor or TV **BEFORE** your HTPC. The monitor/TV must be on before the HTPC is started so the HTPC can autodetect the graphic resolution and refresh rate automatically. Failure to do this may result in corrupted graphics. In such case, with the monitor/TV on simply reboot your HTPC.
+
 ## User name and HTPC computer name
 
 When you install Ubuntu Linux you are asked for a regular or unprivileged user name. In this guide I use the `kodi` user name with home directory `/home/kodi`. Note that you can choose the user name you want, however **BE AWARE** that you will need to change some configuration files and file path names to mach the user name.
@@ -464,6 +466,45 @@ ResultAny=yes
 ResultInactive=yes
 ResultActive=yes
 ```
+
+## Start The X server when the machine boots
+
+Create the **MyOpenBox.service** file:
+
+```
+# File /etc/systemd/system/MyOpenBox.service
+[Unit]
+Description = Run xinit with Openbox-session and D-Bus
+Requires = dbus.service
+After = systemd-user-sessions.service sound.target network-online.target
+
+[Service]
+User = kodi
+Group = kodi
+Type = simple
+PAMName = login
+ExecStart = /usr/bin/xinit /usr/bin/dbus-launch --exit-with-session /usr/bin/openbox-session -- :0 -nolisten tcp vt7
+Restart = on-abort
+
+[Install]
+WantedBy = graphical.target
+```
+
+Now replace the current `display-manager.service` with the `MyOpenBox.service`:
+
+```
+# rm -f /etc/systemd/system/display-manager.service
+# ln -s /etc/systemd/system/MyOpenBox.service /etc/systemd/system/display-manager.service
+```
+
+Enable the HTPC to start the X server at boot time by setting `graphical.target` as the default target with `# systemctl set-default graphical.target`. Check the default target with:
+
+```
+$ systemctl get-default
+graphical.target
+```
+
+With the previous setting your HTPC will boot in the X server (graphical environment). If for some reason you want to boot in the text console `# systemctl set-default multi-user.target`. For example, it may be useful to boot in the text console when you are setting up `/home/kodi/.config/openbox/autostart` file to run EmulationStation or Kodi and once everything is working OK then you enable booting in the graphical environment.
 
 ## (Optional) Connecting to the HTPC with SSH
 

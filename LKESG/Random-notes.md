@@ -518,3 +518,23 @@ systemd───lightdm─┬─Xorg───3*[{Xorg}]
                   │         └─2*[{lightdm}]
                   └─2*[{lightdm}]
 ```
+
+# Documentation leftovers
+
+## Disable Kodi core dumps
+
+**IMPORTANT This step is only necessary if you use kodi.sh or kodi-standalone.sh to run Kodi**
+
+When Kodi crashes (and it will do from time to time) the memory is dumped to the disk into a file name `core`. This file can be used by the developers to track what cause the core. However, core files are bulky and useless unless you are a developer. To disable the creation of core files at all edit the script `/usr/bin/xbmc` (or `/home/kodi/bin/kodi` if you compiled Kodi), which is an ASCII file, and change:
+
+```
+  eval ulimit -c unlimited
+```
+
+to
+
+```
+  eval ulimit -c 0
+```
+
+`eval` is a shell builtin command. Then -c option sets the maximum size of core files.

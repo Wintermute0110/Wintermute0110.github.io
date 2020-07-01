@@ -339,7 +339,7 @@ From Archwiki SSHFS#Automounting:
 
 [ssh_config manpage](https://manpages.debian.org/unstable/openssh-client/ssh_config.5.en.html)
 
-## Automount files from a NAS using NFS
+## Network mount using NFS
 
 **NOTE Work in progress**
 
@@ -352,6 +352,10 @@ To test if NFS is working:
 ```
 # mount -t nfs 172.16.24.192:/srv/nfs/music /mnt/myshare
 ```
+
+-----
+
+[serverfault: Mount an NFS share as non root user in cli](https://serverfault.com/questions/825246/mount-an-nfs-share-as-non-root-user-in-cli)
 
 ### Automount using systemd
 
@@ -397,6 +401,16 @@ WantedBy=multi-user.target
 [HOWTO setup a small server](http://chschneider.eu/linux/server/nfs.shtml)
 
 [Synology: How to access files on Synology NAS within the local network (NFS)](https://www.synology.com/en-us/knowledgebase/DSM/tutorial/File_Sharing/How_to_access_files_on_Synology_NAS_within_the_local_network_NFS)
+
+## Network mount using SAMBA (Windows network)
+
+**TODO**
+
+Note that like NFS, only the root user can mount SAMBA filesystems. Editing `fstab` options, mounting can be allowed by regular users.
+
+-----
+
+[ask ubuntu: How do I mount Samba share as non-root user](https://askubuntu.com/questions/24348/how-do-i-mount-samba-share-as-non-root-user)
 
 ## Advanced sound configuration
 

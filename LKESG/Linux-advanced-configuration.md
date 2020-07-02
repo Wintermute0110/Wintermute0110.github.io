@@ -325,19 +325,7 @@ From Archwiki SSHFS#Automounting:
 
 [Odds and Ends: Optimizing SSHFS, moving files into subdirectories, and getting placeholder images](https://ideatrash.net/2016/08/odds-and-ends-optimizing-sshfs-moving.html)
 
-[systemd.automount manpage](https://man7.org/linux/man-pages/man5/systemd.automount.5.html)
-
-[systemd.mount manpage](https://man7.org/linux/man-pages/man5/systemd.mount.5.html)
-
-[mount manpage](https://man7.org/linux/man-pages/man8/mount.8.html)
-
-[mount.fuse manpage](https://man7.org/linux/man-pages/man8/mount.fuse.8.html)
-
-[ssh manpage](https://manpages.debian.org/unstable/openssh-client/ssh.1.en.html)
-
-[sshfs manpage](https://manpages.debian.org/unstable/sshfs/sshfs.1.en.html)
-
-[ssh_config manpage](https://manpages.debian.org/unstable/openssh-client/ssh_config.5.en.html)
+Man pages: [systemd.automount](https://man7.org/linux/man-pages/man5/systemd.automount.5.html) [systemd.mount](https://man7.org/linux/man-pages/man5/systemd.mount.5.html) [mount](https://man7.org/linux/man-pages/man8/mount.8.html) [mount.fuse](https://man7.org/linux/man-pages/man8/mount.fuse.8.html) [ssh](https://manpages.debian.org/unstable/openssh-client/ssh.1.en.html) [sshfs](https://manpages.debian.org/unstable/sshfs/sshfs.1.en.html) [ssh_config](https://manpages.debian.org/unstable/openssh-client/ssh_config.5.en.html)
 
 ## Network mount using NFS
 
@@ -402,7 +390,7 @@ WantedBy=multi-user.target
 
 [Synology: How to access files on Synology NAS within the local network (NFS)](https://www.synology.com/en-us/knowledgebase/DSM/tutorial/File_Sharing/How_to_access_files_on_Synology_NAS_within_the_local_network_NFS)
 
-## Network mount using SAMBA (Windows network)
+## Network mount using Samba (Windows network)
 
 **TODO**
 
@@ -411,6 +399,20 @@ Note that like NFS, only the root user can mount SAMBA filesystems. Editing `fst
 -----
 
 [ask ubuntu: How do I mount Samba share as non-root user](https://askubuntu.com/questions/24348/how-do-i-mount-samba-share-as-non-root-user)
+
+## Setting up a Samba server (Windows network)
+
+**TODO**
+
+This section describes how to configure a Samba server in your HTPC. This is useful if you want to connect to your HTCP from a Windows computer to upload/download files from/to your HTPC.
+
+**Step 1) Installing Samba**
+
+**Step 2) Samba configuration**
+
+**TODO Descibe how to configure samba to share /home/kodi/**
+
+**Step 3) Connecting to your HTPC from a Windows computer**
 
 ## Advanced sound configuration
 

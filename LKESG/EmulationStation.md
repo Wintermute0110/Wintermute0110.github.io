@@ -69,9 +69,9 @@ $ chmod 755 /home/kodi/bin/emulationstation.sh
 $ ln -s /home/kodi/EmulationStation-Install/retropie-ES/emulationstation /home/kodi/bin/emulationstation
 ```
 
-Now you need to configure your `es_systems.cfg`, install some EmulationStation themes and configure your keyboard and gamepad to control EmulationStation.
-
 ## Setting up EmulationStation
+
+Now you need to configure your `/home/kodi/.emulationstation/es_systems.cfg`, install some EmulationStation themes and configure your keyboard and gamepad to control EmulationStation.
 
 ### Installing a theme
 
@@ -100,7 +100,7 @@ To make things cristal clear this is an example of the layout after both themes 
 
 ### Create a basic es_systems XML for testing
 
-Create a fake `es_systems.cfg` file.
+Create a fake `/home/kodi/.emulationstation/es_systems.cfg` file.
 
 ```
 <?xml version="1.0"?>

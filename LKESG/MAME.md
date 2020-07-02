@@ -65,7 +65,7 @@ The following table describes the main controls you need to configure in your ga
 
 This is the typical layout of a gamepad.
 
-<center><img src="img/MAME_gamepad_grumbel.svg" width="80%"></center>
+![Ar](img/MAME_gamepad_grumbel.svg)
 
 And the recommended MAME control bindings:
 
@@ -89,49 +89,35 @@ And the recommended MAME control bindings:
 | Dpad Left  | Dpad Left     | `P1 Left`                        |
 | Dpad Right | Dpad Right    | `P1 Right`                       |
 
-## Updating MAME (optional)
+## (Optional) Updating MAME
 
-The MAME version in Trusty is old (0.152). The following
-<ulink url="https://launchpad.net/~c.falco/+archive/mame">PPA</ulink>
-contains up-to-date versions of MAME. Create the file 
-<filename>/etc/apt/sources.list.d/mamePPA.list</filename> 
-and insert
+The MAME version in Trusty is old (0.152). The following [PPA](https://launchpad.net/~c.falco/+archive/mame) contains up-to-date versions of MAME. Create the file `/etc/apt/sources.list.d/mame-PPA.list` and insert:
 
 ```
-<programlisting>
 # Cesare Falco unofficial MAME builds
 deb http://ppa.launchpad.net/c.falco/mame/ubuntu trusty main 
 deb-src http://ppa.launchpad.net/c.falco/mame/ubuntu trusty main 
-</programlisting>
 ```
-
-It's much more convenient to configure MAME to 
-use an offline scraper, and provide the downloaded artwork and games description
-files. Have a look at
-https://code.google.com/p/romcollectionbrowser/wiki/HowToAddMAMEOffline
 
 ## Basic MAME setup
 
-The first time that MAME is run it will
-create the directory <filename>~/.mame</filename> to store its stuff. A full screen
-information window will show up stating "No games found. Check your rompath".
+The first time that MAME is run it will create the directory `~/.mame` to store its stuff. A full screen information window will show up stating "No games found. Check your rompath".
 
-The first step is to create a default configuration file and move it
-to the <filename>~/.mame</filename>. Execute
+The first step is to create a default configuration file and move it to the `~/.mame`. Execute
 
-<screen>
+```
 $ mame -createconfig
 $ mv mame.ini .mame
-</screen>
+```
 
-Create a folder <filename>~/ROMs/roms-mame</filename> and put some MAME ROMs there to test
+Create a folder `~/ROMs/roms-mame` and put some MAME ROMs there to test
 
 ```
 $ mkdir ~/ROMs/roms-mame/
 $ cp romName.zip ~/ROMs/roms-mame/
 ```
 
-Next, edit the mame configuration file <filename>~/.mame/mame.ini</filename> and locate the following line
+Next, edit the mame configuration file `~/.mame/mame.ini` and locate the following line
 
 ```
 ...
@@ -147,28 +133,27 @@ rompath $HOME/ROMs/roms-mame
 ...
 ```
 
-If you now execute MAME it will show you a list of the games you copied into <filename>~/ROMs/roms-mame</filename> and also an option to configure the controls.
+If you now execute MAME it will show you a list of the games you copied into `~/ROMs/roms-mame` and also an option to configure the controls.
 
 ## Running MAME from the command line
 
 This is an example of how to run MAME from the command line.
 
-<screen>
+```
 $ mame romName
-</screen>
+```
 
 MAME uses the SDL library
 for video and sound. If you want to force SDL to use ALSA and a specific
 sound card other than the default then execute
 
-<screen>
+```
 $ export SDL_AUDIODRIVER=alsa
 $ export AUDIODEV=hw:1,3
 $ mame romName
-</screen>
+```
 
-By default, MAME should start in full screen mode. If not,
-edit <filename>~/.mame/mame.ini</filename> and change
+By default, MAME should start in full screen mode. If not, edit `~/.mame/mame.ini` and change
 
 ```
 ...
@@ -199,12 +184,7 @@ MAME has a nice in-game menu that can be used to change the controls and other s
 
 Most controls can be configured from the in-game menu, as described [here](http://www.mamedev.org/devwiki/index.php?title=FAQ:Controls#How_do_I_configure_the_keys.3F").
 
-Press <keycap>Tab</keycap> in-game and choose Input: general
-to configure controls for all games, or Input: This Game to
-change controls only for the running game. Then, select the input you want to configure, press enter 
-followed by the key you want it mapped to. More fancy key combinations can be made. 
-To map this key OR that key, set one of the keys as before, wait until 
-MAME accepts it, then repeat for second key.
+Press <keycap>Tab</keycap> in-game and choose Input: general to configure controls for all games, or Input: This Game to change controls only for the running game. Then, select the input you want to configure, press enter followed by the key you want it mapped to. More fancy key combinations can be made. To map this key OR that key, set one of the keys as before, wait until MAME accepts it, then repeat for second key.
 
 
 For the Logitech F710 joystick, this are the recommended controls to remap
@@ -215,15 +195,7 @@ In Input: general -> Player 1 controls remap P1 Button 1, P1 Button 2, P1 Button
 
 In Input: general -> Other controls remap 1 Player Start to the joystick <keycap>START</keycap> button and Coin 1 to the joystick <keycap>BACK</keycap> button.
 
-Finally, in Input: general -> User Interface 
-remap UI Select to the joystick button <keycap>A</keycap> and to
-the default key <keycap>RETURN</keycap> (it is important to being able to control the
-User Interface both with the joystick and the keyboard),
-Config Menu to the joystick button <keycap>Right analog pad center</keycap>
-and to the default key <keycap>TAB</keycap>, and
-UI Cancel to the F710 joystick button <keycap>Logicool button</keycap>
-and to the default key <keycap>ESC</keycap>.
-Note that UI Cancel is used to exit the menu, but also to
-exit the emulator and return to XBMC.
+Finally, in Input: general -> User Interface remap UI Select to the joystick button <keycap>A</keycap> and to the default key <keycap>RETURN</keycap> (it is important to being able to control the User Interface both with the joystick and the keyboard), Config Menu to the joystick button <keycap>Right analog pad center</keycap> and to the default key <keycap>TAB</keycap>, and
+UI Cancel to the F710 joystick button <keycap>Logicool button</keycap> and to the default key <keycap>ESC</keycap>. Note that UI Cancel is used to exit the menu, but also to exit the emulator and return to XBMC.
 
 Additionally, controls can be configured editing the file `~/.mame/cfg/default.cfg`, which is an XML file. You will only see entries in this file for key bindings you have modified (an not the defaults). Editing this file is useful when you do a mistake using the User Interface and want to roll-back to default controls. If you decide to change this file,  keep in mind that in MAME joystick buttons are numbered from 1 to N, not from 0 to N-1 like in `jstest`.

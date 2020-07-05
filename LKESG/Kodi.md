@@ -60,23 +60,24 @@ openbox --exit
 
 Note that compared with the default autostart file created in the [Linux-installation-and-configuration section](Linux-installation-and-configuration) here we disable the execution of `lterminal` and instead execute Kodi.
 
-## Controlling Kodi with a gamepad
+## Controlling Kodi
 
 If you have a USB keyboard and mouse attached to your HTPC they should work out of the box. Refer to the [Kodi wiki: Keyboard controls](https://kodi.wiki/view/Keyboard_controls) page to learn about the default keys. Don't be overwhelmed by the vast numbers of controls, this table summarizes the basic controls you will use 99.9% of the time:
 
-| Key name | Main action |
-|----------|-------------|
-| `Escape` | Previous menu OR Home screen |
-| `Return` | Select |
-| `Tab` | Fullscreen playback |
-| `C` | Open context menu |
-| `I` | Open info menu |
-| `P` | Start playing |
-| `X` | Stop playing |
-| `Space bar` | Pause/Play |
-| `-` minus | Volume down |
-| `+` plus | Volume up |
+| Key name     | Main action |
+|--------------|-------------|
 | `Arrow keys` | Navigate the graphical interface |
+| `Enter`      | Select |
+| `Backspace`  | Back |
+| `Escape`     | Previous menu OR Home screen |
+| `Tab`        | Fullscreen playback |
+| `C`          | Open context menu |
+| `I`          | Open info menu |
+| `P`          | Start playing |
+| `X`          | Stop playing |
+| `Space bar`  | Pause/Play |
+| `-` minus    | Volume down |
+| `+` plus     | Volume up |
 
 Note that in Kodi some keys change their meaning depending on wheter you are on the Home screen, or watching a movie (movie playback) or listening to music (music visualization). When watching a movie or listening to music you can always return to the Home screen pressing `Tab` and your media will keep playing in the background. Press `Tab` again to return to your media. Kodi uses massively the **context menu** which changes depending on the item you have selected. For example, the context menu when you are selecting a movie has options relevant for movies. You will use the `C` key a lot.
 

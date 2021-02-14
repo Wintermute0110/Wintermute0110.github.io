@@ -17,6 +17,9 @@ If you have doubts check the [MAME FAQ](http://www.mamedev.org/devwiki/index.php
 
 ## Controlling MAME with a gamepad
 
+The default MAME controls are defined in [src/emu/inpttype.ipp](https://github.com/mamedev/mame/blob/master/src/emu/inpttype.ipp).
+The key names are defined in [src/emu/input.h](https://github.com/mamedev/mame/blob/master/src/emu/input.h).
+
 You will need a keyboard to configure your gamepads in MAME. Once the gamepads are configured the keyboard is not needed.
 
  * The default control configuration file is `~/.mame/cfg/default.cfg`. Delete this file to restore 
@@ -30,7 +33,7 @@ You will need a keyboard to configure your gamepads in MAME. Once the gamepads a
 
  * <kbd>ENTER</kbd> + <kbd>ESC</kbd> on a `None` command sets the command to its default value.
 
-What was the control to switch beteen keyboards when emulating computers??? `SysRq` or `Scr Lk` 
+`ScrLk` is used to disable keyboard emulation on machines that have a keyboard.
 
 The following table describes the main controls you need to configure in your gamepad and the default key in the keyboard. Bring the MAME menu with the `TAB` key and enter the **Input (general)** menu.
 
